@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   enviroment.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/29 14:35:03 by oseivane          #+#    #+#             */
+/*   Updated: 2024/05/13 10:46:57 by oseivane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 t_env	*ft_lstnew_env(void *name, char *value)
@@ -14,19 +26,6 @@ t_env	*ft_lstnew_env(void *name, char *value)
 	return (node);
 }
 
-t_env *find_in_env(t_env *lst, char *name)
-{
-	t_env *tmp = lst;
-
-	while (tmp)
-	{
-		if (ft_strcmp(tmp->name, name) == 0)
-			return (tmp);
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
-
 t_env	*ft_lstlast_env(t_env *lst)
 {
 	t_env	*temp;
@@ -39,28 +38,6 @@ t_env	*ft_lstlast_env(t_env *lst)
 	return (temp);
 }
 
-void ft_lstdelone_env(t_env **lst, t_env *todelate)
-{
-    if (!lst || !todelate)
-        return;
-
-    if (todelate == *lst)
-    {
-        *lst = todelate->next;
-        if (*lst)
-            (*lst)->prev = NULL;
-    }
-    else
-    {
-        todelate->prev->next = todelate->next;
-        if (todelate->next)
-            todelate->next->prev = todelate->prev;
-    }
-
-    free(todelate->name);
-    free(todelate->value);
-    free(todelate);
-}
 
 void	ft_lstadd_back_env(t_env **lst, t_env *new)
 {
@@ -79,22 +56,15 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new)
 	}
 }
 
-void	add_in_env(t_var *var, char *name, char *value)
+void	save_env(t_var *var, char **env)
 {
-	t_env *new;
-	
-	new = ft_lstnew_env(name, value);
-	ft_lstadd_back_env(&var->env, new);
-}
+	int		i;
+	t_env	*new;
+	char	**arr;
 
-void save_env(t_var *var, char **env)
-{
-	int i = 0;
+	i = 0;
 	var->env = NULL;
-	t_env *new;
-	char **arr;
-
-    while (env[i])
+	while (env[i])
 	{
 		arr = ft_split(env[i], '=');
 		new = ft_lstnew_env(ft_strdup(arr[0]), ft_strdup(arr[1]));

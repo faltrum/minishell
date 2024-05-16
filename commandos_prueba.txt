@@ -16,12 +16,27 @@ echo:
 	echo $VARIABLE
 	echo "Hola, soy $nombre y tengo $edad años."
 	echo -n "Este es un mensaje "; echo "en la misma línea."
+	echo prueba > prueba.txt | wc -l  (no funciona)
+
 
 pwd:
 	pwd
+
 
 cd:
 	cd directorio
 	cd
 	cd -
 	cd ..
+
+redirecciones:
+	<< a << b cat (no funciona).
+
+Pipes:
+	ls | wc -l | exit (no deberia imprimr exit).
+	pwd << p ; ls << prueba.
+		Output:
+			> p
+			> prueba
+			/Path donde estas
+			Ejecucion ls
