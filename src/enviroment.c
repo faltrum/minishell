@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enviroment.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:03 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/13 10:46:57 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/18 15:58:30 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ t_env	*ft_lstlast_env(t_env *lst)
 		temp = temp->next;
 	return (temp);
 }
-
 
 void	ft_lstadd_back_env(t_env **lst, t_env *new)
 {

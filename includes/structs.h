@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:38:34 by oseivane          #+#    #+#             */
-/*   Updated: 2024/04/29 14:38:35 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/18 17:44:32 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_env
 // 		el nombre de la acción.
 // 	function: Un puntero a una función que ejecuta 
 // 		la acción.
+
 typedef struct s_actions
 {
 	char	*action;

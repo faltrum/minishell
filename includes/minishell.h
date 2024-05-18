@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:39:15 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/13 11:12:07 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/18 13:12:35 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char		*toString_t_env(t_env *env);
 char		*toString_t_info_tree(t_info_tree *tree);
 
 //INITIALIZE
-int			init_loop(char **argv, char **env);
+int			init_loop(char **argv, char **env, int fd);
 t_var		*init_struct(char **env);
 t_info_tree	*init_linked_tree(char *command, char *operator, char *prev_op);
 t_info_tree	*init_struct_tree(void);
