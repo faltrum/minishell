@@ -2,7 +2,7 @@
 
 int	wordchar(char c)
 {
-	if (isalnum(c) || c == '$' || c == '_')
+	if (isalnum(c) || c == '$' || c == '_' || c == '.' || c == '/')
 		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:38 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/18 17:54:33 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/05/18 20:06:15 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,23 +53,24 @@ int	init_loop(char **argv, char **env, int fd)
 		init_signals(READ);
 		update_signal(var->env);
 		update_signal(var->env);
+		head = NULL;
 		head = temp_name_additions(line); // ADDITIONS
 		if (fd && line == NULL)
 			break ;
 		if (!head)
 			continue ;
 //		printf_commands(head);
-		//execute_commands(head);
- 		free_command(head);
+		execute_commands(head, var);
+//		free_command(head);
 		//make_binnary_tree(var, line_cleaned);
 		//ft_printall(var);
 		//toString_t_var(var);
-		free(line);
+//		free(line);
 	}
 	if (previous_str)
 		free(previous_str);
 	rl_clear_history();
-	func_exit(var);
+//	func_exit(var);
 	return (EXIT_SUCCESS);
 }
 
@@ -91,18 +92,11 @@ int	main(int argc, char **argv, char **env)
 	int	fd;
 
 	fd = 0;
-	printf("esto esta funcionando?????\n");
+//	printf("esto esta funcionando?????\n");
 	//g_exit_sig = 0;
 	if (argv[1] != NULL)
 		fd = get_fd(argv[1]);
 	init_loop(argv, env, fd);
-	printf("salee\n");
+//	printf("salee\n");
 	return (EXIT_SUCCESS);
 }
-
-// Cambios
-// Agregue estructura para leer de arhivos, falta getnextline
-// Descompuse un poco las funciones del main
-//
-//
-// Parser nuevo

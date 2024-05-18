@@ -2,7 +2,7 @@
 
 static void	free_local_args(t_redirect **redir, t_word_list **words)
 {
-	free_word_list(*words, 1);
+//	free_word_list(*words, 1);
 	free_redirects(*redir);
 	*redir = NULL;
 	*words = NULL;
@@ -49,7 +49,6 @@ int	count_list_args(t_word_list *words)
 	return (count);
 }
 
-
 char	**list_to_arr(t_word_list *words)
 {
 	int		count;
@@ -69,7 +68,7 @@ char	**list_to_arr(t_word_list *words)
 		count++;
 	}
 	arr_words[count] = NULL;
-	free_word_list(words, 0);
+	//free_word_list(words, 0);
 	return (arr_words);
 }
 

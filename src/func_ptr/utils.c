@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 11:27:12 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/13 11:27:40 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/18 20:06:43 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,13 @@ void	execute_action(t_var *var, char **params)
 		return ;
 	else if (pid == 0)
 	{
-		printf("entra: %s\n", execution_path);
+		//printf("entra: %s\n", execution_path);
 		if (execve(execution_path, params, NULL) < 0)
 		{
-			printf("no puedo ejec");
+			//printf("no puedo ejec");
 			if (access(params[0], F_OK) != -1 && params[0][0] != '\0')
 			{
-				printf("y aquinentra???");
+				//printf("y aquinentra???");
 				if (execve(params[0], params, NULL) < 0)
 					exec_error(params[0], NO_PERM);
 			}

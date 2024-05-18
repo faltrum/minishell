@@ -165,7 +165,7 @@ int			add_normal_word(char *str, int* i, char** word);
 
 int			parse_redir(char *str, int *i, t_redirect** redirs);
 
-void		execute_commands(t_command *head, t_var *var);
+int			execute_commands(t_command *head, t_var *var);
 
 char		**list_to_arr(t_word_list *words);
 
@@ -174,5 +174,7 @@ void		printf_commands(t_command *node);
 int			do_here_doc(t_redirect *redir);
 
 t_command *temp_name_additions(char *str); // TEMP
+
+char	*expansion(t_var *var, char *command);
 
 #endif

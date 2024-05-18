@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 03:34:49 by kseligma          #+#    #+#             */
-/*   Updated: 2024/05/18 14:35:21 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/05/18 19:59:52 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ char	*get_next_line(int fd)
 	if (!buff)
 		return (manage_left(&(left[fd]), 0));
 	left[fd] = gnl_readline(left[fd], buff, fd);
-	free(buff);
+	//free(buff); // Este free esa causando un problema, por algun motivo (Puede ser por calloc ditinto)
 	if (!left[fd])
 		return (0);
 	return (ft_separe(&(left[fd])));

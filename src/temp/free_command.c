@@ -47,13 +47,17 @@ void	free_command(t_command *command)
 
 void	free_word_list(t_word_list *words, int free_word) 
 {
-	if (!words)
-		return;
-	free_word_list(words->next, free_word);
-	if (free_word)
+	t_word_list *aux;
+
+	while (words)
 	{
-		free(words->word);
-		words->word = NULL; // Would be set NULL for references from the array? I think yes, I dont know
+		aux = words->next;
+		if (free_word)
+		{
+			free(words->word);
+			words->word = NULL;
+		}
+		free(words);
+		words = aux;
 	}
-	free(words);
 }
