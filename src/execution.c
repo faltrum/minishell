@@ -110,7 +110,7 @@ void	restore_fds(int fds[2])
 		perror("minishell");
 }
 
-int	execute_simple_command(t_simple_command	*command, t_var *var) // Pipe commands executed here? Prob not
+int	execute_simple_command(t_simple_command	*command, t_var *var, int wait, int restore) // Pipe commands executed here? Prob not
 {
 	int		exit;
 	char	**args;
@@ -119,8 +119,9 @@ int	execute_simple_command(t_simple_command	*command, t_var *var) // Pipe comman
 	if (command->words)
 		command->args = list_to_arr(command->words);
 	if (exit == EXIT_SUCCESS || command->args)
-		exit = function_ptr(var, command->args, 1);
-	restore_fds(var->stdfds);
+		exit = function_ptr(var, command->args, wait);
+	if (restore)
+		restore_fds(var->stdfds);
 	return (exit);
 }
 
@@ -130,11 +131,11 @@ int	execute_commands(t_command *node, t_var *var)
 
 	ext = 0;
 	if (node->type == cm_simple)
-		return (execute_simple_command(node->value.simple, var));
+		return (execute_simple_command(node->value.simple, var, 1, 1));
 	else if (node->type == cm_connection)
 	{
 		if (node->value.connection->connector == pipe_con)
-			return (execute_pipeline(node->value.connection, var));
+			return (execute_pipeline(node, var));
 		ext = execute_commands(node->value.connection->first, var);
 		if (ext == EXIT_SUCCESS)
 		{

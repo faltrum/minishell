@@ -93,7 +93,7 @@ char	*get_right_side(char *str, enum e_connector connector)
 	nesting = 0;
 	len = strlen(str);
 	if (!get_connector_char(connector, &c))
-		return (get_left_side_pipe(str));
+		return (get_right_side_pipe(str));
 	while (len > 1)
 	{
 		if (str[len] == '(')

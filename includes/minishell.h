@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:39:15 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/20 21:17:36 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/05/22 19:40:34 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,8 @@ t_command	*parser(char *str);
 
 char		*expansion(t_var *var, char *command);
 
-int			execute_pipeline(t_connection *command, t_var *var);
+int			execute_pipeline(t_command *node, t_var *var);
+
+int			execute_simple_command(t_simple_command	*command, t_var *var, int wait, int restore);
 
 #endif
