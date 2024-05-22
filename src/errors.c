@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:08 by oseivane          #+#    #+#             */
-/*   Updated: 2024/04/29 14:47:34 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/20 21:04:30 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	exec_error(char *command, char *error_msg)
+int	exec_error(char *command, char *error_msg)
 {
 	int	fd;
 
@@ -20,6 +20,7 @@ void	exec_error(char *command, char *error_msg)
 	dup2(2, 1);
 	printf("%s: %s", command, error_msg);
 	dup2(fd, 1);
+	return (EXIT_FAILURE);
 }
 
 void	stx_error(char *error_msg)

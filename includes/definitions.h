@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   definitions.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:38:26 by oseivane          #+#    #+#             */
-/*   Updated: 2024/04/29 14:41:43 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/20 17:03:16 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,33 @@
 # define NO_DIR "Not a directory\n"
 # define NO_EXIST "No such file or directory.\n"
 # define NO_FORK "Error. Fork no created\n"
+
+enum e_redir_type
+{
+	input_redir,
+	output_redir,
+	append,
+	here_doc,
+};
+
+enum e_wordtype
+{
+	quoted,
+	dquoted,
+	single
+};
+
+enum e_command_type
+{
+	cm_simple,
+	cm_connection,
+};
+
+enum e_connector
+{
+	pipe_con,
+	and_and,
+	or_or
+};
 
 #endif

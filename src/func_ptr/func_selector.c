@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:28:30 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/18 19:19:41 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/05/20 21:16:43 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,10 @@ void	save_actions(t_var *var)
 	var->act[8].action = NULL;
 }
 
-void	function_ptr(t_var *var, char **params)
+int	function_ptr(t_var *var, char **params, int should_wait)
 {
 	int	i;
+	int status;
 
 	i = 0;
 	while (var->act[i].action)
@@ -76,10 +77,20 @@ void	function_ptr(t_var *var, char **params)
 		if (ft_strcmp(params[0], var->act[i].action) == 0)
 		{
 			(*(var->act[i].function))(var, params);
-			break ;
+			return (EXIT_SUCCESS); // BUILTIN SHOULD RETURN ERROR CODE
 		}
 		i++;
 	}
-	if (!var->act[i].action)
-		execute_action(var, params);
+	status = execute_action(var, params);
+	if (status && should_wait)
+	{
+		wait(&status);
+		if (WIFEXITED(status))
+			return (WEXITSTATUS(status));
+		else
+			return (EXIT_FAILURE);
+	}
+	else if (status)
+		return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }

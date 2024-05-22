@@ -6,12 +6,11 @@
 /*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:38 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/18 20:06:15 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/05/20 20:58:21 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include "../includes/Header.h"
 
 char	*get_line(char **argv, t_var *var, int fd, char *previous_str)
 {
@@ -53,24 +52,24 @@ int	init_loop(char **argv, char **env, int fd)
 		init_signals(READ);
 		update_signal(var->env);
 		update_signal(var->env);
-		head = NULL;
-		head = temp_name_additions(line); // ADDITIONS
+		head = parser(line);
 		if (fd && line == NULL)
 			break ;
+		free(line);
 		if (!head)
 			continue ;
 //		printf_commands(head);
 		execute_commands(head, var);
-//		free_command(head);
+		free_command(head);
 		//make_binnary_tree(var, line_cleaned);
 		//ft_printall(var);
 		//toString_t_var(var);
-//		free(line);
+		
 	}
 	if (previous_str)
 		free(previous_str);
 	rl_clear_history();
-//	func_exit(var);
+	func_exit(var);
 	return (EXIT_SUCCESS);
 }
 

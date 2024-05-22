@@ -6,7 +6,7 @@
 #    By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/04 19:10:12 by mcatalan@st       #+#    #+#              #
-#    Updated: 2024/05/18 11:15:18 by kseligma         ###   ########.fr        #
+#    Updated: 2024/05/20 17:12:21 by kseligma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,7 +90,7 @@ NAME = minishell
 
 SRCS =	$(wildcard src/*.c)	\
 		$(wildcard src/func_ptr/*.c) \
-		$(wildcard src/temp/*.c)
+		$(wildcard src/parsing/*.c)
 
 OBJS = $(SRCS:.c=.o)
 
