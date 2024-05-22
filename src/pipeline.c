@@ -10,12 +10,6 @@ int execute_pipeline_command(t_simple_command *command, int fds[2], t_var *var, 
 {
 	int exit;
 
-//	printf("Argument 1 %s\n", command->words->word);
-//	return 1;
-//	write(var->stdfds[1], "Exe: ", 5);
-//	write(var->stdfds[1], command->words->word, strlen(command->words->word));
-//	write(var->stdfds[1], "\n", 2);
-
 	if (fds[0] != -1 && dup2(fds[0], STDIN_FILENO) == -1)
 		perror("minishell");
 	close (fds[0]);

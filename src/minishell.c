@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:38 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/22 19:50:15 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/05/22 21:44:03 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	init_loop(char **argv, char **env, int fd)
 		update_signal(var->env);
 		update_signal(var->env);
 		head = parser(line);
-		if (fd && line == NULL)
+		if (line == NULL) // TEMP
 			break ;
 		free(line);
 		if (!head)
@@ -64,7 +64,6 @@ int	init_loop(char **argv, char **env, int fd)
 		//make_binnary_tree(var, line_cleaned);
 		//ft_printall(var);
 		//toString_t_var(var);
-		
 	}
 	if (previous_str)
 		free(previous_str);

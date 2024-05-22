@@ -115,6 +115,7 @@ int	execute_simple_command(t_simple_command	*command, t_var *var, int wait, int 
 	int		exit;
 	char	**args;
 
+	execute_expansions(command, var);
 	exit = execute_redirections(command->redirects);
 	if (command->words)
 		command->args = list_to_arr(command->words);
