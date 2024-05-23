@@ -3,28 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:34:25 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/22 21:50:56 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/05/18 16:58:09 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+void	ft_index(char **params, int index_dash, char *flag)
+{
+	int		index_end;
+	char	*temp;
+	char	*str;
+
+	str = "";
+	index_dash = ft_strchr_index(params[1], '-');
+	index_end = ft_strchr_index(params[1], ' ');
+	if (index_end == -1)
+		index_end = ft_strlen(params[1]);
+	if (index_dash != -1)
+	{
+		flag = ft_substr(params[1], index_dash, index_end);
+		temp = ft_substr(params[1], index_end, ft_strlen(params[1]));
+		str = ft_strtrim(temp, " \t");
+		printf("%s", str);
+		free(str);
+		free(temp);
+	}
+	else
+		printf("%s", params[1]);
+}
+
 void	ft_echo(t_var *var, char **params)
 {
-	int	ind;
+	int		index_dash;
+	char	*flag;
 
-	ind = 1;
-	while (params[ind])
-	{
-		if (ind > 1)
-			printf(" ");
-		printf("%s", params[ind]);
-		ind ++;
-	}
-	printf("\n");
+	flag = NULL;
+	if (params[1])
+		ft_index(*params, index_dash, flag);
+	if (!params[1] || index_dash == -1 || ft_strcmp(flag, "-n") != 0)
+		printf("\n");
+	if (flag)
+		free(flag);
 }
 
 void	ft_unset(t_var *var, char**params)
