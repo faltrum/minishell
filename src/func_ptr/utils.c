@@ -6,7 +6,7 @@
 /*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 11:27:12 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/23 11:52:38 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/23 11:58:36 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,23 +67,20 @@ char	*find_func(char **paths, char *function)
 
 void	exec_path(char *execution_path, char **params)
 {
-	printf("entra: %s\n", execution_path);
 	if (execve(execution_path, params, NULL) < 0)
 	{
-		printf("no puedo ejec");
 		if (access(params[0], F_OK) != -1 && params[0][0] != '\0')
 		{
-			printf("y aquinentra???");
 			if (execve(params[0], params, NULL) < 0)
-				exec_error(params[0], NO_PERM);
+				exit (exec_error(params[0], NO_PERM));
 		}
 		else
-			exec_error(params[0], NOT_FOUND);
+			exit (exec_error(params[0], NOT_FOUND));
 	}
-	exit(0);
+	exit (EXIT_FAILURE);
 }
 
-void	execute_action(t_var *var, char **params)
+int	execute_action(t_var *var, char **params)
 {
 	char	**path;
 	char	*execution_path;
@@ -93,14 +90,13 @@ void	execute_action(t_var *var, char **params)
 	execution_path = find_func(path, params[0]);
 	pid = fork();
 	if (pid == -1)
-		return ;
+		return (EXIT_FAILURE);
 	else if (pid == 0)
 		exec_path(execution_path, params);
 	else
 	{
-		wait(NULL);
 		free_arr(path);
 		free(execution_path);
-		return ;
+		return (EXIT_SUCCESS);
 	}
 }
