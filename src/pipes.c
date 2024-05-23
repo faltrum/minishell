@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:45 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/13 10:10:19 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/20 21:18:28 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	pipes_func_ext(t_var *var, int i,
 	params[2] = NULL;
 	dup_functions(i, struct_pipes->num_pipes,
 		struct_pipes->save, struct_pipes->pipes);
-	function_ptr(var, params);
+	function_ptr(var, params, 0);
 	free(str);
 	free_arr(params);
 }

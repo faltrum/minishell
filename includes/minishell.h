@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:39:15 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/13 11:12:07 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/22 19:40:34 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@
 # include "../libft/libft.h"
 # include "structs.h"
 # include "definitions.h"
+# include "get_next_line.h"
+
 
 //GLOBAL VARIABLE
 
@@ -50,7 +52,7 @@ char		*toString_t_env(t_env *env);
 char		*toString_t_info_tree(t_info_tree *tree);
 
 //INITIALIZE
-int			init_loop(char **argv, char **env);
+int			init_loop(char **argv, char **env, int fd);
 t_var		*init_struct(char **env);
 t_info_tree	*init_linked_tree(char *command, char *operator, char *prev_op);
 t_info_tree	*init_struct_tree(void);
@@ -102,7 +104,7 @@ void		init_signals(int mode);
 
 //BUILT-IN
 void		save_actions(t_var *var);
-void		function_ptr(t_var *var, char **params);
+int			function_ptr(t_var *var, char **params, int should_wait);
 
 void		save_actions_op(t_var *var);
 void		function_ptr_op(t_var *var, t_info_tree *tree);
@@ -116,7 +118,7 @@ void		print_env(t_var *var, char *str);
 void		ft_exit(t_var *var, char **params);
 char		*ft_strcat(char *dest, char *src);
 char		*find_func(char **paths, char *function);
-void		execute_action(t_var *var, char **params);
+int			execute_action(t_var *var, char **params);
 void		ft_unset(t_var *var, char**params);
 void		ft_help(t_var *var, char **params);
 void		get_add_var_env(t_var *var, char **params, int index);
@@ -130,10 +132,68 @@ void		ft_semicolon(t_var *var, t_info_tree *tree);
 
 //ERROR
 void		stx_error(char *error_msg);
-void		exec_error(char *command, char *error_msg);
+int			exec_error(char *command, char *error_msg);
 void		stx_error_op(char *error_msg, char op);
 
 //PIPES
 int			func_pipe(t_var *var, char *command);
+
+
+// NEW FUNCITONS (TODO: ORDER)
+int			search_pipe(char *str);
+
+int			search_andand_or_oror(char *str, char c);
+
+int			search_group(char *str);
+
+t_command	*parse_list(char *str);
+
+char		*ft_substr(char const *s, unsigned int start, size_t len);
+
+char		*get_left_side(char *str, enum e_connector connector);
+
+char		*get_right_side(char *str, enum e_connector connector);
+
+void		free_command(t_command *command);
+
+void		free_word_list(t_word_list *words, int free_word);
+
+void		free_redirects(t_redirect *redirects);
+
+t_command	*create_simple_command(char *str);
+
+t_command	*create_connected_command(char *str, enum e_connector connector);
+
+int			wordchar(char c);
+
+int			search_redir(char *str, int *i);
+
+int			search_word(char *str, int *i);
+
+int			pre_parse_words_and_redirects(char *str, t_simple_command *command);
+
+int			parse_word(char *str, int *i, t_word_list** words);
+
+int			add_quoted_word(char *str, int* i, char** word, char c);
+
+int			add_normal_word(char *str, int* i, char** word);
+
+int			parse_redir(char *str, int *i, t_redirect** redirs);
+
+int			execute_commands(t_command *head, t_var *var);
+
+char		**list_to_arr(t_word_list *words);
+
+void		printf_commands(t_command *node);
+
+int			do_here_doc(t_redirect *redir);
+
+t_command	*parser(char *str);
+
+char		*expansion(t_var *var, char *command);
+
+int			execute_pipeline(t_command *node, t_var *var);
+
+int			execute_simple_command(t_simple_command	*command, t_var *var, int wait, int restore);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 11:27:12 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/13 11:27:40 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/20 21:15:42 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*find_func(char **paths, char *function)
 	return (ft_strdup("-1"));
 }
 
-void	execute_action(t_var *var, char **params)
+int	execute_action(t_var *var, char **params)
 {
 	char	**path;
 	char	*execution_path;
@@ -75,29 +75,28 @@ void	execute_action(t_var *var, char **params)
 	execution_path = find_func(path, params[0]);
 	pid = fork();
 	if (pid == -1)
-		return ;
+		return (EXIT_FAILURE);
 	else if (pid == 0)
 	{
-		printf("entra: %s\n", execution_path);
+		//printf("entra: %s\n", execution_path);
 		if (execve(execution_path, params, NULL) < 0)
 		{
-			printf("no puedo ejec");
+			//printf("no puedo ejec");
 			if (access(params[0], F_OK) != -1 && params[0][0] != '\0')
 			{
-				printf("y aquinentra???");
+				//printf("y aquinentra???");
 				if (execve(params[0], params, NULL) < 0)
-					exec_error(params[0], NO_PERM);
+					exit (exec_error(params[0], NO_PERM));
 			}
 			else
-				exec_error(params[0], NOT_FOUND);
+				exit (exec_error(params[0], NOT_FOUND));
 		}
-		exit(0);
+		exit (EXIT_SUCCESS);
 	}
 	else
 	{
-		wait(NULL);
 		free_arr(path);
 		free(execution_path);
-		return ;
+		return (EXIT_SUCCESS);
 	}
 }

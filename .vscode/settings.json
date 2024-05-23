@@ -1,0 +1,11 @@
+{
+  "files.exclude": {
+    "**/*.d": true,
+    "**/*.o": true
+},
+"files.associations": {
+	"get_next_line.h": "c",
+	"minishell.h": "c",
+	"libft.h": "c"
+}
+}
