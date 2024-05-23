@@ -6,7 +6,7 @@
 /*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 12:58:22 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/23 12:58:35 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/23 13:30:04 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	allocate_simple_command(t_command **node)
 {
-	*node = calloc(1,sizeof(**node));
+	*node = calloc(1, sizeof(**node));
 	if (!*node)
 	{
 		printf("Memory error\n");

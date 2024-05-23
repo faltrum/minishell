@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/23 13:26:40 by oseivane          #+#    #+#             */
+/*   Updated: 2024/05/23 13:26:42 by oseivane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
-int	left_par(char	*str) 
+int	left_par(char *str)
 {
 	int	i;
 
@@ -28,7 +40,7 @@ int	left_par(char	*str)
 	return (0);
 }
 
-int	right_par(char	*str) 
+int	right_par(char	*str)
 {
 	size_t	len;
 
@@ -47,7 +59,7 @@ int	right_par(char	*str)
 			printf("Syntax error, unmatched (");
 			return (0);
 		}
-		else 
+		else
 		{
 			printf("Syntax error, unexpected token after parenthesis\n");
 			return (0);
@@ -63,7 +75,7 @@ int	empty_par(char *str)
 	i = 0;
 	while (str[i] == ' ')
 		i++;
-	if (str[i] == 0) 
+	if (str[i] == 0)
 	{
 		printf("Empty parenthesis\n");
 		return (1);

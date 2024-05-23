@@ -6,7 +6,7 @@
 /*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 12:57:41 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/23 12:58:13 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/23 13:34:18 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	has_content(char *str)
 	i = 0;
 	while (str[i] == ' ')
 		i++;
-	if (str[i] == 0) 
+	if (str[i] == 0)
 	{
 		printf("Syntax error: Empty command on && or || or |\n");
 		return (0);
@@ -75,7 +75,7 @@ t_command	*create_connected_command(char *str, enum e_connector connector)
 	node->value.connection->connector = connector;
 	node->value.connection->first = parse_list(left_side);
 	node->value.connection->second = parse_list(right_side);
-	if (!node->value.connection->first || !node->value.connection->second) 
+	if (!node->value.connection->first || !node->value.connection->second)
 	{
 		free_command(node->value.connection->first);
 		free_command(node->value.connection->second);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_simple_command.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/23 13:25:19 by oseivane          #+#    #+#             */
+/*   Updated: 2024/05/23 13:25:20 by oseivane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 static void	free_local_args(t_redirect **redir, t_word_list **words)
@@ -26,7 +38,7 @@ t_redirect **redir, t_word_list **words)
 		}
 		else if (search_word(str, &i))
 			res = parse_word(str, &i, words);
-		else if (str[i] && res) 
+		else if (str[i] && res)
 		{
 			printf("Syntax error: Unexpected token %c\n", str[i]);
 			res = 0;
@@ -72,7 +84,7 @@ char	**list_to_arr(t_word_list *words)
 	return (arr_words);
 }
 
-int	pre_parse_words_and_redirects(char* str, t_simple_command *command)
+int	pre_parse_words_and_redirects(char *str, t_simple_command *command)
 {
 	t_word_list	*words;
 

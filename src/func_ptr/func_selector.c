@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   func_selector.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:28:30 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/20 21:16:43 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/05/23 13:31:20 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	save_actions(t_var *var)
 int	function_ptr(t_var *var, char **params, int should_wait)
 {
 	int	i;
-	int status;
+	int	status;
 
 	i = 0;
 	while (var->act[i].action)
@@ -77,7 +77,7 @@ int	function_ptr(t_var *var, char **params, int should_wait)
 		if (ft_strcmp(params[0], var->act[i].action) == 0)
 		{
 			(*(var->act[i].function))(var, params);
-			return (EXIT_SUCCESS); // BUILTIN SHOULD RETURN ERROR CODE
+			return (EXIT_SUCCESS);
 		}
 		i++;
 	}

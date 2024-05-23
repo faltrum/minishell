@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_word.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/23 13:25:57 by oseivane          #+#    #+#             */
+/*   Updated: 2024/05/23 13:26:06 by oseivane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 int	add_normal_word(char *str, int *i, char **word)
@@ -77,7 +89,7 @@ int	parse_word(char *str, int *i, t_word_list **words)
 			word->type = dquoted;
 		return (add_quoted_word(str, i, &(word->word), str[*i]));
 	}
-	else 
+	else
 	{
 		word->type = single;
 		return (add_normal_word(str, i, &(word->word)));

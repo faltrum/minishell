@@ -6,7 +6,7 @@
 /*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:52:00 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/23 12:34:21 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/23 13:30:59 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	other_case(char *path, char *old_path, char **params)
 	old_path = getcwd(cwd, sizeof(cwd));
 	path = params[1];
 }
-
 
 void	ft_cd(t_var *var, char **params)
 {
