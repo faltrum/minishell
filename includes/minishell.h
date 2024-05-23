@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:39:15 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/22 19:40:34 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:21:45 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,7 @@
 # include "definitions.h"
 # include "get_next_line.h"
 
-
-//GLOBAL VARIABLE
-
-int wstatus;
-
-//DISPLAYS
+//DISPLAYS (al final hay que borrarlo)
 void		ft_printall(t_var *var);
 char		*intToString(int num);
 char		*toString_t_var(t_var *var);
@@ -138,62 +133,35 @@ void		stx_error_op(char *error_msg, char op);
 //PIPES
 int			func_pipe(t_var *var, char *command);
 
-
 // NEW FUNCITONS (TODO: ORDER)
 int			search_pipe(char *str);
-
 int			search_andand_or_oror(char *str, char c);
-
 int			search_group(char *str);
-
 t_command	*parse_list(char *str);
-
 char		*ft_substr(char const *s, unsigned int start, size_t len);
-
 char		*get_left_side(char *str, enum e_connector connector);
-
 char		*get_right_side(char *str, enum e_connector connector);
-
 void		free_command(t_command *command);
-
 void		free_word_list(t_word_list *words, int free_word);
-
 void		free_redirects(t_redirect *redirects);
-
 t_command	*create_simple_command(char *str);
-
 t_command	*create_connected_command(char *str, enum e_connector connector);
-
 int			wordchar(char c);
-
 int			search_redir(char *str, int *i);
-
 int			search_word(char *str, int *i);
-
 int			pre_parse_words_and_redirects(char *str, t_simple_command *command);
-
-int			parse_word(char *str, int *i, t_word_list** words);
-
-int			add_quoted_word(char *str, int* i, char** word, char c);
-
-int			add_normal_word(char *str, int* i, char** word);
-
-int			parse_redir(char *str, int *i, t_redirect** redirs);
-
+int			parse_word(char *str, int *i, t_word_list **words);
+int			add_quoted_word(char *str, int *i, char **word, char c);
+int			add_normal_word(char *str, int *i, char **word);
+int			parse_redir(char *str, int *i, t_redirect **redirs);
 int			execute_commands(t_command *head, t_var *var);
-
 char		**list_to_arr(t_word_list *words);
-
 void		printf_commands(t_command *node);
-
 int			do_here_doc(t_redirect *redir);
-
 t_command	*parser(char *str);
-
 char		*expansion(t_var *var, char *command);
-
 int			execute_pipeline(t_command *node, t_var *var);
-
-int			execute_simple_command(t_simple_command	*command, t_var *var, int wait, int restore);
+int			execute_simple_command(t_simple_command	*command,
+				t_var *var, int wait, int restore);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 10:41:32 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/13 10:47:40 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:42:26 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_env	*find_in_env(t_env *lst, char *name)
 	}
 	return (NULL);
 }
-
 
 void	ft_lstdelone_env(t_env **lst, t_env *todelate)
 {

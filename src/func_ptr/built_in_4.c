@@ -6,7 +6,7 @@
 /*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:52:00 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/18 17:52:47 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:34:21 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ void	ft_cd(t_var *var, char **params)
 		else if (ft_strcmp(params[1], "..") == 0)
 			etc_case(path, old_path);
 		else if (params[1][0] != '/')
-			slash_case(path, old_path, *params);
+			slash_case(path, old_path, params);
 		else
-			other_case(path, old_path, *params);
+			other_case(path, old_path, params);
 		change_path(var, params[1], path, old_path);
 	}
 	else

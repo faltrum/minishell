@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 16:06:27 by mcatalan@st       #+#    #+#             */
-/*   Updated: 2024/02/24 10:19:11 by mac              ###   ########.fr       */
+/*   Updated: 2024/05/23 12:14:44 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ char	*ft_strchr(const char *s, char c)
 	return (0);
 }
 
-int ft_strchr_index(const char *s, char c)
+int	ft_strchr_index(const char *s, char c)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	if (s == NULL)
 		return (-1);

@@ -6,7 +6,7 @@
 /*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:30 by oseivane          #+#    #+#             */
-/*   Updated: 2024/04/29 14:35:31 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:48:55 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ char	*get_cwd(t_var *var)
 			+ strlen(RESET) + 4);
 	if (!colored_cwd)
 		return (NULL);
-	//colored_cwd = "prueba";
 	strcpy(colored_cwd, GREEN);
 	colored_cwd = ft_newold(ft_strcat(colored_cwd, name), colored_cwd);
 	colored_cwd = ft_newold(ft_strcat(colored_cwd, RESET), colored_cwd);

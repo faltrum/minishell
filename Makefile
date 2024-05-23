@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+         #
+#    By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/04 19:10:12 by mcatalan@st       #+#    #+#              #
-#    Updated: 2024/05/20 17:12:21 by kseligma         ###   ########.fr        #
+#    Updated: 2024/05/23 12:36:42 by oseivane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,7 @@
 # MACOS
 # Print MINISHELL and authors' names
 MINISHELL_MSG = MINISHELL
-AUTHORS_MSG = by oseivane el "calamidades" & ...buscando compi
+AUTHORS_MSG = by oseivane el "calamidades" & ...Kevin "el resacatador"
 MESSAGE_LEN = $$(($(shell echo $(MINISHELL_MSG) | wc -c) - 1))
 
 PRINT_MINISHELL = @printf "$(VIOLET)%*s$(RESET)\n" $(MESSAGE_LEN) $(MINISHELL_MSG)

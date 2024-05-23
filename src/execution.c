@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/23 12:42:47 by oseivane          #+#    #+#             */
+/*   Updated: 2024/05/23 12:45:21 by oseivane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 int	redirect_append(t_redirect *redirects)
@@ -91,26 +103,26 @@ void	execute_expansions(t_simple_command *command, t_var *var)
 	while (words)
 	{
 		if (words->type != quoted)
-			words->word = expansion(var, ft_strdup(words->word)); // The input is freed, this strdup is temporal
+			words->word = expansion(var, ft_strdup(words->word));
 		words = words->next;
 	}
 	while (redirects)
 	{
-		if (redirects->type != here_doc) // Es esto necesario? Cuando se deberia hacer?/
-			redirects->word = expansion(var, ft_strdup(redirects->word)); // The input is freed, this strdup is temporal
-		redirects = redirects->next;
+		if (redirects->type != here_doc)
+			redirects->word = expansion(var, ft_strdup(redirects->word));
 	}
 }
 
 void	restore_fds(int fds[2])
 {
-	if(dup2(fds[0], STDIN_FILENO) == -1)
+	if (dup2(fds[0], STDIN_FILENO) == -1)
 		perror("minishell");
 	if (dup2(fds[1], STDOUT_FILENO) == -1)
 		perror("minishell");
 }
 
-int	execute_simple_command(t_simple_command	*command, t_var *var, int wait, int restore) // Pipe commands executed here? Prob not
+int	execute_simple_command(t_simple_command	*command,
+	t_var *var, int wait, int restore)
 {
 	int		exit;
 	char	**args;

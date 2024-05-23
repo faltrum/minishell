@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:38 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/22 21:44:03 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:50:44 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ char	*get_line(char **argv, t_var *var, int fd, char *previous_str)
 
 int	init_loop(char **argv, char **env, int fd)
 {
-	char	*line;
-	char	*previous_str;
-	t_var	*var;
-	t_command *head;
+	char		*line;
+	char		*previous_str;
+	t_var		*var;
+	t_command	*head;
 
 	(void)argv;
 	line = NULL;
@@ -51,9 +51,8 @@ int	init_loop(char **argv, char **env, int fd)
 		line = get_line(argv, var, fd, previous_str);
 		init_signals(READ);
 		update_signal(var->env);
-		update_signal(var->env);
 		head = parser(line);
-		if (line == NULL) // TEMP
+		if (line == NULL)
 			break ;
 		free(line);
 		if (!head)
@@ -61,9 +60,6 @@ int	init_loop(char **argv, char **env, int fd)
 //		printf_commands(head);
 		execute_commands(head, var);
 		free_command(head);
-		//make_binnary_tree(var, line_cleaned);
-		//ft_printall(var);
-		//toString_t_var(var);
 	}
 	if (previous_str)
 		free(previous_str);
@@ -90,11 +86,8 @@ int	main(int argc, char **argv, char **env)
 	int	fd;
 
 	fd = 0;
-//	printf("esto esta funcionando?????\n");
-	//g_exit_sig = 0;
 	if (argv[1] != NULL)
 		fd = get_fd(argv[1]);
 	init_loop(argv, env, fd);
-//	printf("salee\n");
 	return (EXIT_SUCCESS);
 }

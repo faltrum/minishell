@@ -6,7 +6,7 @@
 /*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:34:25 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/18 16:58:09 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:33:32 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ void	ft_echo(t_var *var, char **params)
 
 	flag = NULL;
 	if (params[1])
-		ft_index(*params, index_dash, flag);
+		ft_index(params, index_dash, flag);
 	if (!params[1] || index_dash == -1 || ft_strcmp(flag, "-n") != 0)
 		printf("\n");
 	if (flag)
 		free(flag);
 }
 
-void	ft_unset(t_var *var, char**params)
+void	ft_unset(t_var *var, char **params)
 {
 	t_env	*env_name;
 	char	*name;

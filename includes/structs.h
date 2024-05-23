@@ -3,19 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:38:34 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/20 18:11:23 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:22:10 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-# include "definitions.h" // Estan los enums. Cambiar nombre a data_structures o algo por el estilo y traerlos? Los enums funcionan como globales
+# include "definitions.h"
+// Estan los enums. Cambiar nombre a data_structures 
+// o algo por el estilo y traerlos? Los enums funcionan como globales
 
-typedef struct s_var	t_var;
+typedef struct s_var		t_var;
+typedef struct s_redirect	t_redirect;
+typedef struct s_word_list	t_word_list;
+struct						s_command;
+typedef struct s_command	t_command;
 
 // Descripción: Esta estructura representa un nodo en 
 // el árbol de análisis sintáctico.
@@ -116,28 +122,20 @@ typedef struct s_pipe
 	int	num_pipes;
 }	t_pipe;
 
-typedef struct s_redirect	t_redirect;
-
-struct s_redirect
+typedef struct s_redirect
 {
 	t_redirect			*next;
 	enum e_redir_type	type;
 	char				*word;
 	int					fd;
-};
+}	t_redirect;
 
-typedef struct s_word_list	t_word_list;
-
-struct s_word_list
+typedef struct s_word_list
 {
 	t_word_list		*next;
 	char			*word;
 	enum e_wordtype	type;
-};
-
-struct						s_command;
-
-typedef struct s_command	t_command;
+}	t_word_list;
 
 typedef struct s_connection
 {
@@ -153,16 +151,16 @@ typedef struct s_simple_command
 	char		**args;
 }	t_simple_command;
 
-union u_command_value
+typedef union u_command_value
 {
 	t_connection		*connection;
 	t_simple_command	*simple;	
-};
+}	t_command_value;
 
-struct s_command
+typedef struct s_command
 {
 	enum e_command_type		type;
 	union u_command_value	value;
-};
+}	t_command;
 
 #endif

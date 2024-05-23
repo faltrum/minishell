@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_command.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/23 12:45:36 by oseivane          #+#    #+#             */
+/*   Updated: 2024/05/23 12:46:25 by oseivane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
-void	free_redirects(t_redirect *redirects) 
+void	free_redirects(t_redirect *redirects)
 {
 	if (!redirects)
-		return;
+		return ;
 	free_redirects(redirects->next);
 	free(redirects->word);
 	if (redirects->fd != 0)
@@ -13,7 +25,7 @@ void	free_redirects(t_redirect *redirects)
 
 void	free_str_arr(char **arr)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!arr)
@@ -36,7 +48,7 @@ void	free_command(t_command *command)
 		free_redirects(command->value.simple->redirects);
 		free(command->value.simple);
 	}
-	else if (command->type == cm_connection && command->value.connection) 
+	else if (command->type == cm_connection && command->value.connection)
 	{
 		free_command(command->value.connection->first);
 		free_command(command->value.connection->second);
@@ -45,9 +57,9 @@ void	free_command(t_command *command)
 	free(command);
 }
 
-void	free_word_list(t_word_list *words, int free_word) 
+void	free_word_list(t_word_list *words, int free_word)
 {
-	t_word_list *aux;
+	t_word_list	*aux;
 
 	while (words)
 	{

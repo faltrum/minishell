@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_connected_command.c                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/23 12:57:41 by oseivane          #+#    #+#             */
+/*   Updated: 2024/05/23 12:58:13 by oseivane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 static void	*free_connected_args(char *ls, char *rs, t_command *node)
@@ -14,7 +26,7 @@ int static	alloc_str(char *str, char **ls, char **rs, enum e_connector c)
 {
 	*ls = get_left_side(str, c);
 	*rs = get_right_side(str, c);
-	if (!*ls || !*rs) 
+	if (!*ls || !*rs)
 	{
 		printf("Allocation error\n");
 		return (0);
@@ -27,7 +39,7 @@ int static	alloc_node(t_command **node)
 	*node = malloc(sizeof(t_command));
 	if (*node)
 		(*node)->value.connection = malloc(sizeof(t_connection));
-	if (!(*node) || !(*node)->value.connection) 
+	if (!(*node) || !(*node)->value.connection)
 	{
 		printf("Allocation error\n");
 		return (0);
@@ -37,7 +49,7 @@ int static	alloc_node(t_command **node)
 
 int	has_content(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] == ' ')
@@ -50,7 +62,7 @@ int	has_content(char *str)
 	return (1);
 }
 
-t_command	*create_connected_command(char* str, enum e_connector connector)
+t_command	*create_connected_command(char *str, enum e_connector connector)
 {
 	t_command	*node;
 	char		*left_side;

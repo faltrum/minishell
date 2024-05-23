@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:45 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/20 21:18:28 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:55:49 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,13 @@ void	init_pipes_func(t_pipe *struct_pipes)
 	struct_pipes->pipes = malloc(sizeof(int *) * struct_pipes->num_pipes);
 	if (!struct_pipes->pipes)
 		return ;
-	for (i = 0; i < struct_pipes->num_pipes; i++)
+	while (i < struct_pipes->num_pipes)
+	{
 		struct_pipes->pipes[i] = malloc(sizeof(int) * 2);
 		if (!struct_pipes->pipes[i])
 			return ;
+		i++;
+	}
 	struct_pipes->save = dup(1);
 }
 
@@ -67,6 +70,7 @@ int	func_pipe(t_var *var, char *command)
 	char	**commands_arr;
 	int		num_pipes;
 	t_pipe	*struct_pipes;
+	int		i;
 
 	if (!command)
 		return (-1);
@@ -87,13 +91,25 @@ int	func_pipe(t_var *var, char *command)
 		return (-1);
 	}
 	init_pipes_func(struct_pipes);
-	for(int i = 0; i < struct_pipes->num_pipes; i++)
+	i = 0;
+	while (i < struct_pipes->num_pipes)
+	{
 		if (pipe(struct_pipes->pipes[i]) == -1)
 			return (84);
-	for (int i = 0; i < struct_pipes->num_pipes; i++)
+		i++;
+	}
+	i = 0;
+	while (i < struct_pipes->num_pipes)
+	{
 		pipes_func_ext(var, i, struct_pipes, commands_arr);
-	for (int i = 0; i < struct_pipes->num_pipes; i++)
+		i++;
+	}
+	i = 0;
+	while (i < struct_pipes->num_pipes)
+	{
 		free(struct_pipes->pipes[i]);
+		i++;
+	}
 	free_arr(commands_arr);
 	free(struct_pipes->pipes);
 	free(struct_pipes);

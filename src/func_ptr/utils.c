@@ -6,7 +6,7 @@
 /*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 11:27:12 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/23 11:58:36 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:27:02 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,5 @@ int	execute_action(t_var *var, char **params)
 		free(execution_path);
 		return (EXIT_SUCCESS);
 	}
+	return (EXIT_SUCCESS);
 }
