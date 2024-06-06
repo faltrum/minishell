@@ -1,110 +1,70 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 13:26:40 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/23 13:26:42 by oseivane         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "minishell.h"
 
-#include "../../includes/minishell.h"
-
-int	left_par(char *str)
+void    print_args(t_word_list *words)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
+    printf("Argumentos: ");
+    if (!words) {
+        printf("No args ");
+        return;
+    }
+    while(words)
 	{
-		if (str[i] == ' ')
-			i++;
-		else if (str[i] == '(')
-		{
-			str[i] = ' ';
-			return (1);
-		}
-		else if (str[i] == ')')
-		{
-			printf("Syntax error, unmatched )\n");
-			return (0);
-		}
-		else
-		{
-			printf("Syntax error, unexpected token before parenthesis\n");
-			return (0);
-		}
+		printf(" %s ", words->word);
+		words = words->next;
 	}
-	return (0);
+    printf("\n");
 }
 
-int	right_par(char	*str)
+void    print_red(t_redirect *reds)
 {
-	size_t	len;
+    printf("Redirecciones: ");
+	if (!reds)
+		printf("No redirs ");
+    while (reds)
+    {
+        printf("file: %s ", reds->word);
+        printf("type: %d ", reds->type);
+        reds = reds->next;
+    }
+    printf("\n");
 
-	len = strlen(str) - 1;
-	while (len > 0)
-	{
-		if (str[len] == ' ')
-			len--;
-		else if (str[len] == ')')
-		{
-			str[len] = ' ';
-			return (1);
-		}
-		else if (str[len] == '(')
-		{
-			printf("Syntax error, unmatched (");
-			return (0);
-		}
-		else
-		{
-			printf("Syntax error, unexpected token after parenthesis\n");
-			return (0);
-		}
-	}
-	return (0);
 }
 
-int	empty_par(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] == ' ')
-		i++;
-	if (str[i] == 0)
-	{
-		printf("Empty parenthesis\n");
-		return (1);
-	}
-	return (0);
+void    printf_commands(t_command *node) {
+    printf("Command: ");
+    switch (node->type) {
+    case cm_connection:
+            printf("Type: connection \n" );
+            printf("First: ");
+            printf_commands(node->value.connection->first);
+            printf("Second: ");
+            printf_commands(node->value.connection->second);
+            break;
+    case cm_simple:
+            printf("Type: simple ");
+            print_args(node->value.simple->words);
+            print_red(node->value.simple->redirects);
+    }
 }
 
-t_command	*parse_group(char *str)
+t_command	*parser(t_var *var, char *str)
 {
-	if (!left_par(str))
+    t_command	*head;
+	char		*ls;
+
+	if (!str)
+    {
+        var->exit = 0;
+        return (NULL);
+    }
+	ls = ft_strchr(str, '\n');
+	if (ls)
+		*ls = 0;
+	if (*str == 0)
 		return (NULL);
-	else if (!right_par(str))
-		return (NULL);
-	else if (empty_par(str))
-		return (NULL);
-	else
-		return (parse_list(str));
-}
-
-t_command	*parse_list(char *str)
-{
-	if (search_andand_or_oror(str, '&'))
-		return (create_connected_command(str, and_and));
-	else if (search_andand_or_oror(str, '|'))
-		return (create_connected_command(str, or_or));
-	else if (search_group(str))
-		return (parse_group(str));
-	else if (search_pipe(str))
-		return (create_connected_command(str, pipe_con));
-	else
-		return (create_simple_command(str));
+    head = parse_list(str);
+    free(str);
+    if (!head)
+        var->exit = 2;
+    return (head);
 }

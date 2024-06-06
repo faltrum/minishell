@@ -3,47 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseus <kseus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:30 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/23 12:48:55 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/06/05 07:06:41 by kseus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
+
+t_var	*init_struct(char **env)
+{
+	t_var	*var;
+
+	var = malloc(sizeof(t_var));
+	if (var == NULL)
+		perror("error\n");
+	var->stdfds[0] = dup(STDIN_FILENO);
+	if (var->stdfds[0] == -1)
+		perror("minishell");
+	var->stdfds[1] = dup(STDOUT_FILENO);
+	if (var->stdfds[1] == -1)
+		perror("minishell");
+	save_env(var, env);
+	save_actions(var);
+	return (var);
+}
 
 char	*get_cwd(t_var *var)
 {
 	char	*name;
-	char	cwd[PATH_MAX];	
+	size_t	len;
+	char	cwd[PATH_MAX];
 	char	*colored_cwd;
 
-	name = find_in_env(var->env, "USER")->value;
-	colored_cwd = malloc(strlen(GREEN) + ft_strlen(name) + strlen(RESET)
+	name = find_in_env(var->env, "USER")->value; // What if unset user WOULD CRASH
+	len = strlen(GREEN) + ft_strlen(name) + strlen(RESET)
 			+ strlen(BLUE) + strlen(getcwd(cwd, sizeof(cwd)))
-			+ strlen(RESET) + 4);
+			+ strlen(RESET) + 4; // What if CWD deleted? Causes a crash.
+	colored_cwd = ft_calloc(sizeof(char), len);
 	if (!colored_cwd)
 		return (NULL);
-	strcpy(colored_cwd, GREEN);
-	colored_cwd = ft_newold(ft_strcat(colored_cwd, name), colored_cwd);
-	colored_cwd = ft_newold(ft_strcat(colored_cwd, RESET), colored_cwd);
-	colored_cwd = ft_newold(ft_strcat(colored_cwd, ":"), colored_cwd);
-	colored_cwd = ft_newold(ft_strcat(colored_cwd, BLUE), colored_cwd);
-	colored_cwd = ft_newold(ft_strcat(colored_cwd,
-				getcwd(cwd, sizeof(cwd))), colored_cwd);
-	colored_cwd = ft_newold(ft_strcat(colored_cwd, RESET), colored_cwd);
-	colored_cwd = ft_newold(ft_strcat(colored_cwd, "$"), colored_cwd);
-	colored_cwd = ft_newold(ft_strcat(colored_cwd, " "), colored_cwd);
+	//colored_cwd = "prueba";
+	ft_strlcat(colored_cwd, GREEN, len);
+	ft_strlcat(colored_cwd, name, len);
+	ft_strlcat(colored_cwd, RESET, len);
+	ft_strlcat(colored_cwd, ":", len);
+	ft_strlcat(colored_cwd, BLUE, len);
+	ft_strlcat(colored_cwd, getcwd(cwd, sizeof(cwd)), len);
+	ft_strlcat(colored_cwd, RESET, len);
+	ft_strlcat(colored_cwd, "$", len);
+	ft_strlcat(colored_cwd, " ", len);
 	return (colored_cwd);
-}
-
-void	manage_history(char *line, char **previous_str)
-{
-	if ((!*previous_str && line) || (*previous_str
-			&& line && ft_strcmp(*previous_str, line) != 0))
-		add_history(line);
-	if (*previous_str)
-		free(*previous_str);
-	if (line)
-		*previous_str = ft_strdup(line);
 }

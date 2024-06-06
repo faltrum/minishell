@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   enviroment2.c                                      :+:      :+:    :+:   */
+/*   f32212680.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseus <kseus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 10:41:32 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/23 12:42:26 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/06/03 07:33:47 by kseus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 t_env	*find_in_env(t_env *lst, char *name)
 {
@@ -25,6 +25,7 @@ t_env	*find_in_env(t_env *lst, char *name)
 	}
 	return (NULL);
 }
+
 
 void	ft_lstdelone_env(t_env **lst, t_env *todelate)
 {
@@ -53,4 +54,18 @@ void	add_in_env(t_var *var, char *name, char *value)
 
 	new = ft_lstnew_env(name, value);
 	ft_lstadd_back_env(&var->env, new);
+}
+
+void	replace_or_set_env(t_var *var, char *name, char *value)
+{
+    t_env   *node;
+
+    node = find_in_env(var->env, name);
+    if (!node)
+        add_in_env(var, ft_strdup(name), ft_strdup(value));
+    else
+    {
+        free(node->value);
+        node->value = ft_strdup(value);
+    }
 }

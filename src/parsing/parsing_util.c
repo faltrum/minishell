@@ -1,20 +1,55 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parsing_util.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 13:26:49 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/23 13:26:50 by oseivane         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "minishell.h"
 
-#include "../../includes/minishell.h"
-
-int	wordchar(char c)
+t_bool	is_blank(char c)
 {
-	if (isalnum(c) || c == '$' || c == '_' || c == '.' || c == '/')
-		return (1);
-	return (0);
+	if (c && ft_strchr(" \t", c))
+		return (TRUE);
+	return (FALSE);
+}
+
+t_bool	is_meta(char c)
+{
+	if (ft_strchr("|&()<>", c) || is_blank(c))
+		return (TRUE);
+	return (FALSE);
+}
+
+t_bool	is_regular(char c)
+{
+	return (!is_meta(c));
+}
+
+t_redirect	*last_redir_node(t_redirect *node)
+{
+	if (!node)
+		return (NULL);
+	while (node->next)
+		node = node->next;
+	return (node);
+}
+t_word_list	*last_word_node(t_word_list *node)
+{
+	if (!node)
+		return (NULL);
+	while (node->next)
+		node = node->next;
+	return (node);
+}
+
+t_word_list	*allocate_last_node(t_word_list **words)
+{
+	t_word_list	*move;
+
+	move = *words;
+	if (move == NULL)
+	{
+		*words = ft_calloc(1, sizeof(t_word_list));
+		return (*words);
+	}
+	else
+	{
+		move = last_word_node(*words);
+		move->next = ft_calloc(1, sizeof(t_word_list));
+		return (move->next);
+	}
 }

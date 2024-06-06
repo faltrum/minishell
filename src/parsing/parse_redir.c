@@ -1,16 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse_redir.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 13:15:30 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/23 13:16:39 by oseivane         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 t_redirect	*last_redir(t_redirect **redirs)
 {
@@ -19,18 +7,18 @@ t_redirect	*last_redir(t_redirect **redirs)
 	move = *redirs;
 	if (move == NULL)
 	{
-		*redirs = calloc(1, sizeof(**redirs));
+		*redirs = ft_calloc(1, sizeof(**redirs));
 		if (!*redirs)
-			return (NULL);
+			return ((t_redirect *) perr(0, 1, "minishell: memory error\n"));
 		return (*redirs);
 	}
 	else
 	{
 		while (move->next)
 			move = move->next;
-		move->next = calloc(1, sizeof(**redirs));
+		move->next = ft_calloc(1, sizeof(**redirs));
 		if (!move->next)
-			return (NULL);
+			return ((t_redirect *) perr(0, 1, "minishell: memory error\n"));
 		return (move->next);
 	}
 }
@@ -69,13 +57,8 @@ int	parse_redir(char *str, int *i, t_redirect **redirs)
 	redir->type = get_redir_type(str, i);
 	while (str[*i] == ' ')
 		(*i)++;
-	if (str[*i] == '\'' || str[*i] == '"')
-		return (add_quoted_word(str, i, &(redir->word), str[*i]));
-	else if (wordchar(str[*i]))
-		return (add_normal_word(str, i, &(redir->word)));
+	if (str[*i] == '\'' || str[*i] == '"' || is_regular(str[*i]))
+		return (add_word(str, i, &(redir->word)));
 	else
-	{
-		printf("Syntax error, expected file after redirection\n");
-		return (0);
-	}
+		return (perr(0, 1, "minishell: syntax error after redirection\n"));
 }

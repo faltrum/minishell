@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   enviroment.c                                       :+:      :+:    :+:   */
+/*   env_utils1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseus <kseus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:03 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/18 15:58:30 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/05 07:20:52 by kseus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 t_env	*ft_lstnew_env(void *name, char *value)
 {
@@ -58,17 +58,16 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new)
 void	save_env(t_var *var, char **env)
 {
 	int		i;
+	int		eq_ind;
 	t_env	*new;
-	char	**arr;
 
 	i = 0;
 	var->env = NULL;
 	while (env[i])
 	{
-		arr = ft_split(env[i], '=');
-		new = ft_lstnew_env(ft_strdup(arr[0]), ft_strdup(arr[1]));
+		eq_ind = ft_strchr_index(env[i], '=');
+		new = ft_lstnew_env(ft_substr(env[i], 0, eq_ind), ft_substr(env[i], eq_ind + 1, ft_strlen(env[i]))); // Y si falla?
 		ft_lstadd_back_env(&var->env, new);
-		free_arr(arr);
 		i++;
 	}
 }

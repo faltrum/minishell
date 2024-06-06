@@ -3,23 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseus <kseus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:08 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/20 21:04:30 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/03 06:56:23 by kseus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
+
+long long	perr(int return_value, int argc, ...)
+{
+	int		i;
+	va_list	ap;
+	char	*str;
+
+	va_start(ap, argc);
+	i = 0;
+	while (i < argc)
+	{
+		str = va_arg(ap, char *);
+		write(2, str, ft_strlen(str));
+		i ++;
+	}
+	va_end(ap);
+	return (return_value);
+}
 
 int	exec_error(char *command, char *error_msg)
 {
-	int	fd;
-
-	fd = dup(1);
-	dup2(2, 1);
-	printf("%s: %s", command, error_msg);
-	dup2(fd, 1);
+	write(2, command, ft_strlen(command));
+	write(2, ": ", 2);
+	write(2, error_msg, ft_strlen(error_msg));
 	return (EXIT_FAILURE);
 }
 

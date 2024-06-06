@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+         #
+#    By: kseus <kseus@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/04 19:10:12 by mcatalan@st       #+#    #+#              #
-#    Updated: 2024/05/23 12:36:42 by oseivane         ###   ########.fr        #
+#    Updated: 2024/06/03 19:33:16 by kseus            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,19 +16,6 @@
 
 # NSERVER = minishell
 
-# SRCS =	src/minishell.c  	\
-# 		src/get_info.c   	\
-# 		src/input.c		 	\
-# 		src/initialize.c 	\
-# 		src/colors.c 	 	\
-# 		src/enviroment.c  	\
-# 		src/func_ptr/func_ptr.c  	\
-# 		src/func_ptr/func_ptr2.c  	\
-# 		src/func_ptr/func_ptr3.c  	\
-# 		src/func_ptr/func_ptr4.c  	\
-# 		src/func_ptr/func_selector.c  	\
-# 		src/pipes.c			\
-# 		src/signals.c
 
 # OBJS = $(SRCS:.c=.o)
 
@@ -42,7 +29,7 @@
 # 	@make --no-print-directory -C $(LIBFT_D)
 
 # %.o: %.c
-# 	${CC} ${CFLAGS} $(INCLUDE) -c $< -o $@ 
+# 	${CC} ${CFLAGS} $(INCLUDE) -c $< -o $@
 
 # $(NSERVER): $(OBJS) $(LIBFT_D)$(LIBFT)
 # 	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LIBFT_D)$(LIBFT) -g -lreadline -L/usr/lib/x86_64-linux-gnu
@@ -62,7 +49,7 @@
 # MACOS
 # Print MINISHELL and authors' names
 MINISHELL_MSG = MINISHELL
-AUTHORS_MSG = by oseivane el "calamidades" & ...Kevin "el resacatador"
+AUTHORS_MSG = by oseivane el "calamidades" & ...buscando compi
 MESSAGE_LEN = $$(($(shell echo $(MINISHELL_MSG) | wc -c) - 1))
 
 PRINT_MINISHELL = @printf "$(VIOLET)%*s$(RESET)\n" $(MESSAGE_LEN) $(MINISHELL_MSG)
@@ -82,42 +69,50 @@ LIBFT = libft.a
 READLINE_D = readline/
 READLINE_A = $(READLINE_D)libhistory.a $(READLINE_D)libreadline.a
 READLINE_FLAGS = -lreadline -ltermcap
-READLINE_URL = http://git.savannah.gnu.org/cgit/readline.git/snapshot/readline-bfe9c573a9e376323929c80b2b71c59727fab0cc.tar.gz
+READLINE_URL = http://git.savannah.gnu.org/cgit/readline.git/snapshot/readline-8.2.tar.gz
 READLINE_TAR = readline.tar.gz
 DEFS = -DREADLINE_LIBRARY
 
 NAME = minishell
 
 SRCS =	$(wildcard src/*.c)	\
-		$(wildcard src/func_ptr/*.c) \
-		$(wildcard src/parsing/*.c)
+		$(wildcard src/builtins/*.c) \
+		$(wildcard src/parsing/*.c) \
+		$(wildcard src/execution/*.c) \
+		$(wildcard src/expansions/*.c)
 
 OBJS = $(SRCS:.c=.o)
 
 DEPS = $(SRCS:.c=.d)
 
-INCLUDE = -I./
+INCLUDE = -I./includes
 RM = rm -rf
-CFLAGS = #-Wall -Wextra -Werror
-OFLAGS = -g  #-fsanitize=address #-fsanitize=leak
+CFLAGS = -Wall -Wextra -Werror
+OFLAGS = #-g  #-fsanitize=address #-fsanitize=leak
 
-all: print_message $(READLINE_A) libft $(NAME)
+#all: print_message $(READLINE_A) libft $(NAME)
+#	@echo "$(GREEN)Build finished successfully!$(RESET)✅"
+
+all: print_message libft $(NAME)
 	@echo "$(GREEN)Build finished successfully!$(RESET)✅"
 
 $(READLINE_D):
+			@echo "$(YELLOW)Downloading READLINE...$(RESET)"
 			@curl -k $(READLINE_URL) > $(READLINE_TAR)
 			@tar -xf $(READLINE_TAR) && mv readline-* readline
 			@rm -rf $(READLINE_TAR)
+			@echo ✅;
 
 $(READLINE_A): $(READLINE_D)
 			@if [ ! -f $(READLINE_D)config.status ] ; then \
-				printf "$(YELLOW)Configuring READLINE...$(DEFAULT)" && \
+				echo "$(YELLOW)Configuring READLINE...$(RESET)" && \
 				cd ./$(READLINE_D) && \
-				./configure &> /dev/null && \
+				./configure > /dev/null && \
+				cd .. && \
 				echo ✅; \
 			fi
-			@printf "$(YELLOW)Making READLINE...$(DEFAULT)"
-			@cd ./$(READLINE_D) && make &> /dev/null
+			@echo "$(YELLOW)Building READLINE...$(RESET)"
+			@make --no-print-directory -C $(READLINE_D) > /dev/null
 			@echo ✅
 
 libft:
@@ -129,12 +124,12 @@ print_message:
 	$(PRINT_AUTHORS)
 
 %.o: %.c
-#   @echo "$(YELLOW)Compiling...$(RESET)"
-	@${CC} ${CFLAGS} $(DEFS) -MMD $(INCLUDE) -c $< -o $@
+#	@echo "$(YELLOW)Compiling...$(RESET)"
+	@${CC} ${CFLAGS} $(DEFS) $(INCLUDE) -c $< -o $@
 
 $(NAME): $(OBJS) $(LIBFT_D)$(LIBFT) $(READLINE_A)
 	@echo "$(YELLOW)Linking...$(RESET)"
-	@$(CC) $(CFLAGS) $(DEFS) $(READLINE_FLAGS) $(OBJS) -o $@ $(LIBFT_D)$(LIBFT) $(READLINE_A) $(OFLAGS)
+	@$(CC) $(CFLAGS) $(DEFS) $(OBJS) -o $@ $(LIBFT_D)$(LIBFT) $(READLINE_A) $(READLINE_FLAGS) 
 	@echo "$(GREEN)Linked!$(RESET)✅"
 -include $(DEPS)
 

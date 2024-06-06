@@ -3,91 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseus <kseus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:38 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/23 12:50:44 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/06/06 06:29:15 by kseus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
-char	*get_line(char **argv, t_var *var, int fd, char *previous_str)
+int	get_line(char **l, t_var *var)
 {
 	char	*line;
-	char	*line_cleaned;
 	char	*path;
 
-	if (fd)
-		return (get_next_line(fd));
-	else
+	path = get_cwd(var);
+	line = readline(path);
+	free(path);
+	if (!line)
+		return (-1);
+	else if (empty_line(line))
 	{
-		line_cleaned = NULL;
-		path = get_cwd(var);
-		line = readline(path);
-		if (line && line[0] != '\0')
-		{
-			line_cleaned = ft_strtrim(line, " \t\n");
-			manage_history(line_cleaned, &previous_str);
-		}
-		free(path);
-		return (line_cleaned);
+		free(line);
+		line = NULL;
 	}
+	else
+		add_history(line);
+	*l = line;
+	return (0);
 }
 
-int	init_loop(char **argv, char **env, int fd)
+void	minishell(t_var *var)
 {
 	char		*line;
-	char		*previous_str;
-	t_var		*var;
-	t_command	*head;
+	t_command	*command_tree;
 
-	(void)argv;
 	line = NULL;
-	var = init_struct(env);
-	previous_str = NULL;
+	init_signals();
 	while (1)
 	{
-		line = get_line(argv, var, fd, previous_str);
-		init_signals(READ);
-		update_signal(var->env);
-		head = parser(line);
-		if (line == NULL)
+		reset_signal(var);
+		if (get_line(&line, var) == -1)
 			break ;
-		free(line);
-		if (!head)
-			continue ;
-//		printf_commands(head);
-		execute_commands(head, var);
-		free_command(head);
+		command_tree = parser(var, line);
+		if (command_tree)
+			var->exit = execute_command_tree(command_tree, var);
+//		free_command_tree(command_tree);
 	}
-	if (previous_str)
-		free(previous_str);
-	rl_clear_history();
-	func_exit(var);
-	return (EXIT_SUCCESS);
-}
-
-int	get_fd(char *filename)
-{
-	int	fd;
-
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-	{
-		perror("minishell");
-		exit(EXIT_FAILURE);
-	}
-	return (fd);
 }
 
 int	main(int argc, char **argv, char **env)
 {
-	int	fd;
+	t_var	*var;
+	int		exit;
 
-	fd = 0;
-	if (argv[1] != NULL)
-		fd = get_fd(argv[1]);
-	init_loop(argv, env, fd);
-	return (EXIT_SUCCESS);
+	(void) argc;
+	(void) argv;
+	var = init_struct(env); // What if fails
+	var->exit = EXIT_SUCCESS;
+	minishell(var);
+	exit = var->exit;
+	rl_clear_history();
+	func_exit(var);
+	printf("exit\n");
+	return (exit);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   definitions.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseus <kseus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:38:26 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/20 17:03:16 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/06 05:08:37 by kseus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,6 @@
 # define BLUE "\033[0;34m"
 # define GREEN "\033[0;32m"
 # define RESET "\033[0m"
-
-# define READ		1
-# define HEREDOC	2
-# define EXEC		3
 
 //ACTIONS
 # define NUM_ACTIONS 9
@@ -43,19 +39,33 @@
 # define NO_EXIST "No such file or directory.\n"
 # define NO_FORK "Error. Fork no created\n"
 
+//Expansion flags
+# define EXP_ERR 0x2
+# define QUOTED 0x4
+# define DQUOTED 0x8
+# define EXPANDED 0x10
+
+//Execution flags
+# define WAIT 0x2
+# define SUBSHELL 0x4
+# define RESTOREFD 0x8
+
+//Bool
+# define TRUE 1
+# define FALSE 0
+
+//Signal helper
+# define IDLE 0x0
+# define WAITING 0x2
+# define HERE_DOC 0x4
+extern int	g_quit; //REVISAR
+
 enum e_redir_type
 {
 	input_redir,
 	output_redir,
 	append,
 	here_doc,
-};
-
-enum e_wordtype
-{
-	quoted,
-	dquoted,
-	single
 };
 
 enum e_command_type
@@ -70,5 +80,7 @@ enum e_connector
 	and_and,
 	or_or
 };
+
+typedef int	t_bool;
 
 #endif

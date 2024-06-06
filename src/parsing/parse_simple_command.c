@@ -1,97 +1,40 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse_simple_command.c                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 13:25:19 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/23 13:25:20 by oseivane         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "minishell.h"
 
-#include "../../includes/minishell.h"
-
-static void	free_local_args(t_redirect **redir, t_word_list **words)
+int	allocate_simple_command(t_command **node)
 {
-//	free_word_list(*words, 1);
-	free_redirects(*redir);
-	*redir = NULL;
-	*words = NULL;
+	*node = ft_calloc(1 ,sizeof(**node));
+	if (!*node)
+		return (perr(-1, 1, "minishell: memory error\n"));
+	(*node)->value.simple = ft_calloc(1, sizeof(*(*node)->value.simple));
+	if (!(*node)->value.simple)
+	{
+		free(*node);
+		return (perr(-1, 1, "minishell: memory error\n"));
+	}
+	return (0);
 }
 
-void	parse_words_and_redirects(char *str, \
-t_redirect **redir, t_word_list **words)
+t_command	*parse_simple_command(char* str)
 {
-	int	i;
-	int	res;
-
-	i = 0;
-	res = 1;
-	while (res && str[i])
-	{
-		if (search_redir(str, &i))
-		{
-			res = parse_redir(str, &i, redir);
-			if (res && (*redir)->type == here_doc)
-				res = do_here_doc(*redir);
-		}
-		else if (search_word(str, &i))
-			res = parse_word(str, &i, words);
-		else if (str[i] && res)
-		{
-			printf("Syntax error: Unexpected token %c\n", str[i]);
-			res = 0;
-		}
-	}
-	if (!res)
-		free_local_args(redir, words);
-}
-
-int	count_list_args(t_word_list *words)
-{
-	int	count;
-
-	count = 0;
-	while (words)
-	{
-		words = words->next;
-		count ++;
-	}
-	return (count);
-}
-
-char	**list_to_arr(t_word_list *words)
-{
-	int		count;
-	char	**arr_words;
-
-	arr_words = malloc((count_list_args(words) + 1) * sizeof(*arr_words));
-	if (!arr_words)
-	{
-		printf("Malloc error\n");
-		return (0);
-	}
-	count = 0;
-	while (words)
-	{
-		arr_words[count] = words->word;
-		words = words->next;
-		count++;
-	}
-	arr_words[count] = NULL;
-	//free_word_list(words, 0);
-	return (arr_words);
-}
-
-int	pre_parse_words_and_redirects(char *str, t_simple_command *command)
-{
+	t_command	*node;
 	t_word_list	*words;
+	t_redirect	*redirects;
 
 	words = NULL;
-	parse_words_and_redirects(str, &command->redirects, &words);
-	if (!command->redirects && !words)
-		return (0);
-	command->words = words;
-	return (1);
+	redirects = NULL;
+	if (allocate_simple_command(&node) == -1)
+		return (NULL);
+	parse_words_and_redirects(str, &redirects, &words);
+	if (!words && !redirects)
+	{
+		free(node->value.simple);
+		free(node);
+		return (NULL);
+	}
+	node->type = cm_simple;
+	node->value.simple->words = words;
+	node->value.simple->redirects = redirects;
+	node->value.simple->fds[0] = -1;
+	node->value.simple->fds[1] = -1;
+	return (node);
 }
