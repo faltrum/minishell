@@ -53,10 +53,7 @@ t_command	*parser(t_var *var, char *str)
 	char		*ls;
 
 	if (!str)
-    {
-        var->exit = 0;
         return (NULL);
-    }
 	ls = ft_strchr(str, '\n');
 	if (ls)
 		*ls = 0;
