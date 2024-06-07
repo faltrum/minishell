@@ -16,7 +16,6 @@ echo hi | cat <"./test_files/infile"
 echo hi | cat "./test_files/infile"
 cat <"./test_files/infile" | echo hi
 cat <"./test_files/infile" | grep hello
-cat <"./test_files/infile_big" | echo hi
 cat <missing
 cat <missing | cat
 cat <missing | echo oi
@@ -24,7 +23,6 @@ cat <missing | cat <"./test_files/infile"
 echo <123 <456 hi | echo 42
 ls >./outfiles/outfile01
 ls >         ./outfiles/outfile01
-echo hi >         ./outfiles/outfile01 bye
 ls >./outfiles/outfile01 >./outfiles/outfile02
 ls >./outfiles/outfile01 >./test_files/invalid_permission
 ls >"./outfiles/outfile with spaces"

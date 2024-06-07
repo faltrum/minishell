@@ -6,7 +6,7 @@
 /*   By: kseus <kseus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:39:15 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/06 06:24:27 by kseus            ###   ########.fr       */
+/*   Updated: 2024/06/07 07:27:27 by kseus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ int			get_key_and_value(char *word, char **key, char **value, t_var *var);
 
 void		advance_one(char *word, int *i, int *exp_len, int *flags);
 
-void		remove_quote(char *str, int i[4], int *flags);
+void		hide_quote(char *str, int i[4], int *flags);
 
 void		replace_or_set_env(t_var *var, char *name, char *value);
 

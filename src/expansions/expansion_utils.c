@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	remove_quote(char *word, int i[4], int *flags)
+void	hide_quote(char *word, int i[4], int *flags)
 {
 	int j;
 
@@ -14,11 +14,7 @@ void	remove_quote(char *word, int i[4], int *flags)
 		(*flags) ^= QUOTED;
 	else if (word[j] == '"')
 		(*flags) ^= DQUOTED;
-	while (word[j])
-	{
-		word[j] = word[j + 1];
-		j ++;
-	}
+	word[j] = -1;
 }
 
 void	advance_one(char *word, int *i, int *exp_len, int *flags)

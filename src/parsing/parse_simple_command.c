@@ -34,7 +34,5 @@ t_command	*parse_simple_command(char* str)
 	node->type = cm_simple;
 	node->value.simple->words = words;
 	node->value.simple->redirects = redirects;
-	node->value.simple->fds[0] = -1;
-	node->value.simple->fds[1] = -1;
 	return (node);
 }

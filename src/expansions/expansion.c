@@ -43,10 +43,29 @@ int	expand_word(t_var *var, char **word, int *i, int *flags)
 		*flags ^= EXPANDED;
 	return (value_len);
 }
+void	remove_quotes(char *str)
+{
+	int	i;
+	int	j;
 
-// MOVE THE START JUMPING ALL SPACES OR UNTIL IT REACHES CURRENT
-// COPY FROM START TO THIS PLACE (WE ARE ON SPACE OR END) - IF NOT EMPTY (IF HEADS ARENT EQUAL) - IF EMPTY, ADVANCE HEAD ONE.
-// MOVE THE CURRENT POINTER ALL THE WAY TO THE START OF NEXT (SKIP SPACES)
+	i = 0;
+	if (!str)
+		return ;
+	while (str[i])
+	{
+		if (str[i] == -1)
+		{
+			j = i;
+			while (str[j])
+			{
+				str[j] = str[j + 1];
+				j ++;
+			}
+		}
+		else
+			i ++;
+	}
+}
 void	 add_word_to_list(t_word_list **head, char *word, int i[4], int *flags)
 {
 	char		*str;
@@ -72,7 +91,10 @@ void	 add_word_to_list(t_word_list **head, char *word, int i[4], int *flags)
 		perr(-1, 1, "minishell: expansion: memory error\n");
 	}
 	else
+	{
 		node->word = str;
+		remove_quotes(str);
+	}
 	i[1] = i[0];
 	advance_one(word, &i[0], &i[2], flags);
 }
@@ -90,7 +112,7 @@ int	get_expanded_list(t_var *var, char *word, t_word_list **head) // SHOULDNT RE
 	while (word[i[0]] && !(flags & EXP_ERR))
 	{
 		if (!(flags & EXPANDED) && (word[i[0]] == '\'' || word[i[0]] == '"'))
-			remove_quote(word, i, &flags);
+			hide_quote(word, i, &flags);
 		else if (!(flags & QUOTED) && !(flags & DQUOTED) && word[i[0]] == ' ')
 			add_word_to_list(head, word, i, &flags);
 		else if (!(flags & QUOTED) && !(flags & EXPANDED) && word[i[0]] == '$' && ((ft_isalpha(word[i[0] + 1]) || word[i[0] + 1] == '?') || word[i[0] + 1] == '_'))

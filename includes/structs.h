@@ -6,7 +6,7 @@
 /*   By: kseus <kseus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:38:34 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/06 01:21:16 by kseus            ###   ########.fr       */
+/*   Updated: 2024/06/07 07:25:58 by kseus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,6 @@ typedef struct s_connection
 typedef struct s_simple_command
 {
 	t_redirect	*redirects;
-	int			fds[2];
 	t_word_list	*words;
 	char		**args;
 }	t_simple_command;
