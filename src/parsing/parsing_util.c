@@ -3,15 +3,15 @@
 t_bool	is_blank(char c)
 {
 	if (c && ft_strchr(" \t", c))
-		return (TRUE);
-	return (FALSE);
+		return (1);
+	return (0);
 }
 
 t_bool	is_meta(char c)
 {
 	if (ft_strchr("|&()<>", c) || is_blank(c))
-		return (TRUE);
-	return (FALSE);
+		return (1);
+	return (0);
 }
 
 t_bool	is_regular(char c)

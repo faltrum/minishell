@@ -5,8 +5,8 @@ t_bool	empty_line(char *str)
 	while (is_blank(*str))
 		str ++;
 	if (*str == 0)
-		return (TRUE);
-	return (FALSE);
+		return (1);
+	return (0);
 }
 
 int	get_fd(char *filename)

@@ -6,7 +6,7 @@
 /*   By: kseus <kseus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:39:15 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/08 05:52:11 by kseus            ###   ########.fr       */
+/*   Updated: 2024/06/08 06:05:24 by kseus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void		ft_lstadd_back_env(t_env **lst, t_env *new);
 t_env		*ft_lstnew_env(void *name, char *value);
 t_env		*ft_lstlast_env(t_env *lst);
 t_env		*find_in_env(t_env *lst, char *name);
+void		replace_or_set_env(t_var *var, char *name, char *value);
 
 //INPUT
 char		*get_cwd(t_var *var);
@@ -62,6 +63,7 @@ t_command	*parse_simple_command(char *str);
 t_command	*parse_connected_command(char *str, enum e_connector connector);
 int			parse_redir(char *str, int *i, t_redirect **redirs);
 int			parse_word(char *str, int *i, t_word_list **words);
+int			add_word(char *str, int *i, char **word);
 int			search_pipe(char *str);
 int			search_andand_or_oror(char *str, char c);
 int			search_group(char *str);
