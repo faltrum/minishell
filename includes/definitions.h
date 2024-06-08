@@ -6,7 +6,7 @@
 /*   By: kseus <kseus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:38:26 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/07 17:52:05 by kseus            ###   ########.fr       */
+/*   Updated: 2024/06/08 05:53:07 by kseus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,6 @@
 # define WAIT 0x2
 # define SUBSHELL 0x4
 # define RESTOREFD 0x8
-
-//Bool
-# define TRUE 1
-# define FALSE 0
 
 //Signal helper
 # define SINT_OFF 0

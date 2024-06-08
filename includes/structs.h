@@ -6,7 +6,7 @@
 /*   By: kseus <kseus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:38:34 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/08 03:12:10 by kseus            ###   ########.fr       */
+/*   Updated: 2024/06/08 06:00:30 by kseus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ typedef struct s_pipe
 }	t_pipe;
 
 typedef struct s_redirect	t_redirect;
-
 
 typedef struct s_word_list	t_word_list;
 
