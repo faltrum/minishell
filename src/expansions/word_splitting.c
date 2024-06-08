@@ -37,10 +37,10 @@ int	word_splitting(char *str, t_word_list **head)
 	i = 0;
 	while (str[i])
 	{
+		if (!is_blank(str[i]) && add_word_to_list(head, str, &i, flags) == -1)
+			return (-1);
 		if (str[i] == QUOTE || str[i] == DQUOTE)
 			update_quote_flag(str, &i, &flags);
-		else if (!is_blank(str[i]) && add_word_to_list(head, str, &i, flags) == -1)
-			return (-1);
 		else
 			i ++;
 	}

@@ -3,20 +3,20 @@
 int	get_expanded_list(t_var *var, char *word, t_word_list **head)
 {
 	*head = NULL;
-
 	hide_quotes(word);
 	if (parameter_expansion(var, &word) == -1)
 		return (-1);
 	if (word_splitting(word, head) == -1)
 		return (-1);
-//	if (pathname_expansion(word, head) == -1)
-//		return (-1);
+	if (pathname_expansion(*head) == -1)
+		return (-1);
 	sanitize_list(*head);
 	return (0);
 }
+
 static int	expand_argument(t_var *var, t_word_list *node, t_word_list *next)
 {
-	t_word_list *new;
+	t_word_list	*new;
 
 	if (get_expanded_list(var, node->word, &new) == -1)
 		return (-1);

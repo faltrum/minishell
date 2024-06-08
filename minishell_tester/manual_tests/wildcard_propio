@@ -1,0 +1,38 @@
+touch '*'
+touch 'a*'
+touch '*a'
+touch Makefile
+touch testa
+touch atest
+
+Matches
+
+echo *
+echo ***
+echo '*'
+echo "*"
+echo "*"*
+echo *"*"
+echo *""""""
+echo *"*""""*"""
+echo *""*""*
+echo a*
+echo *a
+echo Ma*le
+echo *ke*
+echo ****''''''''
+echo """"""""*
+echo "Makefile"*
+echo *"Makefile"
+echo "Makefile"***
+echo ***"Makefile"
+echo Makefile***''''
+echo ''''***''''Makefile
+
+Fails
+echo ''*''Make
+echo *'Makefile''*''*'
+echo *Makefil
+echo *Makefilea
+echo akefile*
+echo kefile*

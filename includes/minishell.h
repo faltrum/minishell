@@ -6,7 +6,7 @@
 /*   By: kseus <kseus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:39:15 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/08 06:05:24 by kseus            ###   ########.fr       */
+/*   Updated: 2024/06/08 09:48:57 by kseus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,8 @@ void		sanitize_list(t_word_list *node);
 void		hide_quotes(char *str);
 int			parameter_expansion(t_var *var, char **str);
 int			word_splitting(char *str, t_word_list **head);
+int			pathname_expansion(t_word_list *node);
+int			get_directories(t_word_list **directories);
 
 //UTILS
 void		func_exit(t_var *var);
