@@ -13,19 +13,13 @@ t_redirect **redir, t_word_list **words)
 {
 	int			i;
 	int			res;
-	t_redirect	*aux;
 
 	i = 0;
 	res = 1;
 	while (res && str[i])
 	{
 		if (search_redir(str, &i))
-		{
 			res = parse_redir(str, &i, redir);
-			aux = last_redir_node(*redir);
-			if (res && aux->type == here_doc)
-				res = do_here_doc(aux);
-		}
 		else if (search_word(str, &i))
 			res = parse_word(str, &i, words);
 		else if (res && str[i])

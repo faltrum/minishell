@@ -6,7 +6,7 @@
 /*   By: kseus <kseus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:38:26 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/06 05:08:37 by kseus            ###   ########.fr       */
+/*   Updated: 2024/06/07 17:52:05 by kseus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@
 # define QUOTED 0x4
 # define DQUOTED 0x8
 # define EXPANDED 0x10
+# define HEREDOC 0x20
+# define QUOTE -1
+# define DQUOTE -2
 
 //Execution flags
 # define WAIT 0x2
@@ -55,10 +58,10 @@
 # define FALSE 0
 
 //Signal helper
-# define IDLE 0x0
-# define WAITING 0x2
-# define HERE_DOC 0x4
-extern int	g_quit; //REVISAR
+# define SINT_OFF 0
+# define SINT_ON 1
+# define SINT_HEREDOC 2
+extern int	g_sigint; //REVISAR
 
 enum e_redir_type
 {

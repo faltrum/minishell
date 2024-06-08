@@ -6,7 +6,7 @@
 /*   By: kseus <kseus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:39:15 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/07 07:27:27 by kseus            ###   ########.fr       */
+/*   Updated: 2024/06/08 03:39:58 by kseus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <limits.h>
 # include <sys/wait.h>
 # include <stdarg.h>
+# include <dirent.h>
 
 // Readline .h files
 # include "../readline/readline.h"
@@ -128,7 +129,7 @@ char		**list_to_arr(t_word_list *words);
 
 void		printf_commands(t_command *node);
 
-int			do_here_doc(t_redirect *redir);
+int			do_here_doc(t_var *var, t_redirect *redir);
 
 t_command	*parser(t_var *var, char *str);
 
@@ -143,15 +144,9 @@ t_word_list	*allocate_last_node(t_word_list **words);
 
 void		print_args(t_word_list *words);
 
-int			execute_expansions(t_simple_command *command, t_var *var);
+int			expand_command_lists(t_simple_command *command, t_var *var);
 
 long long	perr(int return_value, int argc, ...);
-
-int			get_key_and_value(char *word, char **key, char **value, t_var *var);
-
-void		advance_one(char *word, int *i, int *exp_len, int *flags);
-
-void		hide_quote(char *str, int i[4], int *flags);
 
 void		replace_or_set_env(t_var *var, char *name, char *value);
 
@@ -187,5 +182,17 @@ t_redirect **redir, t_word_list **words);
 void		sint_handler(int signal);
 
 t_redirect	*last_redir_node(t_redirect *node);
+
+void	update_quote_flag(char *str , int *i, int *flags);
+
+void	remove_quotes(char *str);
+
+void	sanitize_list(t_word_list *node);
+
+void	hide_quotes(char *str);
+
+int		parameter_expansion(t_var *var, char **str);
+
+int		word_splitting(char *str, t_word_list **head);
 
 #endif

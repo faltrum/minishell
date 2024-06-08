@@ -4,7 +4,7 @@ int	execute_simple_command(t_simple_command	*command, t_var *var, int flags)
 {
 	int		exit;
 
-	if (execute_expansions(command, var) == -1)
+	if (expand_command_lists(command, var) == -1)
 		exit = EXIT_FAILURE;
 	else
 	{

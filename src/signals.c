@@ -6,35 +6,32 @@
 /*   By: kseus <kseus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:51 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/06 08:30:43 by kseus            ###   ########.fr       */
+/*   Updated: 2024/06/07 15:09:34 by kseus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <termios.h>
 
-// Things to do:
 // ^C gets printed
-// Behaviour with subshells
 
-int g_quit = IDLE; // REVISAR
+int g_sigint = SINT_OFF; // REVISAR
 
 void	sint_handler(int signal)
 {
 	(void) signal;
-	if (g_quit == IDLE)
-	{
-		write(1, "\n", 2);
-		rl_replace_line("", 0);
-		rl_on_new_line();
+	write(1, "\n", 2);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	if (g_sigint != SINT_HEREDOC)
 		rl_redisplay();
-	}
+	g_sigint = SINT_ON;
 }
 
 void	reset_signal(t_var *var)
 {
-	(void) var;
-	g_quit = IDLE;
+	if (g_sigint)
+		var->exit = 130;
+	g_sigint = 0;
 }
 
 void	set_signal_ignore(int signal)

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	redirect_append(t_redirect *redirects)
+static int	redirect_append(t_redirect *redirects)
 {
 	int	flags;
 	int	exit;
@@ -18,7 +18,7 @@ int	redirect_append(t_redirect *redirects)
 	return (exit);
 }
 
-int	redirect_input(t_redirect *redirects)
+static int	redirect_input(t_redirect *redirects)
 {
 	int	flags;
 	int	exit;
@@ -36,7 +36,7 @@ int	redirect_input(t_redirect *redirects)
 	return (exit);
 }
 
-int	redirect_output(t_redirect *redirects)
+static int	redirect_output(t_redirect *redirects)
 {
 	int	flags;
 	int	exit;
@@ -54,26 +54,45 @@ int	redirect_output(t_redirect *redirects)
 	return (exit);
 }
 
+static int	set_redirect_word(t_redirect *redirect)
+{
+	char		*word;
+	t_word_list *words;
+
+	word = NULL;
+	words = redirect->expanded;
+	while (words)
+	{
+		if (words->word && word)
+			return (-1);
+		else if (words->word)
+			word = words->word;
+		words = words->next;
+	}
+	redirect->word = word;
+	return (0);
+}
+
 int	execute_redirections(t_redirect *redirects)
 {
 	int	exit;
 
 	exit = EXIT_SUCCESS;
-	while (redirects)
+	while (exit == EXIT_SUCCESS && redirects)
 	{
 		if (redirects->type == here_doc && dup2(redirects->fd, 0) == -1)
 				exit = perr(EXIT_FAILURE, 3, "minishell: heredoc error: ", strerror(errno) ,"\n");
 		else if (redirects->word)
 		{
-			if (redirects->type == append)
+			if (set_redirect_word(redirects) == -1)
+				exit = perr(EXIT_FAILURE, 1, "minishell: ambiguous redirect\n");
+			else if (redirects->type == append)
 				exit = redirect_append(redirects);
 			else if (redirects->type == input_redir)
 				exit = redirect_input(redirects);
 			else if (redirects->type == output_redir)
 				exit = redirect_output(redirects);
 		}
-		if (exit == EXIT_FAILURE)
-			break ;
 		redirects = redirects->next;
 	}
 	return (exit);

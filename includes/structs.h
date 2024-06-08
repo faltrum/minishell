@@ -6,7 +6,7 @@
 /*   By: kseus <kseus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:38:34 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/07 07:25:58 by kseus            ###   ########.fr       */
+/*   Updated: 2024/06/08 03:12:10 by kseus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,13 +105,6 @@ typedef struct s_pipe
 
 typedef struct s_redirect	t_redirect;
 
-struct s_redirect
-{
-	t_redirect			*next;
-	enum e_redir_type	type;
-	char				*word;
-	int					fd;
-};
 
 typedef struct s_word_list	t_word_list;
 
@@ -119,6 +112,15 @@ struct s_word_list
 {
 	t_word_list		*next;
 	char			*word;
+};
+
+struct s_redirect
+{
+	t_redirect			*next;
+	enum e_redir_type	type;
+	char				*word;
+	t_word_list			*expanded;
+	int					fd;
 };
 
 struct						s_command;

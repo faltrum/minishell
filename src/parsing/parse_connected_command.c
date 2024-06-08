@@ -1,7 +1,8 @@
 #include "minishell.h"
 
-static void	*free_connected_args(char *ls, char *rs, t_command *node)
+static void	*	free_connected_args(char *ls, char *rs, t_command *node)
 {
+	return (NULL);
 	free(ls);
 	free(rs);
 	(void) node;
@@ -65,8 +66,8 @@ t_command	*parse_connected_command(char* str, enum e_connector connector)
 	node->value.connection->second = parse_list(right_side);
 	if (!node->value.connection->first || !node->value.connection->second)
 	{
-		free_command_tree(node->value.connection->first);
-		free_command_tree(node->value.connection->second);
+		//free_command_tree(node->value.connection->first);
+		//free_command_tree(node->value.connection->second);
 		return (free_connected_args(left_side, right_side, node));
 	}
 	free(left_side);
