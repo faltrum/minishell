@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   f32212680.c                                        :+:      :+:    :+:   */
+/*   env_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseus <kseus@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 10:41:32 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/03 07:33:47 by kseus            ###   ########.fr       */
+/*   Updated: 2024/06/09 00:55:49 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ void	add_in_env(t_var *var, char *name, char *value)
 
 void	replace_or_set_env(t_var *var, char *name, char *value)
 {
-    t_env   *node;
+	t_env	*node;
 
-    node = find_in_env(var->env, name);
-    if (!node)
-        add_in_env(var, ft_strdup(name), ft_strdup(value));
-    else
-    {
-        free(node->value);
-        node->value = ft_strdup(value);
-    }
+	node = find_in_env(var->env, name);
+	if (!node)
+		add_in_env(var, ft_strdup(name), ft_strdup(value));
+	else
+	{
+		free(node->value);
+		node->value = ft_strdup(value);
+	}
 }

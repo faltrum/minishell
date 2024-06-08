@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kseus <kseus@student.42.fr>                +#+  +:+       +#+         #
+#    By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/04 19:10:12 by mcatalan@st       #+#    #+#              #
-#    Updated: 2024/06/03 19:33:16 by kseus            ###   ########.fr        #
+#    Updated: 2024/06/09 01:47:31 by kseligma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,7 +88,6 @@ DEPS = $(SRCS:.c=.d)
 INCLUDE = -I./includes
 RM = rm -rf
 CFLAGS = -Wall -Wextra -Werror
-OFLAGS = #-g  #-fsanitize=address #-fsanitize=leak
 
 #all: print_message $(READLINE_A) libft $(NAME)
 #	@echo "$(GREEN)Build finished successfully!$(RESET)✅"
@@ -125,13 +124,16 @@ print_message:
 
 %.o: %.c
 #	@echo "$(YELLOW)Compiling...$(RESET)"
-	@${CC} ${CFLAGS} $(DEFS) $(INCLUDE) -c $< -o $@
+	@${CC} ${CFLAGS} $(OFLAGS) $(DEFS) $(INCLUDE) -c $< -o $@
 
 $(NAME): $(OBJS) $(LIBFT_D)$(LIBFT) $(READLINE_A)
 	@echo "$(YELLOW)Linking...$(RESET)"
-	@$(CC) $(CFLAGS) $(DEFS) $(OBJS) -o $@ $(LIBFT_D)$(LIBFT) $(READLINE_A) $(READLINE_FLAGS) 
+	@$(CC) $(CFLAGS) $(DEFS) $(OBJS) -o $@ $(LIBFT_D)$(LIBFT) $(READLINE_A) $(READLINE_FLAGS)
 	@echo "$(GREEN)Linked!$(RESET)✅"
 -include $(DEPS)
+
+debug:
+	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all ./minishell
 
 clean:
 	@make clean --no-print-directory -C $(LIBFT_D)
@@ -150,4 +152,4 @@ jesusg:
 
 re: fclean all
 
-.PHONY: all clean fclean re libft readline jesusg config
+.PHONY: all clean fclean re libft readline jesusg config debug

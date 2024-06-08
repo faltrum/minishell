@@ -1,5 +1,13 @@
 #include "minishell.h"
 
+int	ft_errloc(size_t size, size_t qty, void **ptr)
+{
+	*ptr = ft_calloc(qty, size);
+	if (!*ptr)
+		return (ft_err(-1, STR_MEMORY_ERR, strerror(errno), 0));
+	return (0);
+}
+
 t_bool	empty_line(char *str)
 {
 	while (is_blank(*str))

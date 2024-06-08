@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseus <kseus@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:51 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/07 15:09:34 by kseus            ###   ########.fr       */
+/*   Updated: 2024/06/09 01:05:42 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // ^C gets printed
+# define norminetterror "FIXME"
 
 int g_sigint = SINT_OFF; // REVISAR
 

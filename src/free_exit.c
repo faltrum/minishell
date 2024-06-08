@@ -3,35 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   free_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseus <kseus@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:13 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/05 06:21:07 by kseus            ###   ########.fr       */
+/*   Updated: 2024/06/09 01:14:01 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_lst(t_env *head)
+void	free_enviroment(t_env *head)
 {
-	t_env	*current;
 	t_env	*next;
 
-	current = head;
-	while (current != NULL)
+	while (head)
 	{
-		next = current->next;
-		free(current->name);
-		free(current->value);
-		free(current);
-		current = next;
+		next = head->next;
+		free(head->name);
+		free(head->value);
+		free(head);
+		head = next;
 	}
 }
 
-void	func_exit(t_var *var)
+void	minishell_cleanup(t_var *var)
 {
-	free_lst(var->env);
+	free_enviroment(var->env);
 	free(var->act);
+	close(var->stdfds[0]);
+	close(var->stdfds[1]);
 	free(var);
 }
 

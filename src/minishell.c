@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseus <kseus@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:38 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/06 06:29:15 by kseus            ###   ########.fr       */
+/*   Updated: 2024/06/09 01:14:43 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_line(char **l, t_var *var)
+static int	get_line(char **l, t_var *var)
 {
 	char	*line;
 	char	*path;
@@ -33,7 +33,7 @@ int	get_line(char **l, t_var *var)
 	return (0);
 }
 
-void	minishell(t_var *var)
+static void	minishell(t_var *var)
 {
 	char		*line;
 	t_command	*command_tree;
@@ -45,11 +45,13 @@ void	minishell(t_var *var)
 		reset_signal(var);
 		if (get_line(&line, var) == -1)
 			break ;
-		command_tree = parser(var, line);
-		if (command_tree)
-			var->exit = execute_command_tree(command_tree, var);
+		(void) command_tree;
+//		command_tree = parser(var, line);
+//		if (command_tree)
+//			var->exit = execute_command_tree(command_tree, var);
 //		free_command_tree(command_tree);
 	}
+	rl_clear_history();
 }
 
 int	main(int argc, char **argv, char **env)
@@ -59,12 +61,10 @@ int	main(int argc, char **argv, char **env)
 
 	(void) argc;
 	(void) argv;
-	var = init_struct(env); // What if fails
-	var->exit = EXIT_SUCCESS;
+	var = init_struct(env);
 	minishell(var);
 	exit = var->exit;
-	rl_clear_history();
-	func_exit(var);
-	printf("exit\n");
+	minishell_cleanup(var);
+	printf(STR_EXIT);
 	return (exit);
 }

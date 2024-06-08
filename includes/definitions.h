@@ -6,7 +6,7 @@
 /*   By: kseus <kseus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:38:26 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/08 05:53:07 by kseus            ###   ########.fr       */
+/*   Updated: 2024/06/08 23:45:33 by kseus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 # define HELP "help"
 
 //ERROR MSG
+# define PROGRAM_NAME "minishell"
+# define LSKIP "\n"
 # define WRONG_OP_NL "minishell: syntax error 'new line'\n"
 # define WRONG_OP "minishell: syntax error near unexpected token"
 # define NO_CLOSED "minishell: syntax error no closed quote\n"
@@ -38,6 +40,8 @@
 # define NO_DIR "Not a directory\n"
 # define NO_EXIST "No such file or directory.\n"
 # define NO_FORK "Error. Fork no created\n"
+# define STR_EXIT "exit\n"
+# define STR_MEMORY_ERR "memory error"
 
 //Expansion flags
 # define EXP_ERR 0x2

@@ -6,7 +6,7 @@
 /*   By: kseus <kseus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:28:30 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/06 05:55:06 by kseus            ###   ########.fr       */
+/*   Updated: 2024/06/09 00:22:09 by kseus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	execute_here(t_var *var, char **params)
 	int		i;
 
 	i = 0;
-	while (var->act[i].action)
+	while (var->act && var->act[i].action)
 	{
 		if (ft_strcmp(params[0], var->act[i].action) == 0)
 			return ((*(var->act[i].function))(var, params));

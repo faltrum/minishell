@@ -6,11 +6,33 @@
 /*   By: kseus <kseus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:08 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/03 06:56:23 by kseus            ###   ########.fr       */
+/*   Updated: 2024/06/08 23:45:11 by kseus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_err(int ret, char *s1, char *s2, char *s3)
+{
+	write(1, PROGRAM_NAME, ft_strlen(PROGRAM_NAME));
+	if (s1)
+	{
+		write(1, ": ", 2);
+		write(1, s1, ft_strlen(s1));
+	}
+	if (s2)
+	{
+		write(1, ": ", 2);
+		write(1, s2, ft_strlen(s2));
+	}
+	if (s3)
+	{
+		write(1, ": ", 2);
+		write(1, s3, ft_strlen(s3));
+	}
+	write (1, LSKIP, ft_strlen(LSKIP));
+	return (ret);
+}
 
 long long	perr(int return_value, int argc, ...)
 {

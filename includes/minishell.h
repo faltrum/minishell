@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseus <kseus@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:39:15 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/08 09:48:57 by kseus            ###   ########.fr       */
+/*   Updated: 2024/06/09 01:24:39 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,15 @@
 
 //INITIALIZE
 t_var		*init_struct(char **env);
-void		save_actions(t_var *var);
 
 //ENVIROMENT
-void		save_env(t_var *var, char **env);
-void		add_in_env(t_var *var, char *name, char *value);
 void		ft_lstdelone_env(t_env **lst, t_env *todelate);
 void		ft_lstadd_back_env(t_env **lst, t_env *new);
 t_env		*ft_lstnew_env(void *name, char *value);
 t_env		*ft_lstlast_env(t_env *lst);
 t_env		*find_in_env(t_env *lst, char *name);
 void		replace_or_set_env(t_var *var, char *name, char *value);
+void		add_in_env(t_var *var, char *name, char *value);
 
 //INPUT
 char		*get_cwd(t_var *var);
@@ -98,6 +96,7 @@ void		stx_error(char *error_msg);
 int			exec_error(char *command, char *error_msg);
 void		stx_error_op(char *error_msg, char op);
 long long	perr(int return_value, int argc, ...); // Prohibido variadicos
+int			ft_err(int ret, char *s1, char *s2, char *s3);
 
 //EXECUTION
 int			execute_command_tree(t_command *head, t_var *var);
@@ -122,7 +121,7 @@ int			pathname_expansion(t_word_list *node);
 int			get_directories(t_word_list **directories);
 
 //UTILS
-void		func_exit(t_var *var);
+void		minishell_cleanup(t_var *var);
 void		restore_fds(int fds[2]);
 t_word_list	*last_word_node(t_word_list *node);
 t_redirect	*last_redir_node(t_redirect *node);
@@ -131,6 +130,7 @@ t_bool		is_regular(char c);
 t_bool		is_meta(char c);
 t_bool		empty_line(char *str);
 void		update_quote_flag(char *str, int *i, int *flags);
+int			ft_errloc(size_t size, size_t qty, void **ptr);
 
 //MEMORY UTILS
 void		free_command_tree(t_command *command);
