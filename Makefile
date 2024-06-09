@@ -6,7 +6,7 @@
 #    By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/04 19:10:12 by mcatalan@st       #+#    #+#              #
-#    Updated: 2024/06/09 01:47:31 by kseligma         ###   ########.fr        #
+#    Updated: 2024/06/09 02:06:49 by kseligma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -133,7 +133,7 @@ $(NAME): $(OBJS) $(LIBFT_D)$(LIBFT) $(READLINE_A)
 -include $(DEPS)
 
 debug:
-	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all ./minishell
+	valgrind --suppressions=readline.supp --track-fds=yes --leak-check=full --show-leak-kinds=all ./minishell
 
 clean:
 	@make clean --no-print-directory -C $(LIBFT_D)

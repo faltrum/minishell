@@ -1,4 +1,52 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute_command_tree.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/09 03:59:45 by kseligma          #+#    #+#             */
+/*   Updated: 2024/06/09 04:48:53 by kseligma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
+
+static int	count_list_args(t_word_list *words)
+{
+	int	count;
+
+	count = 0;
+	while (words)
+	{
+		if (words->word)
+			count ++;
+		words = words->next;
+	}
+	return (count);
+}
+
+static char	**list_to_arr(t_word_list *words)
+{
+	int		count;
+	char	**arr_words;
+
+	arr_words = malloc((count_list_args(words) + 1) * sizeof(*arr_words));
+	if (!arr_words)
+		return ((char **) perr(0, 1, "minishell: memory error\n"));
+	count = 0;
+	while (words)
+	{
+		if (words->word)
+		{
+			arr_words[count] = words->word;
+			count++;
+		}
+		words = words->next;
+	}
+	arr_words[count] = NULL;
+	return (arr_words);
+}
 
 int	execute_simple_command(t_simple_command	*command, t_var *var, int flags)
 {

@@ -1,4 +1,34 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_word.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/09 03:55:52 by kseligma          #+#    #+#             */
+/*   Updated: 2024/06/09 05:00:56 by kseligma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
+
+t_word_list	*allocate_last_node(t_word_list **words)
+{
+	t_word_list	*move;
+
+	move = *words;
+	if (*words == NULL)
+	{
+		ft_errloc(sizeof(t_word_list), 1, (void **) words);
+		return (*words);
+	}
+	else
+	{
+		move = last_word_node(*words);
+		ft_errloc(sizeof(t_word_list), 1, (void **) &(move->next));
+		return (move->next);
+	}
+}
 
 int	get_length(char *str, int *i)
 {
@@ -20,10 +50,10 @@ int	get_length(char *str, int *i)
 		else if ((quote == 0 && is_regular(str[*i])) || quote)
 			(*i)++;
 		else
-			return (perr(-1, 1,"minishell: syntax error unmatched quote\n"));
+			return (ft_err(-1, "syntax error unmatched quote", 0, 0));
 	}
 	if (quote != 0)
-		return (perr(-1, 1, "minishell: syntax error unmatched quote\n"));
+		return (ft_err(-1, "syntax error unmatched quote", 0, 0));
 	return (0);
 }
 
@@ -33,11 +63,11 @@ int	add_word(char *str, int *i, char **word)
 
 	p0 = *i;
 	if (get_length(str, i) == -1)
-		return (0);
+		return (-1);
 	*word = ft_substr(str, p0, *i - p0);
 	if (!*word)
-		return (perr(0, 1, "minishell: memory error\n"));
-	return (1);
+		return (ft_err(-1 , STR_MEMORY_ERR, 0, 0));
+	return (0);
 }
 
 int	parse_word(char *str, int *i, t_word_list **words)
@@ -46,6 +76,6 @@ int	parse_word(char *str, int *i, t_word_list **words)
 
 	word = allocate_last_node(words);
 	if (!word)
-		return (0);
+		return (-1);
 	return (add_word(str, i, &(word->word)));
 }

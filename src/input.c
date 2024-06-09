@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:30 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/09 00:58:12 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/09 03:46:06 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,8 @@ static void	save_env(t_var *var, char **env)
 	}
 }
 
-t_var	*init_struct(char **env)
+void	init_minishell(char **env, t_var *var)
 {
-	t_var	*var;
-
-	if (ft_errloc(sizeof(*var), 1, (void **) &var) == -1)
-		exit (EXIT_FAILURE);
 	var->stdfds[0] = dup(STDIN_FILENO);
 	if (var->stdfds[0] == -1)
 		ft_err(0, "dup", strerror(errno), "warning broke STDIN");
@@ -94,5 +90,4 @@ t_var	*init_struct(char **env)
 	save_env(var, env);
 	save_actions(var);
 	var->exit = EXIT_SUCCESS;
-	return (var);
 }

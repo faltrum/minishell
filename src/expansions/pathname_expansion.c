@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pathname_expansion.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/09 03:57:16 by kseligma          #+#    #+#             */
+/*   Updated: 2024/06/09 04:52:22 by kseligma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 # include "minishell.h"
 
 int	match_everything(char *str, int flag)
@@ -56,15 +68,17 @@ int	wildcard_matches(char *wild, char *match, int flag)
 	return (0);
 }
 
-int	expand_pathname(t_word_list *next, t_word_list *node, t_word_list *directories)
+int	expand_pathname(t_word_list *next, \
+t_word_list *node, t_word_list *directories)
 {
 	t_word_list	*matches;
-	t_word_list *head;
+	t_word_list	*head;
 
 	head = NULL;
 	while (directories)
 	{
-		if (node->word  && *(node->word) && wildcard_matches(node->word, directories->word, 0))
+		if (node->word && *(node->word) \
+		&& wildcard_matches(node->word, directories->word, 0))
 		{
 			matches = allocate_last_node(&head);
 			matches->word = ft_strdup(directories->word);
@@ -108,7 +122,6 @@ int	pathname_expansion(t_word_list *node)
 	directories = NULL;
 	if (get_directories(&directories) == -1)
 		return (-1);
-	(void) node;
 	while (node)
 	{
 		next = node->next;

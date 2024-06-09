@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:38 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/09 01:14:43 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/09 04:55:37 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ static void	minishell(t_var *var)
 		if (get_line(&line, var) == -1)
 			break ;
 		(void) command_tree;
-//		command_tree = parser(var, line);
-//		if (command_tree)
-//			var->exit = execute_command_tree(command_tree, var);
+		command_tree = parser(var, line);
+		if (command_tree)
+			var->exit = execute_command_tree(command_tree, var);
 //		free_command_tree(command_tree);
 	}
 	rl_clear_history();
@@ -56,15 +56,15 @@ static void	minishell(t_var *var)
 
 int	main(int argc, char **argv, char **env)
 {
-	t_var	*var;
-	int		exit;
+	static t_var	var;
+	int				exit;
 
 	(void) argc;
 	(void) argv;
-	var = init_struct(env);
-	minishell(var);
-	exit = var->exit;
-	minishell_cleanup(var);
-	printf(STR_EXIT);
+	init_minishell(env, &var);
+	minishell(&var);
+	exit = var.exit;
+	minishell_cleanup(&var);
+	write(1, STR_EXIT, ft_strlen(STR_EXIT));
 	return (exit);
 }

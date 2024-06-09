@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_trimming.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/09 03:55:58 by kseligma          #+#    #+#             */
+/*   Updated: 2024/06/09 04:30:35 by kseligma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-char	*get_left_side_pipe(char *str)
+static char	*get_left_side_pipe(char *str)
 {
 	int	i;
 	int	nesting;
@@ -23,7 +35,7 @@ char	*get_left_side_pipe(char *str)
 		return (ft_substr(str, 0, i));
 }
 
-char	*get_right_side_pipe(char *str)
+static char	*get_right_side_pipe(char *str)
 {
 	int	i;
 	int	nesting;
@@ -83,7 +95,6 @@ char	*get_left_side(char	*str, enum e_connector connector)
 	else
 		return (ft_substr(str, 0, len - 1));
 }
-
 char	*get_right_side(char *str, enum e_connector connector)
 {
 	int		len;

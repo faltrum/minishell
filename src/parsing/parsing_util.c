@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_util.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/09 03:55:36 by kseligma          #+#    #+#             */
+/*   Updated: 2024/06/09 04:18:03 by kseligma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 t_bool	is_blank(char c)
@@ -34,22 +46,4 @@ t_word_list	*last_word_node(t_word_list *node)
 	while (node->next)
 		node = node->next;
 	return (node);
-}
-
-t_word_list	*allocate_last_node(t_word_list **words)
-{
-	t_word_list	*move;
-
-	move = *words;
-	if (move == NULL)
-	{
-		*words = ft_calloc(1, sizeof(t_word_list));
-		return (*words);
-	}
-	else
-	{
-		move = last_word_node(*words);
-		move->next = ft_calloc(1, sizeof(t_word_list));
-		return (move->next);
-	}
 }

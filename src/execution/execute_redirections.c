@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute_redirections.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/09 03:58:12 by kseligma          #+#    #+#             */
+/*   Updated: 2024/06/09 04:42:11 by kseligma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	redirect_append(t_redirect *redirects)
@@ -57,7 +69,7 @@ static int	redirect_output(t_redirect *redirects)
 static int	set_redirect_word(t_redirect *redirect)
 {
 	char		*word;
-	t_word_list *words;
+	t_word_list	*words;
 
 	word = NULL;
 	words = redirect->expanded;
@@ -81,7 +93,7 @@ int	execute_redirections(t_redirect *redirects)
 	while (exit == EXIT_SUCCESS && redirects)
 	{
 		if (redirects->type == here_doc && dup2(redirects->fd, 0) == -1)
-				exit = perr(EXIT_FAILURE, 3, "minishell: heredoc error: ", strerror(errno) ,"\n");
+			exit = perr(EXIT_FAILURE, 3, "minishell: heredoc error: ", strerror(errno) ,"\n");
 		else if (redirects->word)
 		{
 			if (set_redirect_word(redirects) == -1)

@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   word_splitting.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/09 03:57:21 by kseligma          #+#    #+#             */
+/*   Updated: 2024/06/09 04:52:08 by kseligma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	 add_word_to_list(t_word_list **head, char *str, int *i, int flags)
 {
-	int		end;
-	t_word_list *node;
+	int			end;
+	t_word_list	*node;
 
 	end = *i;
 	while (str[end])

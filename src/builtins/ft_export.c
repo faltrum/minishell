@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseus <kseus@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:34:19 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/03 06:37:46 by kseus            ###   ########.fr       */
+/*   Updated: 2024/06/09 04:06:52 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	print_export(t_env *env)
 		if (env->value)
 		{
 			if (printf("declare -x %s=\"%s\"\n", env->name, env->value) == -1)
-				exit = EXIT_FAILURE;
+	exit = EXIT_FAILURE;
 		}
 		else if (printf("declare -x %s\n", env->name) == -1)
 			exit = EXIT_FAILURE;
@@ -102,8 +102,8 @@ int	ft_export(t_var *var, char **params)
 		while (*params)
 		{
 			if (valid_identifier(*params, &exit) == 0)
-				if (get_add_var_env(var, *params) == -1)
-					exit = EXIT_FAILURE;
+	if (get_add_var_env(var, *params) == -1)
+		exit = EXIT_FAILURE;
 			params ++;
 		}
 	}

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_list.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/09 02:22:32 by kseligma          #+#    #+#             */
+/*   Updated: 2024/06/09 02:22:33 by kseligma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int	left_par(char	*str)
+static int	left_par(char	*str)
 {
 	int	i;
 
@@ -15,12 +27,13 @@ int	left_par(char	*str)
 			return (1);
 		}
 		else
-			return (perr(0, 1, "minishell: syntax error unexpected token near parenthesis\n"));
+			return (ft_err(-1, \
+			"syntax error unexpected token near parenthesis", 0, 0));
 	}
 	return (1);
 }
 
-int	right_par(char	*str)
+static int	right_par(char	*str)
 {
 	size_t	len;
 
@@ -35,12 +48,13 @@ int	right_par(char	*str)
 			return (1);
 		}
 		else
-			return (perr(0, 1, "minishell: syntax error unexpected token near parenthesis\n"));
+			return (ft_err(-1, \
+			"syntax error unexpected token near parenthesis", 0, 0));
 	}
 	return (0);
 }
 
-int	empty_par(char *str)
+static int	empty_par(char *str)
 {
 	int	i;
 
@@ -48,17 +62,18 @@ int	empty_par(char *str)
 	while (str[i] == ' ')
 		i++;
 	if (str[i] == 0)
-		return (perr(1, 1, "minishell:  syntax error unexpected token near parenthesis\n"));
+		return (ft_err(-1, \
+		"syntax error unexpected token near parenthesis", 0, 0));
 	return (0);
 }
 
-t_command	*parse_grouped_command(char *str)
+static t_command	*parse_list_command(char *str)
 {
-	if (!left_par(str))
+	if (left_par(str) == -1)
 		return (NULL);
-	else if (!right_par(str))
+	else if (right_par(str) == -1)
 		return (NULL);
-	else if (empty_par(str))
+	else if (empty_par(str) == -1)
 		return (NULL);
 	else
 		return (parse_list(str));
@@ -70,8 +85,8 @@ t_command	*parse_list(char *str)
 		return (parse_connected_command(str, and_and));
 	else if (search_andand_or_oror(str, '|'))
 		return (parse_connected_command(str, or_or));
-	else if (search_group(str))
-		return (parse_grouped_command(str));
+	else if (search_list(str))
+		return (parse_list_command(str));
 	else if (search_pipe(str))
 		return (parse_connected_command(str, pipe_con));
 	else

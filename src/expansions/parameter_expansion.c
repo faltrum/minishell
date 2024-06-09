@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parameter_expansion.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/09 03:57:07 by kseligma          #+#    #+#             */
+/*   Updated: 2024/06/09 04:06:52 by kseligma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static char	*get_value(t_var *var, char *key)
@@ -95,7 +107,7 @@ int	parameter_expansion(t_var *var, char **str)
 		else if (!(flags & QUOTED) && (*str)[i] == '$' && \
 			(ft_isalpha((*str)[i + 1]) ||(*str)[i + 1] == '?' || (*str)[i + 1] == '_') && \
 			expand_parameter(var, str, &i) == -1)
-				return (-1);
+	return (-1);
 		else
 			i ++;
 	}

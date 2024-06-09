@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:39:15 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/09 01:24:39 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/09 04:31:36 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # include "get_next_line.h"
 
 //INITIALIZE
-t_var		*init_struct(char **env);
+void		init_minishell(char **env, t_var *var);
 
 //ENVIROMENT
 void		ft_lstdelone_env(t_env **lst, t_env *todelate);
@@ -64,14 +64,11 @@ int			parse_word(char *str, int *i, t_word_list **words);
 int			add_word(char *str, int *i, char **word);
 int			search_pipe(char *str);
 int			search_andand_or_oror(char *str, char c);
-int			search_group(char *str);
+int			search_list(char *str);
 int			search_redir(char *str, int *i);
 int			search_word(char *str, int *i);
-char		*get_left_side(char *str, enum e_connector connector);
+char		*get_left_side(char	*str, enum e_connector connector);
 char		*get_right_side(char *str, enum e_connector connector);
-char		**list_to_arr(t_word_list *words);
-void		parse_words_and_redirects(char *str, \
-				t_redirect **redir, t_word_list **words);
 
 //SIGNALS
 void		init_signals(void);

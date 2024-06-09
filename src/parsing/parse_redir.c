@@ -1,24 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_redir.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/09 03:55:12 by kseligma          #+#    #+#             */
+/*   Updated: 2024/06/09 04:32:17 by kseligma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-t_redirect	*last_redir(t_redirect **redirs)
+static t_redirect	*allocate_last_redir(t_redirect **redirs)
 {
 	t_redirect	*move;
 
 	move = *redirs;
 	if (move == NULL)
 	{
-		*redirs = ft_calloc(1, sizeof(**redirs));
-		if (!*redirs)
-			return ((t_redirect *) perr(0, 1, "minishell: memory error\n"));
+		ft_errloc(sizeof(**redirs), 1, (void **)redirs);
 		return (*redirs);
 	}
 	else
 	{
 		while (move->next)
 			move = move->next;
-		move->next = ft_calloc(1, sizeof(**redirs));
-		if (!move->next)
-			return ((t_redirect *) perr(0, 1, "minishell: memory error\n"));
+		ft_errloc(sizeof(**redirs), 1, (void **)&(move->next));
 		return (move->next);
 	}
 }
@@ -51,14 +59,14 @@ int	parse_redir(char *str, int *i, t_redirect **redirs)
 {
 	t_redirect	*redir;
 
-	redir = last_redir(redirs);
+	redir = allocate_last_redir(redirs);
 	if (!redir)
-		return (0);
+		return (-1);
 	redir->type = get_redir_type(str, i);
 	while (str[*i] == ' ')
 		(*i)++;
 	if (str[*i] == '\'' || str[*i] == '"' || is_regular(str[*i]))
 		return (add_word(str, i, &(redir->word)));
 	else
-		return (perr(0, 1, "minishell: syntax error after redirection\n"));
+		return (ft_err(-1, "syntax error after redirection", 0, 0));
 }
