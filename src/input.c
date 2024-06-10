@@ -3,47 +3,91 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:30 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/23 12:48:55 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/06/09 03:46:06 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
-char	*get_cwd(t_var *var)
+static void	save_actions(t_var *var)
 {
-	char	*name;
-	char	cwd[PATH_MAX];	
-	char	*colored_cwd;
-
-	name = find_in_env(var->env, "USER")->value;
-	colored_cwd = malloc(strlen(GREEN) + ft_strlen(name) + strlen(RESET)
-			+ strlen(BLUE) + strlen(getcwd(cwd, sizeof(cwd)))
-			+ strlen(RESET) + 4);
-	if (!colored_cwd)
-		return (NULL);
-	strcpy(colored_cwd, GREEN);
-	colored_cwd = ft_newold(ft_strcat(colored_cwd, name), colored_cwd);
-	colored_cwd = ft_newold(ft_strcat(colored_cwd, RESET), colored_cwd);
-	colored_cwd = ft_newold(ft_strcat(colored_cwd, ":"), colored_cwd);
-	colored_cwd = ft_newold(ft_strcat(colored_cwd, BLUE), colored_cwd);
-	colored_cwd = ft_newold(ft_strcat(colored_cwd,
-				getcwd(cwd, sizeof(cwd))), colored_cwd);
-	colored_cwd = ft_newold(ft_strcat(colored_cwd, RESET), colored_cwd);
-	colored_cwd = ft_newold(ft_strcat(colored_cwd, "$"), colored_cwd);
-	colored_cwd = ft_newold(ft_strcat(colored_cwd, " "), colored_cwd);
-	return (colored_cwd);
+	if (ft_errloc(sizeof(*(var->act)), \
+		NUM_ACTIONS + 1, (void **) &(var->act)) == -1)
+	{
+		var->act = NULL;
+		ft_err(-1, \
+			"warning: memory error allocating builtins", 0, 0);
+		return ;
+	}
+	var->act[0].action = EXIT;
+	var->act[0].function = &ft_exit;
+	var->act[1].action = ECHO;
+	var->act[1].function = &ft_echo;
+	var->act[2].action = PWD;
+	var->act[2].function = &ft_pwd;
+	var->act[3].action = CD;
+	var->act[3].function = &ft_cd;
+	var->act[4].action = EXPORT;
+	var->act[4].function = &ft_export;
+	var->act[5].action = UNSET;
+	var->act[5].function = &ft_unset;
+	var->act[6].action = ENV;
+	var->act[6].function = &ft_env;
+	var->act[7].action = HELP;
+	var->act[7].function = &ft_help;
+	var->act[8].action = NULL;
+}
+static int	env_str_to_node(int eq_ind, char *str, char **key, char **value)
+{
+	*key = ft_substr(str, 0, eq_ind);
+	if (!*key)
+		return (ft_err(-1, STR_MEMORY_ERR, strerror(errno), 0));
+	*value = ft_substr(str, eq_ind + 1, ft_strlen(str));
+	if (!*value)
+	{
+		free(*key);
+		return (ft_err(-1, STR_MEMORY_ERR, strerror(errno), 0));
+	}
+	return (0);
 }
 
-void	manage_history(char *line, char **previous_str)
+static void	save_env(t_var *var, char **env)
 {
-	if ((!*previous_str && line) || (*previous_str
-			&& line && ft_strcmp(*previous_str, line) != 0))
-		add_history(line);
-	if (*previous_str)
-		free(*previous_str);
-	if (line)
-		*previous_str = ft_strdup(line);
+	int		eq_ind;
+	t_env	*new;
+	char	*key;
+	char	*value;
+
+	var->env = NULL;
+	while (*env)
+	{
+		eq_ind = ft_strchr_index(*env, '=');
+		if (env_str_to_node(eq_ind, *env, &key, &value) == -1)
+			continue ;
+		new = ft_lstnew_env(key, value);
+		if (!new)
+		{
+			free(key);
+			free(value);
+		}
+		else
+			ft_lstadd_back_env(&var->env, new);
+		env ++;
+	}
+}
+
+void	init_minishell(char **env, t_var *var)
+{
+	var->stdfds[0] = dup(STDIN_FILENO);
+	if (var->stdfds[0] == -1)
+		ft_err(0, "dup", strerror(errno), "warning broke STDIN");
+	var->stdfds[1] = dup(STDOUT_FILENO);
+	if (var->stdfds[1] == -1)
+		ft_err(0, "dup", strerror(errno), "warning broke STDOUT");
+	save_env(var, env);
+	save_actions(var);
+	var->exit = EXIT_SUCCESS;
 }

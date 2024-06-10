@@ -3,89 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:51 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/18 18:17:10 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/09 01:05:42 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
-void	update_signal(t_env *env)
-{
-	// if (g_exit_sig)
-	// 	env->end_type = g_exit_sig;
-	(void)env;
-}
+// ^C gets printed
+# define norminetterror "FIXME"
 
-static void	read_handler(int signal, siginfo_t *data, void *n_data)
+int g_sigint = SINT_OFF; // REVISAR
+
+void	sint_handler(int signal)
 {
-	(void) data;
-	(void) n_data;
-	if (signal == SIGINT)
-	{
-		//g_exit_sig = 1;
-		ft_putstr_fd("\n", STDERR_FILENO);
-		rl_replace_line("", 1);
-		rl_on_new_line();
+	(void) signal;
+	write(1, "\n", 2);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	if (g_sigint != SINT_HEREDOC)
 		rl_redisplay();
-	}
+	g_sigint = SINT_ON;
 }
 
-static void	heredoc_handler(int signal, siginfo_t *data, void *n_data)
+void	reset_signal(t_var *var)
 {
-	(void) data;
-	(void) n_data;
-	if (signal == SIGINT)
-	{
-		ft_putstr_fd("\n", STDERR_FILENO);
-		rl_replace_line("", 1);
-		exit(1);
-	}
+	if (g_sigint)
+		var->exit = 130;
+	g_sigint = 0;
 }
 
-static void	exec_handler(int signal, siginfo_t *data, void *n_data)
+void	set_signal_ignore(int signal)
 {
-	(void) data;
-	(void) n_data;
-	if (signal == SIGINT)
-	{
-		//g_exit_sig = 130;
-		ft_putstr_fd("\n", STDERR_FILENO);
-		rl_replace_line("", 1);
-	}
-	else if (signal == SIGQUIT)
-	{
-		//g_exit_sig = 131;
-		ft_putstr_fd("Quit: 3\n", STDERR_FILENO);
-		rl_replace_line("", 1);
-	}
+	struct sigaction	sigs;
+
+	sigs.sa_flags = 0;
+	sigs.sa_handler = SIG_IGN;
+	sigemptyset(&sigs.sa_mask);
+	sigaction(signal, &sigs, NULL);
 }
 
-void	init_signals(int mode)
+void	set_signal_handler(int signal, void (*handler))
 {
-	struct sigaction	sig;
+	struct sigaction	sigs;
 
-	sig.sa_flags = SA_RESTART;
-	sigemptyset(&sig.sa_mask);
-	//g_exit_sig = 0;
-	if (mode == READ)
-	{
-		sig.sa_sigaction = read_handler;
-		signal(SIGQUIT, SIG_IGN);
-		sigaction(SIGINT, &sig, NULL);
-	}
-	else if (mode == HEREDOC)
-	{
-		sig.sa_sigaction = heredoc_handler;
-		signal(SIGQUIT, SIG_IGN);
-		sigaction(SIGINT, &sig, NULL);
-	}
-	else if (mode == EXEC)
-	{
-		sig.sa_sigaction = exec_handler;
-		sigaction(SIGINT, &sig, NULL);
-		sigaction(SIGQUIT, &sig, NULL);
-	}
+	sigs.sa_flags = 0;
+	sigs.sa_handler = handler;
+	sigemptyset(&sigs.sa_mask);
+	sigaction(signal, &sigs, NULL);
+}
+
+void	init_signals(void)
+{
+	set_signal_ignore(SIGQUIT);
+	set_signal_handler(SIGINT, sint_handler);
 }

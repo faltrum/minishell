@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 03:34:49 by kseligma          #+#    #+#             */
-/*   Updated: 2024/05/23 12:48:03 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/06/09 04:46:33 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 static char	*ft_append(char *left, char *buff, ssize_t ro)
 {

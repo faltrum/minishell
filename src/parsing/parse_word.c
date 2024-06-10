@@ -3,96 +3,79 @@
 /*                                                        :::      ::::::::   */
 /*   parse_word.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 13:25:57 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/23 13:26:06 by oseivane         ###   ########.fr       */
+/*   Created: 2024/06/09 03:55:52 by kseligma          #+#    #+#             */
+/*   Updated: 2024/06/09 05:00:56 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
-int	add_normal_word(char *str, int *i, char **word)
-{
-	int	p0;
-
-	p0 = *i;
-	while (wordchar(str[*i]))
-		(*i)++;
-	*word = ft_substr(str, p0, *i - p0);
-	if (!*word)
-	{
-		printf("Malloc error\n");
-		return (0);
-	}
-	return (1);
-}
-
-int	add_quoted_word(char *str, int *i, char **word, char c)
-{
-	int	p0;
-
-	(*i)++;
-	p0 = *i;
-	while (str[(*i)] != c && str[(*i)])
-		(*i)++;
-	if (!str[*i])
-	{
-		printf("Syntax error, unmatched %c\n", c);
-		return (0);
-	}
-	(*i)++;
-	*word = ft_substr(str, p0, *i - p0 - 1);
-	if (!*word)
-	{
-		printf("Malloc error\n");
-		return (0);
-	}
-	return (1);
-}
-
-t_word_list	*last_word(t_word_list **words)
+t_word_list	*allocate_last_node(t_word_list **words)
 {
 	t_word_list	*move;
 
 	move = *words;
-	if (move == NULL)
+	if (*words == NULL)
 	{
-		*words = calloc(1, sizeof(**words));
-		if (!*words)
-			return (NULL);
+		ft_errloc(sizeof(t_word_list), 1, (void **) words);
 		return (*words);
 	}
 	else
 	{
-		while (move->next)
-			move = move->next;
-		move->next = calloc(1, sizeof(**words));
-		if (!move->next)
-			return (NULL);
+		move = last_word_node(*words);
+		ft_errloc(sizeof(t_word_list), 1, (void **) &(move->next));
 		return (move->next);
 	}
+}
+
+int	get_length(char *str, int *i)
+{
+	char	quote;
+
+	quote = 0;
+	while (str[*i])
+	{
+		if (quote == 0 && (is_meta(str[*i]) || is_blank(str[*i])))
+			break ;
+		else if (str[*i] == '\'' || str[*i] == '"')
+		{
+			if (quote == 0)
+				quote = str[*i];
+			else if ((str[*i]) == quote)
+				quote = 0;
+			(*i)++;
+		}
+		else if ((quote == 0 && is_regular(str[*i])) || quote)
+			(*i)++;
+		else
+			return (ft_err(-1, "syntax error unmatched quote", 0, 0));
+	}
+	if (quote != 0)
+		return (ft_err(-1, "syntax error unmatched quote", 0, 0));
+	return (0);
+}
+
+int	add_word(char *str, int *i, char **word)
+{
+	int		p0;
+
+	p0 = *i;
+	if (get_length(str, i) == -1)
+		return (-1);
+	*word = ft_substr(str, p0, *i - p0);
+	if (!*word)
+		return (ft_err(-1 , STR_MEMORY_ERR, 0, 0));
+	return (0);
 }
 
 int	parse_word(char *str, int *i, t_word_list **words)
 {
 	t_word_list	*word;
 
-	word = last_word(words);
+	word = allocate_last_node(words);
 	if (!word)
-		return (0);
-	if (str[*i] == '\'' || str[*i] == '"')
-	{
-		if (str[*i] == '\'')
-			word->type = quoted;
-		else
-			word->type = dquoted;
-		return (add_quoted_word(str, i, &(word->word), str[*i]));
-	}
-	else
-	{
-		word->type = single;
-		return (add_normal_word(str, i, &(word->word)));
-	}
-	return (0);
+		return (-1);
+	return (add_word(str, i, &(word->word)));
 }

@@ -3,34 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 13:15:30 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/23 13:16:39 by oseivane         ###   ########.fr       */
+/*   Created: 2024/06/09 03:55:12 by kseligma          #+#    #+#             */
+/*   Updated: 2024/06/09 04:32:17 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
-t_redirect	*last_redir(t_redirect **redirs)
+static t_redirect	*allocate_last_redir(t_redirect **redirs)
 {
 	t_redirect	*move;
 
 	move = *redirs;
 	if (move == NULL)
 	{
-		*redirs = calloc(1, sizeof(**redirs));
-		if (!*redirs)
-			return (NULL);
+		ft_errloc(sizeof(**redirs), 1, (void **)redirs);
 		return (*redirs);
 	}
 	else
 	{
 		while (move->next)
 			move = move->next;
-		move->next = calloc(1, sizeof(**redirs));
-		if (!move->next)
-			return (NULL);
+		ft_errloc(sizeof(**redirs), 1, (void **)&(move->next));
 		return (move->next);
 	}
 }
@@ -63,19 +59,14 @@ int	parse_redir(char *str, int *i, t_redirect **redirs)
 {
 	t_redirect	*redir;
 
-	redir = last_redir(redirs);
+	redir = allocate_last_redir(redirs);
 	if (!redir)
-		return (0);
+		return (-1);
 	redir->type = get_redir_type(str, i);
 	while (str[*i] == ' ')
 		(*i)++;
-	if (str[*i] == '\'' || str[*i] == '"')
-		return (add_quoted_word(str, i, &(redir->word), str[*i]));
-	else if (wordchar(str[*i]))
-		return (add_normal_word(str, i, &(redir->word)));
+	if (str[*i] == '\'' || str[*i] == '"' || is_regular(str[*i]))
+		return (add_word(str, i, &(redir->word)));
 	else
-	{
-		printf("Syntax error, expected file after redirection\n");
-		return (0);
-	}
+		return (ft_err(-1, "syntax error after redirection", 0, 0));
 }
