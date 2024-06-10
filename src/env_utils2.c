@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 10:41:32 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/09 00:55:49 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/10 23:02:50 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_env	*find_in_env(t_env *lst, char *name)
 	t_env	*tmp;
 
 	tmp = lst;
-	while (tmp)
+	while (lst && tmp && name)
 	{
 		if (ft_strcmp(tmp->name, name) == 0)
 			return (tmp);
@@ -29,7 +29,7 @@ t_env	*find_in_env(t_env *lst, char *name)
 
 void	ft_lstdelone_env(t_env **lst, t_env *todelate)
 {
-	if (!lst || !todelate)
+	if (!lst || !*lst || !todelate)
 		return ;
 	if (todelate == *lst)
 	{
@@ -53,7 +53,8 @@ void	add_in_env(t_var *var, char *name, char *value)
 	t_env	*new;
 
 	new = ft_lstnew_env(name, value);
-	ft_lstadd_back_env(&var->env, new);
+	if (new)
+		ft_lstadd_back_env(&var->env, new);
 }
 
 void	replace_or_set_env(t_var *var, char *name, char *value)
@@ -67,5 +68,7 @@ void	replace_or_set_env(t_var *var, char *name, char *value)
 	{
 		free(node->value);
 		node->value = ft_strdup(value);
+		if (!node->value)
+			ft_err(0, STR_MEMORY_ERR, 0, 0);
 	}
 }

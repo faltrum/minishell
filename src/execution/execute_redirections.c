@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:58:12 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/10 10:01:12 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/10 22:24:59 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static int	set_redirect_word(t_redirect *redirect)
 			word = words->word;
 		words = words->next;
 	}
-	if (!word)
+	if (!word && redirect->type != here_doc)
 		return (-1);
 	free(redirect->word);
 	redirect->word = word;

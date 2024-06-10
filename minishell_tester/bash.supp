@@ -1,0 +1,91 @@
+{
+   <Readline>
+   Memcheck:Leak
+   ...
+   fun:readline
+   ...
+}
+{
+   <Readline/AddHistory>
+   Memcheck:Leak
+   ...
+   fun:add_history
+   ...
+}
+{
+   <Bash>
+   Memcheck:Leak
+   ...
+   fun:copy_command
+   ...
+}
+{
+   <Bash>
+   Memcheck:Leak
+   ...
+   fun:initialize_job_control
+   ...
+}
+{
+   <Bash>
+   Memcheck:Leak
+   ...
+   fun:execute_command_internal
+   ...
+}
+{
+   <Bash>
+   Memcheck:Leak
+   ...
+   fun:initialize_shell_variables
+   ...
+}
+{
+   <Bash>
+   Memcheck:Leak
+   ...
+   fun:with_input_from_buffered_stream
+   ...
+}
+{
+   <Bash>
+   Memcheck:Leak
+   ...
+   fun:uwp_init
+   ...
+}
+{
+   <Bash>
+   Memcheck:Leak
+   ...
+   fun:cmd_init
+   ...
+}
+{
+   <Bash>
+   Memcheck:Leak
+   ...
+   fun:reader_loop
+   ...
+}
+{
+   <Bash>
+   Memcheck:Leak
+   ...
+   fun:???
+   ...
+}
+{
+   <Bash>
+   Memcheck:Leak
+   ...
+   fun:array_rshift
+   ...
+}
+{
+   <Bash>
+   Memcheck:Leak
+   ...
+   fun:move_to_high_fd
+   ...
+}

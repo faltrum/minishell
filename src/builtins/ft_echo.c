@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 04:01:27 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 04:23:18 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/10 23:15:55 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ int	ft_echo(t_var *var, char **params)
 	{
 		if (ind > 1)
 			if (printf(" ") == -1)
-				return (2);
+				return (EXIT_FAILURE);
 		if (printf("%s", params[ind]) == -1)
-			return (2);
+			return (EXIT_FAILURE);
 		ind ++;
 	}
 	if (!flag && printf("\n") == -1)
-		return (2);
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

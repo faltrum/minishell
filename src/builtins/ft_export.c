@@ -6,13 +6,13 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:34:19 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/09 04:06:52 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/10 23:29:41 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_key_and_value_export(char **key, char **value, char *param)
+static int	get_key_and_value_export(char **key, char **value, char *param)
 {
 	int	eq;
 
@@ -31,12 +31,13 @@ int	get_key_and_value_export(char **key, char **value, char *param)
 	{
 		free(*key);
 		free(*value);
+		ft_err(0, STR_MEMORY_ERR, 0, 0);
 		return (-1);
 	}
 	return (0);
 }
 
-int	get_add_var_env(t_var *var, char *param)
+static int	get_add_var_env(t_var *var, char *param)
 {
 	char	*key;
 	char	*value;
@@ -55,22 +56,24 @@ int	get_add_var_env(t_var *var, char *param)
 	return (0);
 }
 
-int	valid_identifier(char *str, int *exit) // JUNTAR LOS DOS BLOQUES
+static int	valid_identifier(char *str, int *exit)
 {
-	if (!ft_isalpha(*str) && *str != '_')
+	if (!str)
+		return (-1);
+	if (!is_identifier(*str, 1))
 	{
 		*exit = EXIT_FAILURE;
-		return (perr(-1, 3, "minishell: export: ", str, ": not a valid identifier\n"));
+		return (ft_err(-1,"export", str, "not a valid identifier"));
 	}
-	while (ft_isalnum(*str) || *str == '_')
+	while (*str && is_identifier(*str, 0))
 		str ++;
 	if (!*str || *str == '=')
 		return (0);
 	*exit = EXIT_FAILURE;
-	return (perr(-1, 3, "minishell: export: ", str, ": not a valid identifier\n"));
+	return (ft_err(-1, "export", str, "not a valid identifier"));
 }
 
-int	print_export(t_env *env)
+static int	print_export(t_env *env)
 {
 	int	exit;
 
@@ -80,7 +83,7 @@ int	print_export(t_env *env)
 		if (env->value)
 		{
 			if (printf("declare -x %s=\"%s\"\n", env->name, env->value) == -1)
-	exit = EXIT_FAILURE;
+				exit = EXIT_FAILURE;
 		}
 		else if (printf("declare -x %s\n", env->name) == -1)
 			exit = EXIT_FAILURE;
@@ -94,6 +97,8 @@ int	ft_export(t_var *var, char **params)
 	int	exit;
 
 	exit = EXIT_SUCCESS;
+	if (!params)
+		return (EXIT_FAILURE);
 	if (!params[1])
 		return (print_export(var->env));
 	else
@@ -102,8 +107,8 @@ int	ft_export(t_var *var, char **params)
 		while (*params)
 		{
 			if (valid_identifier(*params, &exit) == 0)
-	if (get_add_var_env(var, *params) == -1)
-		exit = EXIT_FAILURE;
+				if (get_add_var_env(var, *params) == -1)
+					exit = EXIT_FAILURE;
 			params ++;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:08 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/10 07:35:49 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/10 22:30:19 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int	ft_err_nocolon(int ret, char *s1, char *s2, char *s3)
 	char	msg[500];
 
 	msg[0] = 0;
-	write(1, PROGRAM_NAME, ft_strlen(PROGRAM_NAME));
+	ft_strlcat(msg, "\n", 2);
+	ft_strlcat(msg, PROGRAM_NAME, ft_strlen(PROGRAM_NAME) + 2);
 	if (s1)
 	{
 		ft_strlcat(msg, ": ", 500);

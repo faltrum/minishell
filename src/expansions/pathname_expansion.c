@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:57:16 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 20:36:08 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/10 22:32:37 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_word_list *node, t_word_list *directories)
 	if (head)
 	{
 		matches->next = next;
+		free(node->word);
 		node->word = head->word;
 		node->next = head->next;
 		free(head);

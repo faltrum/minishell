@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 04:01:19 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 04:24:43 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/10 23:31:27 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	is_num(char *str)
 	while (ft_isdigit(*str))
 		 str++ ;
 	if (*str)
-		return (perr(0, 3, "minishell: exit: ", s, ": numeric argument required\n"));
+		return (ft_err(0, "exit", s, "numeric argument required"));
 	return (1);
 }
 
@@ -32,7 +32,7 @@ int ft_exit(t_var *var, char **params) // FREE DE COSAS
 {
 	printf("exit\n");
 	if (params[1] && params[2])
-		return (perr(EXIT_FAILURE, 1, "minishell: exit: too many arguments\n"));
+		return (ft_err(EXIT_FAILURE, "exit" ,"too many arguments", 0));
 	if (params[1])
 	{
 		if (!is_num(params[1]))
