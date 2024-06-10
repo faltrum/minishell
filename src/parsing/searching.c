@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:55:19 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 04:35:07 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/09 09:29:05 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	search_list(char *str)
 	return (0);
 }
 
-int	search_andand_or_oror(char *str, char c)
+int	search_andand_or_oror(char *str, char *c)
 {
 	int		quoted;
 	int		nesting;
@@ -41,7 +41,7 @@ int	search_andand_or_oror(char *str, char c)
 	len = strlen(str);
 	quoted = -1;
 	nesting = 0;
-	while (len > 0)
+	while (!*c && len > 0)
 	{
 		if (str[len] == '\'' || str[len] == '\"')
 			quoted *= -1;
@@ -50,11 +50,12 @@ int	search_andand_or_oror(char *str, char c)
 		else if (quoted == -1 && str[len] == ')')
 			nesting--;
 		else if (quoted == -1 && nesting == 0 && \
-			str[len] == c && str[len - 1] == c)
-			return (1);
+			((str[len] == '|' && str[len - 1] == '|') \
+			|| (str[len] == '&' && str[len - 1] == '&')))
+			*c = str[len];
 		len --;
 	}
-	return (0);
+	return (*c);
 }
 
 int	search_pipe(char *str)

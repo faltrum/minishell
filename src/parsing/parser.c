@@ -6,12 +6,13 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:55:44 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 05:04:24 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/10 04:21:30 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
 void    print_args(t_word_list *words)
 {
 	printf("Argumentos: ");
@@ -58,6 +59,7 @@ void    printf_commands(t_command *node) {
 	    print_red(node->value.simple->redirects);
 	}
 }
+*/
 
 t_command	*parser(t_var *var, char *str)
 {
@@ -72,8 +74,9 @@ t_command	*parser(t_var *var, char *str)
 	if (*str == 0)
 		return (NULL);
 	head = parse_list(str);
+	var->command_tree = head;
 	free(str);
 	if (!head)
-	var->exit = 2;
+		var->exit = 2;
 	return (head);
 }

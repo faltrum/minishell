@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:55:58 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 04:30:35 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:01:49 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ char	*get_left_side(char	*str, enum e_connector connector)
 	else
 		return (ft_substr(str, 0, len - 1));
 }
+
 char	*get_right_side(char *str, enum e_connector connector)
 {
 	int		len;

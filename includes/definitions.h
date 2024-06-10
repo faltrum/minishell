@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:38:26 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/09 02:24:37 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/09 22:17:12 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@
 # define NO_FORK "Error. Fork no created\n"
 # define STR_EXIT "exit\n"
 # define STR_MEMORY_ERR "memory error"
+# define HERE_WARNING1 "warning: here-document delimited by end-of-file (wanted `"
+# define HERE_WARNING2 "')"
 
 //Expansion flags
 # define EXP_ERR 0x2

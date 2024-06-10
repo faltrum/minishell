@@ -6,31 +6,55 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:08 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/09 02:23:08 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/10 07:35:49 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_err(int ret, char *s1, char *s2, char *s3)
+long long	ft_err(int ret, char *s1, char *s2, char *s3)
 {
-	write(1, PROGRAM_NAME, ft_strlen(PROGRAM_NAME));
+	char	msg[500];
+
+	msg[0] = 0;
+	ft_strlcat(msg, PROGRAM_NAME, 500);
 	if (s1)
 	{
-		write(1, ": ", 2);
-		write(1, s1, ft_strlen(s1));
+		ft_strlcat(msg, ": ", 500);
+		ft_strlcat(msg, s1, 500);
 	}
 	if (s2)
 	{
-		write(1, ": ", 2);
-		write(1, s2, ft_strlen(s2));
+		ft_strlcat(msg, ": ", 500);
+		ft_strlcat(msg, s2, 500);
 	}
 	if (s3)
 	{
-		write(1, ": ", 2);
-		write(1, s3, ft_strlen(s3));
+		ft_strlcat(msg, ": ", 500);
+		ft_strlcat(msg, s3, 500);
 	}
-	write (1, LSKIP, ft_strlen(LSKIP));
+	ft_strlcat(msg, LSKIP, 500);
+	write(2, msg, ft_strlen(msg));
+	return (ret);
+}
+
+int	ft_err_nocolon(int ret, char *s1, char *s2, char *s3)
+{
+	char	msg[500];
+
+	msg[0] = 0;
+	write(1, PROGRAM_NAME, ft_strlen(PROGRAM_NAME));
+	if (s1)
+	{
+		ft_strlcat(msg, ": ", 500);
+		ft_strlcat(msg, s1, 500);
+	}
+	if (s2)
+		ft_strlcat(msg, s2, 500);
+	if (s3)
+		ft_strlcat(msg, s3, 500);
+	ft_strlcat(msg, LSKIP, 500);
+	write(2, msg, ft_strlen(msg));
 	return (ret);
 }
 

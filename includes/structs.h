@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:38:34 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/09 02:24:07 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/10 07:19:26 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 # include "definitions.h" // Estan los enums. Cambiar nombre a data_structures o algo por el estilo y traerlos? Los enums funcionan como globales
 
 typedef struct s_var	t_var;
+
+struct						s_command;
+
+typedef struct s_command	t_command;
 
 // Descripción: Esta estructura representa un nodo en
 // el árbol de análisis sintáctico.
@@ -90,10 +94,11 @@ typedef struct s_actions
 typedef struct s_var
 {
 	struct s_info_tree	*tree;
+	t_command			*command_tree;
 	struct s_env		*env;
 	struct s_actions	*act;
 	int					exit;
-	int					stdfds[2];
+	int					fds_list[3];
 }	t_var;
 
 typedef struct s_pipe
@@ -121,10 +126,6 @@ struct s_redirect
 	t_word_list			*expanded;
 	int					fd;
 };
-
-struct						s_command;
-
-typedef struct s_command	t_command;
 
 typedef struct s_connection
 {

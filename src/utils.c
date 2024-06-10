@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 02:23:53 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 02:23:54 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:34:39 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,20 @@ t_bool	empty_line(char *str)
 	return (0);
 }
 
-int	get_fd(char *filename)
+t_redirect	*last_redir_node(t_redirect *node)
 {
-	int	fd;
+	if (!node)
+		return (NULL);
+	while (node->next)
+		node = node->next;
+	return (node);
+}
 
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-	{
-		perror("minishell");
-		exit(EXIT_FAILURE);
-	}
-	return (fd);
+t_word_list	*last_word_node(t_word_list *node)
+{
+	if (!node)
+		return (NULL);
+	while (node->next)
+		node = node->next;
+	return (node);
 }

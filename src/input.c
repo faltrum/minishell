@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:30 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/09 03:46:06 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/10 07:37:43 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,13 @@ static void	save_env(t_var *var, char **env)
 
 void	init_minishell(char **env, t_var *var)
 {
-	var->stdfds[0] = dup(STDIN_FILENO);
-	if (var->stdfds[0] == -1)
+	var->fds_list[0] = dup(STDIN_FILENO);
+	if (var->fds_list[0] == -1)
 		ft_err(0, "dup", strerror(errno), "warning broke STDIN");
-	var->stdfds[1] = dup(STDOUT_FILENO);
-	if (var->stdfds[1] == -1)
+	var->fds_list[1] = dup(STDOUT_FILENO);
+	if (var->fds_list[1] == -1)
 		ft_err(0, "dup", strerror(errno), "warning broke STDOUT");
+	var->fds_list[2] = -1;
 	save_env(var, env);
 	save_actions(var);
 	var->exit = EXIT_SUCCESS;

@@ -6,54 +6,74 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:28:30 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/09 03:23:34 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/10 09:45:08 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	execute_execve(t_var *var, char **params)
+static int	execute_execve(t_var *var, char **params)
 {
 	char	*execution_path;
 	char	**arr_env;
-	t_env	*env;
+	int		exit;
 
-	env = find_in_env(var->env, "PATH");
-	if (env)
-		execution_path = find_path(env->value, params[0]);
-	else
-		execution_path = params[0];
+	exit = EXIT_FAILURE;
+	execution_path = find_path(find_in_env(var->env, "PATH"), \
+		params[0], &exit);
 	if (!execution_path)
-		return (EXIT_FAILURE);
+	{
+		free_command_tree(var->command_tree);
+		minishell_cleanup(var);
+		return (exit);
+	}
 	arr_env = env_to_array(var->env);
 	execve(execution_path, params, arr_env);
-	// RUN VALGRIND --TRACK-CHILD TO KNOW WHAT TO FREE HERE
-	return (perr(EXIT_FAILURE, 5, "minishell: ", *params, ": ", strerror(errno), "\n"));
+	if (execution_path && execution_path != params[0])
+		free(execution_path);
+	if (ft_strchr(*params, '/'))
+		exit = ft_err(126, *params, "Is a directory", 0);
+	else
+		exit = ft_err(127, *params, "command not found", 0);
+	free_arr(arr_env);
+	free_command_tree(var->command_tree);
+	minishell_cleanup(var);
+	return (exit);
 }
 
-int	execute_here(t_var *var, char **params)
+static int	execute_here(t_var *var, char **params, int flags)
 {
 	int		i;
+	int		exit;
 
 	i = 0;
 	while (var->act && var->act[i].action)
 	{
 		if (ft_strcmp(params[0], var->act[i].action) == 0)
-			return ((*(var->act[i].function))(var, params));
+		{
+			(void) flags;
+			exit = (*(var->act[i].function))(var, params);
+			if (flags & SUBSHELL)
+			{
+				free_command_tree(var->command_tree);
+				minishell_cleanup(var);
+			}
+			return (exit);
+		}
 		i++;
 	}
 	return (execute_execve(var, params));
 }
 
-int	execute_in_subshell(t_var *var, char **params, int flags, int status)
+static int	execute_in_subshell(t_var *var, char **params, int flags, int status)
 {
 	pid_t	pid;
 
 	pid = fork();
 	if (pid == -1)
-		return (perr(EXIT_FAILURE, 3, "minishell:", *params, ": fork error\n"));
+		return (ft_err(EXIT_FAILURE, *params, "fork error", strerror(errno)));
 	else if (pid == 0)
-		exit (execute_here(var, params));
+		exit (execute_here(var, params, flags));
 	if (!(flags & WAIT))
 	{
 		waitpid(pid, &status, WNOHANG);
@@ -63,7 +83,7 @@ int	execute_in_subshell(t_var *var, char **params, int flags, int status)
 	waitpid(pid, &status, 0);
 	set_signal_handler(SIGINT, sint_handler);
 	if (WIFSIGNALED(status))
-		return (130);
+		return (WTERMSIG(status) + 128);
 	else if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (EXIT_FAILURE);
@@ -79,6 +99,6 @@ int	try_execution(t_var *var, char **params, int flags)
 	if (flags & SUBSHELL || !is_builtin(var, params[0]))
 		status = execute_in_subshell(var, params, flags, status);
 	else
-		status = execute_here(var, params);
+		status = execute_here(var, params, flags);
 	return (status);
 }

@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:55:12 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 04:32:17 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/10 11:00:53 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ static t_redirect	*allocate_last_redir(t_redirect **redirs)
 	t_redirect	*move;
 
 	move = *redirs;
-	if (move == NULL)
+	if (*redirs == NULL)
 	{
-		ft_errloc(sizeof(**redirs), 1, (void **)redirs);
+		ft_errloc(sizeof(t_redirect) , 1, (void **)redirs);
 		return (*redirs);
 	}
 	else
 	{
 		while (move->next)
 			move = move->next;
-		ft_errloc(sizeof(**redirs), 1, (void **)&(move->next));
+		ft_errloc(sizeof(t_redirect), 1, (void **)&(move->next));
 		return (move->next);
 	}
 }

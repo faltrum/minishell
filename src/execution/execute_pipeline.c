@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:58:25 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 03:59:27 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/10 07:45:05 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,26 @@ int fds[2], t_var *var, int islast)
 		close (fds[0]);
 	if (islast)
 	{
-		if (dup2(var->stdfds[1], STDOUT_FILENO) == -1)
+		if (dup2(var->fds_list[1], STDOUT_FILENO) == -1)
 			perror ("minishell");
-		exit = execute_simple_command(command, \
+		exit = exe_simple_command(command, \
 			var, WAIT | RESTOREFD | SUBSHELL);
 	}
 	else
 	{
 		if (pipe(fds) == -1)
 			perror("minishell");
+		else
+			var->fds_list[2] = fds[0];
 		if (dup2(fds[1], STDOUT_FILENO) == -1)
 			perror("minishell");
-		exit = execute_simple_command(command, var, SUBSHELL);
 		close(fds[1]);
+		exit = exe_simple_command(command, var, SUBSHELL);
 	}
 	return (exit);
 }
 
-int	execute_pipeline(t_command *node, t_var *var)
+int	exe_pipeline(t_command *node, t_var *var)
 {
 	int	fds[2];
 

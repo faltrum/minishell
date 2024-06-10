@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:51 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/09 01:05:42 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/10 02:59:11 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,8 @@ void	sint_handler(int signal)
 
 void	reset_signal(t_var *var)
 {
-	if (g_sigint)
-		var->exit = 130;
-	g_sigint = 0;
+	(void) var;
+	g_sigint = SINT_OFF;
 }
 
 void	set_signal_ignore(int signal)

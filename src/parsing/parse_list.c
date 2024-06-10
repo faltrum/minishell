@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 02:22:32 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 02:22:33 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/09 09:24:25 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,16 @@ static t_command	*parse_list_command(char *str)
 
 t_command	*parse_list(char *str)
 {
-	if (search_andand_or_oror(str, '&'))
-		return (parse_connected_command(str, and_and));
-	else if (search_andand_or_oror(str, '|'))
-		return (parse_connected_command(str, or_or));
+	char	c;
+
+	c = 0;
+	if (search_andand_or_oror(str, &c))
+	{
+		if (c == '|')
+			return (parse_connected_command(str, or_or));
+		else
+			return (parse_connected_command(str, and_and));
+	}
 	else if (search_list(str))
 		return (parse_list_command(str));
 	else if (search_pipe(str))

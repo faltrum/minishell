@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:38 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/09 04:55:37 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/10 11:12:07 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,12 @@ static void	minishell(t_var *var)
 		reset_signal(var);
 		if (get_line(&line, var) == -1)
 			break ;
-		(void) command_tree;
+		if (!line)
+			continue ;
 		command_tree = parser(var, line);
 		if (command_tree)
-			var->exit = execute_command_tree(command_tree, var);
-//		free_command_tree(command_tree);
+			var->exit = exe_command_tree(command_tree, var);
+		free_command_tree(command_tree);
 	}
 	rl_clear_history();
 }
