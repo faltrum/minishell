@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 04:01:00 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/10 23:04:34 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 01:47:22 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@ int	ft_pwd(t_var *var, char **params)
 	(void)params;
 	(void)var;
 	if (!getcwd(cwd, sizeof(cwd)) || printf("%s\n", cwd) == -1)
-		ft_err(EXIT_FAILURE, "pwd", strerror(errno), 0);
+		ft_err(EXIT_FAILURE, PWD, strerror(errno), 0);
 	return (EXIT_SUCCESS);
 }

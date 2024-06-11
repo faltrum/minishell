@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:28:30 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/10 09:45:08 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 02:04:33 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ static int	execute_execve(t_var *var, char **params)
 	if (execution_path && execution_path != params[0])
 		free(execution_path);
 	if (ft_strchr(*params, '/'))
-		exit = ft_err(126, *params, "Is a directory", 0);
+		exit = ft_err(126, *params, ERR_IS_DIR, 0);
 	else
-		exit = ft_err(127, *params, "command not found", 0);
+		exit = ft_err(127, *params, ERR_CMD_NOT_FOUND, 0);
 	free_arr(arr_env);
 	free_command_tree(var->command_tree);
 	minishell_cleanup(var);
@@ -65,13 +65,14 @@ static int	execute_here(t_var *var, char **params, int flags)
 	return (execute_execve(var, params));
 }
 
-static int	execute_in_subshell(t_var *var, char **params, int flags, int status)
+static int	execute_in_subshell(t_var *var, \
+	char **params, int flags, int status)
 {
 	pid_t	pid;
 
 	pid = fork();
 	if (pid == -1)
-		return (ft_err(EXIT_FAILURE, *params, "fork error", strerror(errno)));
+		return (ft_err(EXIT_FAILURE, *params, ERR_FORK, strerror(errno)));
 	else if (pid == 0)
 		exit (execute_here(var, params, flags));
 	if (!(flags & WAIT))

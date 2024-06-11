@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 04:01:31 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/10 23:22:32 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 02:02:32 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,15 @@ static int	change_dir(t_var *var, char *dir)
 {
 	char	str[PATH_MAX];
 
-	if(!dir)
+	if (!dir)
 		return (EXIT_FAILURE);
 	if (getcwd(str, PATH_MAX) == NULL || chdir(dir) == -1)
-		return (ft_err(EXIT_FAILURE, "cd", dir, strerror(errno)));
+		return (ft_err(EXIT_FAILURE, CD, dir, strerror(errno)));
 	replace_or_set_env(var, "OLDPWD", str);
 	replace_or_set_env(var, "PWD", str);
 	return (EXIT_SUCCESS);
 }
+
 static int	next_options(t_var *var, t_env *env, char **params, char *dir)
 {
 	if (params[1][0] == '\0')
@@ -51,7 +52,7 @@ int	ft_cd(t_var *var, char **params)
 	dir = NULL;
 	env = NULL;
 	if (params[1] && params[2])
-		perr(0, 1, "minishell: cd: too many arguments\n");
+		ft_err(0, CD, ERR_TOO_MANY_ARGS, 0);
 	else if (!params[1] || !ft_strcmp(params[1], "~"))
 	{
 		env = find_in_env(var->env, "HOME");

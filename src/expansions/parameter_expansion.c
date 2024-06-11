@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:57:07 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 16:46:49 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 02:01:21 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*get_value(t_var *var, char *key)
 			expanded = ft_strdup("");
 	}
 	if (!expanded)
-		ft_err(0, STR_MEMORY_ERR, strerror(errno), 0);
+		ft_err(0, ERR_MALLOC, strerror(errno), 0);
 	return (expanded);
 }
 
@@ -49,14 +49,14 @@ static char	*get_key(char *word)
 		str = ft_substr(&word[1], 0, ind - 1);
 	}
 	if (!str)
-		ft_err(0, STR_MEMORY_ERR, strerror(errno), 0);
+		ft_err(0, ERR_MALLOC, strerror(errno), 0);
 	return (str);
 }
 
 static int	allocate_expanded_string(char **str, \
 char *word, char *value, char *key)
 {
-	if (ft_errloc(ft_strlen(word) + ft_strlen(value) + 1,\
+	if (ft_errloc(ft_strlen(word) + ft_strlen(value) + 1, \
 		sizeof(*str), (void **)str) == -1)
 	{
 		free(value);

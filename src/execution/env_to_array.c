@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:57:53 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/10 06:25:53 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 02:04:16 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	count_env(t_env *env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (env)

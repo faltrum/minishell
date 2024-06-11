@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:57:02 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/10 07:19:26 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 01:38:01 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	heredoc_cleanup(int fds[2], char *line)
 
 static int	heredoc_error(int fds[2], char *line)
 {
-	ft_err(0, "heredoc error", strerror(errno), 0);
+	ft_err(0, ERR_HEREDOC, strerror(errno), 0);
 	return (heredoc_cleanup(fds, line));
 }
 
@@ -56,11 +56,12 @@ int	do_here_doc(t_var *var, t_redirect *redir)
 		write(var->fds_list[1], "> ", 2);
 		line = get_heredoc_line(var);
 		if (!line && g_sigint == SINT_HEREDOC)
-			ft_err_nocolon(0, HERE_WARNING1, redir->word, HERE_WARNING2);
+			ft_err_here_doc(0, WAR_HERE_EOF, redir->word, WAR_HERE_EOF2);
 		if (!line || !ft_strcmp(redir->word, line))
 			break ;
 		if (write(fds[1], line, ft_strlen(line)) \
-			== -1 || write(fds[1], "\n", 2) == -1)
+			== -1 || write(fds[1], \
+			END_OF_LINE, ft_strlen(END_OF_LINE)) == -1)
 			return (heredoc_error(fds, line));
 		free(line);
 	}

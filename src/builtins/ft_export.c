@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:34:19 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/10 23:29:41 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 02:02:07 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	get_key_and_value_export(char **key, char **value, char *param)
 	{
 		free(*key);
 		free(*value);
-		ft_err(0, STR_MEMORY_ERR, 0, 0);
+		ft_err(0, ERR_AMB_REDIR, 0, 0);
 		return (-1);
 	}
 	return (0);
@@ -63,14 +63,14 @@ static int	valid_identifier(char *str, int *exit)
 	if (!is_identifier(*str, 1))
 	{
 		*exit = EXIT_FAILURE;
-		return (ft_err(-1,"export", str, "not a valid identifier"));
+		return (ft_err(-1, EXPORT, str, ERR_VALID_IDENTIFIER));
 	}
 	while (*str && is_identifier(*str, 0))
 		str ++;
 	if (!*str || *str == '=')
 		return (0);
 	*exit = EXIT_FAILURE;
-	return (ft_err(-1, "export", str, "not a valid identifier"));
+	return (ft_err(-1, EXPORT, str, ERR_VALID_IDENTIFIER));
 }
 
 static int	print_export(t_env *env)

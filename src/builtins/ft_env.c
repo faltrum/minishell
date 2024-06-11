@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 04:01:23 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/10 23:14:49 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 01:50:38 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_env(t_var *var, char **params)
 	exit = EXIT_SUCCESS;
 	if (params[1])
 	{
-		ft_err(0, "env", "too many arguments", 0);
+		ft_err(0, ENV, ERR_TOO_MANY_ARGS, 0);
 		return (EXIT_FAILURE);
 	}
 	tmp = var->env;

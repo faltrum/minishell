@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:12:26 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/10 10:55:37 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 01:54:57 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_redirect **redir, t_word_list **words)
 		else if (search_word(str, &i))
 			res = parse_word(str, &i, words);
 		else if (str[i])
-			res = ft_err(-1, "syntax error near unexpected token", 0, 0);
+			res = ft_err(-1, ERR_UNEXPECTED_TOKEN, 0, 0);
 	}
 	if (res == -1)
 	{

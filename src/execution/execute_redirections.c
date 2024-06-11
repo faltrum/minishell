@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:58:12 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/10 22:24:59 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 02:03:51 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	redirect_append(t_redirect *redirects)
 	if (fd == -1 || dup2(fd, STDOUT_FILENO) == -1)
 	{
 		exit = EXIT_FAILURE;
-		perror("minishell: append");
+		perror(ERR_PERROR_APPEND_REDIR);
 	}
 	if (fd > -1)
 		close(fd);
@@ -43,7 +43,7 @@ static int	redirect_input(t_redirect *redirects)
 	if (fd == -1 || dup2(fd, STDIN_FILENO) == -1)
 	{
 		exit = EXIT_FAILURE;
-		perror("minishell: redirect input");
+		perror(ERR_PERROR_INPUT_REDIR);
 	}
 	if (fd > -1)
 		close(fd);
@@ -62,7 +62,7 @@ static int	redirect_output(t_redirect *redirects)
 	if (fd == -1 || dup2(fd, STDOUT_FILENO) == -1)
 	{
 		exit = EXIT_FAILURE;
-		perror("minishell: redirect output");
+		perror(ERR_PERROR_OUTPUT_REDIR);
 	}
 	if (fd > -1)
 		close(fd);
@@ -98,12 +98,12 @@ int	execute_redirections(t_redirect *redirects)
 	exit = EXIT_SUCCESS;
 	while (exit == EXIT_SUCCESS && redirects)
 	{
-		if (redirects->type == here_doc && dup2(redirects->fd, 0) == -1){
-			exit = ft_err(EXIT_FAILURE, "heredoc error", strerror(errno), 0);}
+		if (redirects->type == here_doc && dup2(redirects->fd, 0) == -1)
+			exit = ft_err(EXIT_FAILURE, ERR_HEREDOC, strerror(errno), 0);
 		else if (redirects->word)
 		{
 			if (set_redirect_word(redirects) == -1)
-				exit = ft_err(EXIT_FAILURE, "ambiguous redirect", 0, 0);
+				exit = ft_err(EXIT_FAILURE, ERR_AMB_REDIR, 0, 0);
 			else if (redirects->type == append)
 				exit = redirect_append(redirects);
 			else if (redirects->type == input_redir)

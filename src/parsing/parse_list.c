@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 02:22:32 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 09:24:25 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 01:32:49 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ static int	left_par(char	*str)
 			return (1);
 		}
 		else
-			return (ft_err(-1, \
-			"syntax error unexpected token near parenthesis", 0, 0));
+			return (ft_err(-1, ERR_SYNTAX_PARENTHESIS, 0, 0));
 	}
 	return (1);
 }
@@ -48,8 +47,7 @@ static int	right_par(char	*str)
 			return (1);
 		}
 		else
-			return (ft_err(-1, \
-			"syntax error unexpected token near parenthesis", 0, 0));
+			return (ft_err(-1, ERR_SYNTAX_PARENTHESIS, 0, 0));
 	}
 	return (0);
 }
@@ -62,8 +60,7 @@ static int	empty_par(char *str)
 	while (str[i] == ' ')
 		i++;
 	if (str[i] == 0)
-		return (ft_err(-1, \
-		"syntax error unexpected token near parenthesis", 0, 0));
+		return (ft_err(-1, ERR_SYNTAX_PARENTHESIS, 0, 0));
 	return (0);
 }
 

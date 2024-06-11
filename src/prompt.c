@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 00:33:54 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 00:54:57 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 01:12:58 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ static	void	set_prompt(char *prompt, char *name, char *cwd, size_t len)
 	ft_strlcat(prompt, BLUE, len);
 	ft_strlcat(prompt, cwd, len);
 	ft_strlcat(prompt, RESET, len);
-	ft_strlcat(prompt, "$", len);
-	ft_strlcat(prompt, " ", len);
+	ft_strlcat(prompt, PROMPT_END, len);
 }
 
 char	*get_cwd(t_var *var)

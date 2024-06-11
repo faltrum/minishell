@@ -6,13 +6,13 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:57:16 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/10 22:32:37 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 01:35:51 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	expand_pathname(t_word_list *next, \
+static int	expand_pathname(t_word_list *next, \
 t_word_list *node, t_word_list *directories)
 {
 	t_word_list	*matches;
@@ -40,7 +40,7 @@ t_word_list *node, t_word_list *directories)
 	return (1);
 }
 
-int	should_be_expanded(char *str)
+static int	should_be_expanded(char *str)
 {
 	int	i;
 	int	flags;

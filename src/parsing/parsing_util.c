@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:55:36 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 15:33:40 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 01:28:41 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	is_blank(char c)
 {
-	if (c && ft_strchr(" \t", c))
+	if (c && ft_strchr(BLANK_CHARS, c))
 		return (1);
 	return (0);
 }
 
 int	is_meta(char c)
 {
-	if (ft_strchr("|&()<>", c) || is_blank(c))
+	if (ft_strchr(META_CHARS, c) || is_blank(c))
 		return (1);
 	return (0);
 }

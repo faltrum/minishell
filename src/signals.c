@@ -6,16 +6,15 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:51 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/10 02:59:11 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 02:07:58 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// ^C gets printed
-# define norminetterror "FIXME"
+#define norminetterror "FIXME ^C, GLOBAL ASSIGNATION??"
 
-int g_sigint = SINT_OFF; // REVISAR
+int	g_sigint;
 
 void	sint_handler(int signal)
 {
@@ -56,6 +55,7 @@ void	set_signal_handler(int signal, void (*handler))
 
 void	init_signals(void)
 {
+	g_sigint = SINT_OFF;
 	set_signal_ignore(SIGQUIT);
 	set_signal_handler(SIGINT, sint_handler);
 }

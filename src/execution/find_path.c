@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 04:32:05 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/10 06:19:04 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 02:03:31 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*param_access_check(char *param, int *exit)
 		if (ft_strchr(param, '/'))
 			*exit = ft_err(127, param, strerror(errno), 0);
 		else
-			*exit = ft_err(127, param, "command not found", 0);
+			*exit = ft_err(127, param, ERR_CMD_NOT_FOUND, 0);
 		return (NULL);
 	}
 	if (access(param, X_OK) == -1)
@@ -27,7 +27,7 @@ static char	*param_access_check(char *param, int *exit)
 		if (ft_strchr(param, '/'))
 			*exit = ft_err(126, param, strerror(errno), 0);
 		else
-			*exit = ft_err(127, param, "command not found", 0);
+			*exit = ft_err(127, param, ERR_CMD_NOT_FOUND, 0);
 		return (NULL);
 	}
 	return (param);
@@ -42,7 +42,7 @@ static int	path_access_check(char **path, char *param, int *exit)
 			if (ft_strchr(param, '/'))
 				*exit = ft_err(126, param, strerror(errno), 0);
 			else
-				*exit = ft_err(127, param, "command not found", 0);
+				*exit = ft_err(127, param, ERR_CMD_NOT_FOUND, 0);
 			free(*path);
 			*path = NULL;
 		}
@@ -73,10 +73,10 @@ char	*find_path(t_env *env, char *param, int *exit)
 
 	i = 0;
 	if (!env || !env->value || ft_strchr(param, '/'))
-		return	(param_access_check(param, exit));
+		return (param_access_check(param, exit));
 	paths = ft_split(env->value, ':');
 	if (!paths)
-		return ((char *) ft_err(0, STR_MEMORY_ERR, 0, 0));
+		return ((char *) ft_err(0, ERR_CMD_NOT_FOUND, 0, 0));
 	while (paths[i])
 	{
 		path = get_path_str(paths[i], param);

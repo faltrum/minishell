@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:39:15 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/10 05:22:45 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 01:25:25 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,8 @@ int			ft_export(t_var *var, char **params);
 int			ft_env(t_var *var, char **params);
 
 //ERROR
-void		stx_error(char *error_msg);
-int			exec_error(char *command, char *error_msg);
-void		stx_error_op(char *error_msg, char op);
-long long	perr(int return_value, int argc, ...); // Prohibido variadicos
 long long	ft_err(int ret, char *s1, char *s2, char *s3);
-int			ft_err_nocolon(int ret, char *s1, char *s2, char *s3);
+int			ft_err_here_doc(int ret, char *s1, char *s2, char *s3);
 
 //EXECUTION
 int			exe_command_tree(t_command *head, t_var *var);
@@ -126,20 +122,16 @@ t_redirect	*last_redir_node(t_redirect *node);
 int			is_blank(char c);
 int			is_regular(char c);
 int			is_meta(char c);
-int			empty_line(char *str);
 int			is_identifier(char c, int first);
+int			empty_line(char *str);
 void		update_quote_flag(char *str, int *i, int *flags);
-int			ft_errloc(size_t size, size_t qty, void **ptr);
 
 //MEMORY UTILS
 void		free_command_tree(t_command *command);
 void		free_word_list(t_word_list *words, int free_word);
 void		free_redirects(t_redirect *redirects);
 void		free_arr(char **arr);
+int			ft_errloc(size_t size, size_t qty, void **ptr);
 t_word_list	*allocate_last_node(t_word_list **words);
-
-//OTHER UTILS (TO BE DELETED)
-void		printf_commands(t_command *node);
-void		print_args(t_word_list *words);
 
 #endif

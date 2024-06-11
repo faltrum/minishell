@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 02:42:02 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 09:21:03 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 01:59:25 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	alloc_str(char *str, char **ls, char **rs, enum e_connector c)
 	*ls = get_left_side(str, c);
 	*rs = get_right_side(str, c);
 	if (!*ls || !*rs)
-		return (ft_err(-1, STR_MEMORY_ERR, 0, 0));
+		return (ft_err(-1, ERR_MALLOC, 0, 0));
 	return (0);
 }
 
@@ -35,7 +35,7 @@ static int	alloc_node(t_command **node)
 	if (*node)
 		(*node)->value.connection = ft_calloc(1, sizeof(t_connection));
 	if (!(*node) || !(*node)->value.connection)
-		return (ft_err(-1, STR_MEMORY_ERR, 0, 0));
+		return (ft_err(-1, ERR_MALLOC, 0, 0));
 	return (0);
 }
 
@@ -49,13 +49,11 @@ static int	has_content(char *str, enum e_connector connector)
 	if (str[i] == 0)
 	{
 		if (connector == pipe_con)
-			return (ft_err(-1, "syntax error near unexpected token `|'", 0, 0));
+			return (ft_err(-1, ERR_SYNTAX_PIPE, 0, 0));
 		else if (connector == or_or)
-			return (ft_err(-1, \
-				"syntax error near unexpected token `||'", 0, 0));
+			return (ft_err(-1, ERR_SYNTAX_CONJ1, 0, 0));
 		else if (connector == and_and)
-			return (ft_err(-1, \
-				"syntax error near unexpected token `&&'", 0, 0));
+			return (ft_err(-1, ERR_SYNTAX_CONJ2, 0, 0));
 	}
 	return (0);
 }

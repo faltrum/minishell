@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:55:52 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/10 10:54:30 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 01:59:40 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ int	get_length(char *str, int *i)
 		else if ((quote == 0 && is_regular(str[*i])) || quote)
 			(*i)++;
 		else
-			return (ft_err(-1, "syntax error unmatched quote", 0, 0));
+			return (ft_err(-1, ERR_UNMATCHED_QUOTE, 0, 0));
 	}
 	if (quote != 0)
-		return (ft_err(-1, "syntax error unmatched quote", 0, 0));
+		return (ft_err(-1, ERR_UNMATCHED_QUOTE, 0, 0));
 	return (0);
 }
 
@@ -66,7 +66,7 @@ int	add_word(char *str, int *i, char **word)
 		return (-1);
 	*word = ft_substr(str, p0, *i - p0);
 	if (!*word)
-		return (ft_err(-1 , STR_MEMORY_ERR, 0, 0));
+		return (ft_err(-1, ERR_MALLOC, 0, 0));
 	return (0);
 }
 

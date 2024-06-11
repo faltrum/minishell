@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 04:01:19 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/10 23:31:27 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 02:05:30 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,17 @@ static int	is_num(char *str)
 	if (*str == '+' || *str == '-')
 		str ++;
 	while (ft_isdigit(*str))
-		 str++ ;
+		str ++;
 	if (*str)
-		return (ft_err(0, "exit", s, "numeric argument required"));
+		return (ft_err(0, EXIT, s, ERR_NUMERIC_ARG));
 	return (1);
 }
 
-int ft_exit(t_var *var, char **params) // FREE DE COSAS
+int	ft_exit(t_var *var, char **params) // FREE DE COSAS
 {
-	printf("exit\n");
+	printf(STR_EXIT);
 	if (params[1] && params[2])
-		return (ft_err(EXIT_FAILURE, "exit" ,"too many arguments", 0));
+		return (ft_err(EXIT_FAILURE, EXIT, ERR_TOO_MANY_ARGS, 0));
 	if (params[1])
 	{
 		if (!is_num(params[1]))

@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:55:19 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 09:29:05 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 01:55:37 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	search_pipe(char *str)
 
 int	search_redir(char *str, int *i)
 {
-	while (str[*i] == ' ')
+	while (is_blank(str[*i]))
 		(*i)++;
 	if (str[*i] == '>' || str[*i] == '<')
 		return (1);
@@ -94,7 +94,7 @@ int	search_redir(char *str, int *i)
 
 int	search_word(char *str, int *i)
 {
-	while (str[*i] == ' ')
+	while (is_blank(str[*i]))
 		(*i)++;
 	if (is_regular(str[*i]))
 		return (1);

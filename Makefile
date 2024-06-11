@@ -6,7 +6,7 @@
 #    By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/04 19:10:12 by mcatalan@st       #+#    #+#              #
-#    Updated: 2024/06/10 22:48:31 by kseligma         ###   ########.fr        #
+#    Updated: 2024/06/10 23:54:10 by kseligma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,6 +75,8 @@ DEFS = -DREADLINE_LIBRARY
 
 NAME = minishell
 
+INCS =	$(wildcard includes/*.h)
+
 SRCS =	$(wildcard src/*.c)	\
 		$(wildcard src/builtins/*.c) \
 		$(wildcard src/parsing/*.c) \
@@ -126,7 +128,7 @@ print_message:
 #	@echo "$(YELLOW)Compiling...$(RESET)"
 	@${CC} ${CFLAGS} $(OFLAGS) $(DEFS) $(INCLUDE) -c $< -o $@
 
-$(NAME): $(OBJS) $(LIBFT_D)$(LIBFT) $(READLINE_A)
+$(NAME): $(OBJS) $(LIBFT_D)$(LIBFT) $(READLINE_A) $(INCS)
 	@echo "$(YELLOW)Linking...$(RESET)"
 	@$(CC) $(CFLAGS) $(DEFS) $(OBJS) -o $@ $(LIBFT_D)$(LIBFT) $(READLINE_A) $(READLINE_FLAGS)
 	@echo "$(GREEN)Linked!$(RESET)✅"

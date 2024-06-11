@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:57:21 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/10 06:49:51 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 02:01:09 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	add_word_to_list(t_word_list **head, char *str, int *i, int flags)
 		return (-1);
 	node->word = ft_substr(str, *i, end - *i);
 	if (!node->word)
-		return (ft_err(-1, STR_MEMORY_ERR, strerror(errno), 0));
+		return (ft_err(-1, ERR_MALLOC, strerror(errno), 0));
 	*i = end;
 	return (0);
 }
@@ -43,6 +43,7 @@ static int	splitting_error(t_word_list **head)
 	*head = NULL;
 	return (-1);
 }
+
 int	word_splitting(char *str, t_word_list **head)
 {
 	int	i;
