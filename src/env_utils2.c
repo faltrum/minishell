@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 10:41:32 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/11 01:59:09 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/12 01:34:54 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ void	add_in_env(t_var *var, char *name, char *value)
 	new = ft_lstnew_env(name, value);
 	if (new)
 		ft_lstadd_back_env(&var->env, new);
+	else
+	{
+		free(name);
+		free(value);
+	}
 }
 
 void	replace_or_set_env(t_var *var, char *name, char *value)
@@ -62,7 +67,11 @@ void	replace_or_set_env(t_var *var, char *name, char *value)
 
 	node = find_in_env(var->env, name);
 	if (!node)
+	{
 		add_in_env(var, ft_strdup(name), ft_strdup(value));
+		if (!node->name || !node->value)
+			ft_err(0, ERR_MALLOC, 0, 0);
+	}
 	else
 	{
 		free(node->value);

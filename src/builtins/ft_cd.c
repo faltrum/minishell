@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 04:01:31 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/11 02:02:32 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/12 01:17:52 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ static int	change_dir(t_var *var, char *dir)
 
 	if (!dir)
 		return (EXIT_FAILURE);
-	if (getcwd(str, PATH_MAX) == NULL || chdir(dir) == -1)
+	if (chdir(dir) == -1)
+		return (ft_err(EXIT_FAILURE, CD, dir, strerror(errno)));
+	if (getcwd(str, PATH_MAX) == NULL)
 		return (ft_err(EXIT_FAILURE, CD, dir, strerror(errno)));
 	replace_or_set_env(var, "OLDPWD", str);
 	replace_or_set_env(var, "PWD", str);

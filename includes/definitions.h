@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:38:26 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/11 02:27:24 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/12 01:41:15 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 # define ERR_SEPARATOR ": "
 # define ERR_UNMATCHED_QUOTE "syntax error unmatched quote"
 # define ERR_UNEXPECTED_TOKEN "syntax error near unexpected token"
-# define ERR_SYNTAX_REDIRECTION "syntax error after redirection"
+# define ERR_SYNTAX_REDIRECTION "syntax error near redirection"
 # define ERR_SYNTAX_PARENTHESIS "syntax error unexpected token near parenthesis"
 # define ERR_SYNTAX_PIPE "syntax error near unexpected token `|'"
 # define ERR_SYNTAX_CONJ1 "syntax error near unexpected token `||'"

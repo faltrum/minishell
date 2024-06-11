@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:34:19 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/11 06:30:50 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/12 01:33:54 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static int	get_add_var_env(t_var *var, char *param)
 		add_in_env(var, key, value);
 	else
 	{
+		free(key);
 		free(env->value);
 		env->value = value;
 	}
