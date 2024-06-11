@@ -6,11 +6,19 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:55:36 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/11 01:28:41 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/12 00:58:35 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	update_quote_flag_parsing(char c, int *flag)
+{
+	if (c == '\'' && !(*flag & DQUOTED))
+		*flag ^= QUOTED;
+	else if (c == '"' && !(*flag & QUOTED))
+		*flag ^= DQUOTED;
+}
 
 int	is_blank(char c)
 {

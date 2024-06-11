@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:39:15 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/11 06:42:59 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/12 00:52:21 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int			search_list(char *str);
 int			search_redir(char *str, int *i);
 int			parse_here_docs(t_var *var, t_command *command_tree);
 int			search_word(char *str, int *i);
+void		update_quote_flag_parsing(char c, int *flag);
 char		*get_left_side(char	*str, enum e_connector connector);
 char		*get_right_side(char *str, enum e_connector connector);
 

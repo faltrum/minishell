@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:13 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/10 11:11:25 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 23:05:46 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void	free_redirects(t_redirect *redirects)
 	free_redirects(redirects->next);
 	if (redirects->fd > 2)
 		close(redirects->fd);
-	if (redirects->expanded && redirects->word != redirects->expanded->word)
+	if (redirects->word && \
+		(!redirects->expanded || redirects->expanded->word != redirects->word))
 		free(redirects->word);
 	free_word_list(redirects->expanded, 1);
 	free(redirects);

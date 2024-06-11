@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:55:44 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/11 03:32:33 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 22:48:30 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_command	*parser(t_var *var, char *str)
 	if (head && parse_here_docs(var, head) == -1)
 	{
 		var->exit = EXIT_FAILURE;
-		if (g_sigint)
+		if (g_sigint)	
 			var->exit = 130;
 		free_command_tree(head);
 		head = NULL;

@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:57:02 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/11 03:31:21 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 22:53:23 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	do_here_doc(t_var *var, t_redirect *redir)
 	}
 	if (g_sigint == SIGINT)
 		return (heredoc_cleanup(fds, line));
+	free(line);
 	close(fds[1]);
 	redir->fd = fds[0];
 	return (0);
