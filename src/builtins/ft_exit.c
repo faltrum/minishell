@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 04:01:19 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/11 07:36:49 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:12:07 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,11 @@ int	ft_exit(t_var *var, char **params)
 	if (!params[1])
 		actual_exit(var, var->exit);
 	if (!is_num(params[1]))
-		actual_exit(var, var->exit);
+		actual_exit(var, 2);
 	if (params[2])
 		ft_err(EXIT_FAILURE, EXIT, ERR_TOO_MANY_ARGS, 0);
-	actual_exit(var, var->exit);
+	else
+		actual_exit(var, ft_atoi(params[1]));
+	actual_exit(var, 1);
 	return (EXIT_SUCCESS);
 }

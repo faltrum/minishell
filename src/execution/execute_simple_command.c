@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:28:30 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/11 06:37:26 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:05:50 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,13 @@ static int	execute_here(t_var *var, char **params, int flags)
 	int		i;
 	int		exit;
 
-	i = 0;
+	i = 0;	
+	if (var->fds_list[2] > 2)
+		close(var->fds_list[2]);
 	while (var->act && var->act[i].action)
 	{
 		if (ft_strcmp(params[0], var->act[i].action) == 0)
 		{
-			(void) flags;
 			exit = (*(var->act[i].function))(var, params);
 			if (flags & SUBSHELL)
 			{
@@ -83,6 +84,11 @@ static int	execute_in_subshell(t_var *var, \
 	set_signal_ignore(SIGINT);
 	waitpid(pid, &status, 0);
 	set_signal_handler(SIGINT, sint_handler);
+	close(1);
+	close(0);
+	while (waitpid(-1, NULL, 0) != -1)
+		;
+	restore_fds(var->fds_list);
 	if (WIFSIGNALED(status))
 		return (WTERMSIG(status) + 128);
 	else if (WIFEXITED(status))
