@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:34:19 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/11 02:02:07 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 06:30:50 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	get_key_and_value_export(char **key, char **value, char *param)
 	{
 		free(*key);
 		free(*value);
-		ft_err(0, ERR_AMB_REDIR, 0, 0);
+		ft_err(0, ERR_MALLOC, 0, 0);
 		return (-1);
 	}
 	return (0);

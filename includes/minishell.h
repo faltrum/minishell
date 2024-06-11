@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:39:15 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/11 01:25:25 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 06:42:59 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,17 @@ int			search_pipe(char *str);
 int			search_andand_or_oror(char *str, char *c);
 int			search_list(char *str);
 int			search_redir(char *str, int *i);
+int			parse_here_docs(t_var *var, t_command *command_tree);
 int			search_word(char *str, int *i);
 char		*get_left_side(char	*str, enum e_connector connector);
 char		*get_right_side(char *str, enum e_connector connector);
 
 //SIGNALS
 void		init_signals(void);
-void		reset_signal(t_var *var);
 void		set_signal_ignore(int signal);
 void		set_signal_handler(int signal, void (*handler));
 void		sint_handler(int signal);
+void		sint_handler_heredoc(int signal);
 
 //BUILT-IN
 int			is_builtin(t_var *var, char *command);

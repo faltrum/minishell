@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 02:22:32 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/11 01:32:49 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 06:40:26 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,18 @@ static int	empty_par(char *str)
 
 static t_command	*parse_list_command(char *str)
 {
+	t_command *command;
+
 	if (left_par(str) == -1)
 		return (NULL);
 	else if (right_par(str) == -1)
 		return (NULL);
 	else if (empty_par(str) == -1)
 		return (NULL);
-	else
-		return (parse_list(str));
+	command = parse_list(str);
+	if (command)
+		command->flags = SUBSHELL;
+	return (command);
 }
 
 t_command	*parse_list(char *str)

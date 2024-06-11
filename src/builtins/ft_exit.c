@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 04:01:19 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/11 02:05:30 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 07:36:49 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static int	is_num(char *str)
 	char	*s;
 
 	s = str;
-	while (*str == ' ')
-		str ++;
+	if (!*str)
+		return (ft_err(0, EXIT, s, ERR_NUMERIC_ARG));
 	if (*str == '+' || *str == '-')
 		str ++;
 	while (ft_isdigit(*str))
@@ -28,16 +28,22 @@ static int	is_num(char *str)
 	return (1);
 }
 
-int	ft_exit(t_var *var, char **params) // FREE DE COSAS
+static void	actual_exit(t_var *var, int ex)
 {
-	printf(STR_EXIT);
-	if (params[1] && params[2])
-		return (ft_err(EXIT_FAILURE, EXIT, ERR_TOO_MANY_ARGS, 0));
-	if (params[1])
-	{
-		if (!is_num(params[1]))
-			return (2);
-		exit ((unsigned char) ft_atoi(params[1]));
-	}
-	exit(var->exit);
+	free_command_tree(var->command_tree);
+	minishell_cleanup(var);
+	exit ((unsigned char)  ex);
+}
+
+int	ft_exit(t_var *var, char **params)
+{
+	write(1, STR_EXIT, ft_strlen(STR_EXIT));
+	if (!params[1])
+		actual_exit(var, var->exit);
+	if (!is_num(params[1]))
+		actual_exit(var, var->exit);
+	if (params[2])
+		ft_err(EXIT_FAILURE, EXIT, ERR_TOO_MANY_ARGS, 0);
+	actual_exit(var, var->exit);
+	return (EXIT_SUCCESS);
 }

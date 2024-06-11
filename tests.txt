@@ -1,0 +1,432 @@
+// SEÑALES
+CTRL+C
+CTRL+D
+CTRL+\
+CTRL+C, CTRL+C, CTRL+C, exit
+CTRL+C, CTRL+C, CTRL+C, Ctrl+D
+
+cat | ls
+#- Enter
+#- Ctrl+D
+#- Ctrl+\
+#- Ctrl+C
+
+grep oi | ls
+#- Enter + Ctrl+D
+#- Ctrl+D
+#- "oi" + Enter + Ctrl+D
+#- Ctrl+\
+#- Ctrl+C
+#- "oi" + Enter + Ctrl+\
+
+yes
+#- Ctrl+C
+#- Ctrl+\
+#- Ctrl+D
+
+./test_files/loop.out | ls
+#- Ctrl+C
+#- Ctrl+\
+#- Ctrl+D
+
+ls | yes
+#- Ctrl+C
+#- Ctrl+\
+#- Ctrl+D
+
+
+// HERE DOC
+* Confirmar que here doc ocurre antes que todo, y que
+ante una señal se suspende la ejecucion de la pipeline entera.
+* Encadenar varios here doc
+* SIGINT y CTRL d
+* Solo se expanden los $, sin importr las comillas, dentro del heredoc
+
+
+// BONUS CONJUCTIONS
+echo 1 && echo 2
+ech 1 && echo 2
+echo 1 || echo 2
+ech 1 || echo 2
+echo "&&"  echo hi
+echo "&&"  echo hi
+echo "||"  echo hi
+echo "|"|  echo hi
+echo " |"|  echo hi
+echo "()|&&))("
+ls doesnotexists&& echo adios
+ls doesnotexists|| echo bonjour
+echo hola&& ls doesnotexists
+echo a|| b||echo c|| echo k|| echo z
+echo a || echo b|| echo c ||echo d     ||   echo e   ||echo f&&        echo g@|| with spaces
+echo hola && echo adios || echo noejecuta && echo si ejecuta
+echo hola && echon adios || echo siejecuta && echo fin
+
+// ECHO
+echo
+echo ñ
+echo hi
+/bin/echo hi
+echo $PATH
+echo $NONEXIST
+echo -n
+echo -n hi
+echo --n hi
+echo -nn hi
+echo -n -n hi
+echo hi -n
+echo "-n -n -n" -n hi
+
+// CD
+cd " "
+cd "" ""
+cd / many args
+cd ' / '
+cd noexisteeee
+cd notadir
+cd dir_sinpermissos
+cd ~ (SIN HOME)
+cd (SIN HOME)
+cd .
+cd - (Sin OLDPWD)
+cd - (Varias veces)
+cd 255chars255chars255chars255char255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars@cd maxpathlen
+cd 256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars
+mkdir testdirtest;cd testdirtest;bash;cd .. && rm -rf testdirtest && exit;pwd;cd
+mkdir testdir;cd testdir;pwd;cd ..;pwd;rm -rf testdir; cd - (deleted old path dir)
+cd;pwd;cd -;pwd
+
+// PWD
+pwd
+pwd many args
+pwd (NOT SET)
+
+// ENV
+env
+env | grep TESTVAR (export TESTVAR)
+env | grep TESTVAR (export TESTVAR=)
+env | grep TESTVAR (export TESTVAR="")
+env | grep TESTVAR (export TESTVAR=123)
+
+// EXIT
+exit
+exit 0
+exit -0
+exit 42network
+exit +
+exit ++
+exit -
+exit ---
+exit +0
+exit ++0
+exit --0
+exit ++1
+exit 1
+exit +1
+exit -1
+exit --1
+exit 1 2 3
+exit 1 not numeric
+exit not numeric 2
+exit 42 | cat
+
+// EXPORT
+export 1A=value
+export /A=value
+export A/=value
+export 'A=value'
+export ' A=value'
+export 'A =value'
+export TEST=test
+export TEST=test TESTT=test2
+export TEST=test W:RON:G=wrong TESTT=test2
+export EMPTY EMPTY_TOO= NOT_EMPTY=contnent
+export TEST=value TEST=value2
+export TEST=value (Existing variable)
+export correct=correct wrong%=wrong
+export wrong%=wrong correct=correct
+export PATH='/usr/bin'; whoami
+
+// PARAMETER EXPANSION
+echo $?
+echo $
+echo hi$
+echo '$ '
+echo $/
+echo "'$?'"
+echo $USER
+echo $NONEXIST
+$NONEXIST $NONEXIST
+echo $USER$PATH$PWD
+echo "$USER$PATH$PWD"
+echo '$USER$PATH$PWD'
+echo '$USER",$PATH,$PWD'
+echo $USER"$PATH"$PWD"USER"$PATH"$PWD"
+echo $USER'$PATH'$PWD'USER'$PATH'$PWD'
+$VAR (export $VAR)
+$VAR (export $VAR="            abc")
+$VAR (export $VAR="            abc               ssss")
+echo $VAR noskip hi@VAR: (export VAR="-n")
+
+// QUOTES
+'echo' hi
+"echo" hi
+""echo hi
+''echo hi
+" "echo hi
+' 'echo hi
+echo'' hi
+echo"" hi
+echo' ' hi
+echo" " hi
+''''''''''echo hi
+""""""""""echo hi
+echo'''''''''' hi
+echo"""""""""" hi
+"e"'c'h"o" hi
+ec""ho hi
+ec""h''o hi
+'''echo' hi
+'echo' 'hi'
+'echo' 'hi'''
+'echo' 'hi' ''
+"echo" hi
+"""echo" hi
+"echo" "hi"
+"echo" "hi"""
+"echo" "hi" ""
+echo '""""""""""""'
+'echo' "hi"'' " ' "' "' "" ''''''""
+echo hi"hi" hi'h"i'
+echo "hi" "hi"
+echo "hi"  "hi"
+
+//SYNTAX
+echo >
+echo >>
+echo <
+echo <<
+echo >>>
+echo <<<
+echo hi >< file
+test | >
+test | >>
+test | <
+|test
+ | test
+< | test
+<< | test
+> | test
+>> | test
+| < test
+| << test
+| > test
+| >> test
+| test
+(test &&)
+(&& test)
+1 &&
+&& 2
+1 (test)
+(test) 1
+< | a
+> | a
+>> | a
+| < a
+| > a
+| >> a
+< && a
+> && a
+>> && a
+< || a
+> || a
+>> || a
+< ) a
+> ) a
+>> ) a
+&& < a
+&& > a
+&& >> a
+&& || a
+&& ) a
+|| < a
+|| > a
+|| >> a
+|| && a
+|| ( a
+|| ) a
+) < a
+) > a
+) >> a
+( ) a
+) && a
+) || a
+) ( a
+() a
+) a
+&&echo
+&& echo
+ && echo
+||echo
+|| echo
+ || echo
+<<<
+<<<<
+> '
+echo hi |    |  < >>
+echo hi |  < >>   |  |
+
+//PIPES
+echo | /bin/cat
+echo hi | /bin/cat
+cat /etc/shells | head -c 10
+ls | cat -e
+ls -l | cat -e
+echo hola | asdf
+asdf | echo hola
+sleep 1 | ls | cat -n
+
+// Redirects
+> file
+>> file
+echo hola | > filepipe
+> file_first | > file_second
+echo hi > file
+echo hi >> file   echo hi >> file
+echo hi > *
+echo > file hi
+echo >> file hi   echo >> file hi
+> file echo hi
+>> file echo hi   >> file echo hi
+echo hi > file2 > file hi
+echo hi >> file2 > file hi   echo hi >> file2 > file hi
+echo hi > file2 >> file hi   echo hi > file2 >> file hi
+echo hi > file2 > file hi   echo hi > file2 > file hi
+echo hi >> file2 >> file hi   echo hi >> file2 >> file hi
+echo hi>file2>file hi
+echo hi>>file2>>file hi
+echo hi > file3 > file2 > file hi   echo hii > file3 > file2 > file hii
+echo hi > file3 >> file2 > file hi   echo hii > file3 >> file2 > file hii
+echo hi > file3 > file2 >> file hi   echo hii > file3 > file2 >> file hii
+echo hi >> file3 > file2 > file hi   echo hii >> file3 > file2 > file hii
+echo hi >> file3 > file2 >> file hi   echo hii >> file3 > file2 >> file hii
+echo hi >> file3 >> file2 > file hi   echo hii >> file3 >> file2 > file hii
+echo hi>file3>file2>file hi
+> file3 echo hi > file2 > file hi   > file3 echo hi > file2 > file hi
+> file3 echo hi > file2 >> file hi   > file3 echo hi > file2 >> file hi
+>> file3 echo hi > file2 > file hi   >> file3 echo hi > file2 > file hi
+> file3 echo hi >> file2 > file hi   > file3 echo hi >> file2 > file hi
+>file3 echo hi>file2>file hi   > file3 echo hi > file2 > file hi
+echo hi >filea>fileb>filec hi   echo hi >filea>fileb>filec hi
+echo hi >filea>>fileb>filec hi   echo hi >filea>>fileb>filec hi
+echo hi >filea>fileb>>filec hi   echo hi >filea>fileb>>filec hi
+echo hi >>filea>fileb>filec hi   echo hi >>filea>fileb>filec hi
+echo -n hi >>'simple'quote;echo -n hi >>'simple'quote
+echo hi > 'with spaces'
+echo hi >> 'with spaces'
+# mkdir testfolder
+echo hi > testfolder
+echo hi >> testfolder
+# chmod 000 testfolder &> /dev/null
+echo hi > testfolder
+echo hi >> testfolder
+# touch file && touch file2 && touch file3
+# chmod 000 file && chmod 000 file2  && chmod 000 file3
+echo > file hi
+echo >> file2 hi
+> file echo hi
+>> file3 echo hi
+cat < nonexist
+cat < $USER
+cat < file3
+echo hi < non_exist > wrong;
+< non_exist echo hi > wrong
+> correct echo hi < non_exist
+echo this is the file > file;echo this is not the file > file2;cat < file 3< file2
+
+// EXTRA
+env | grep PWD; cd testdirtest;env | grep PWD; unset PWD; cd ..; env | grep PWD
+env | grep PWD; cd testdirtest;env | grep PWD; export PWD=nosensedir; cd ..; env | grep PWD
+#touch echo && chmod 777 echo
+./echo@file with permission named echo
+#rm echo
+# keep track of OLDPWD
+cd obj
+echo $PWD $OLDPWD
+
+# invalid command, followed by empty input, should keep the exit code
+doesntexist
+
+echo $?
+
+#invalid command, followed by empty variable, should clear the exit code
+doesntexist
+$EMPTY
+echo $?
+
+# Check if there isn't a zombie process called `cat`
+echo "hi" | cat | cat | cat | cat | cat | cat | cat
+ps -a
+
+# Should skip the empty argument, and print hello after spaces
+echo - "" "  " hello
+
+# Neither of these unsets should break the shell, and you should still be able to call `/bin/ls`
+unset USER
+unset PATH
+unset PWD
+
+// PATHNAME EXPANSIONS
+*
+echo *
+#touch file1.txt file2.txt
+echo *.txt
+echo fil*
+echo *le*
+echo *.*
+echo *.md
+echo built*
+echo oi*
+echo *.supp
+echo 'bye *' bo*s bye
+echo 'bye *' mini* bye
+echo *ME*
+echo "*"
+"*"
+manual*
+echo * | awk -v RS=" " '{print}' | sort
+<*.txt
+echo 'bye *' t*.c bye
+echo *EMPTY hello READ* world
+cat <README*
+echo "pip*"
+echo *bonus *.supp bonjour
+
+#touch '*' 'a*' '*a' Makefile testa atest
+echo *
+echo ***
+echo '*'
+echo "*"
+echo "*"*
+echo *"*"
+echo *""""""
+echo *"*""""*"""
+echo *""*""*
+echo a*
+echo *a
+echo Ma*le
+echo *ke*
+echo ****''''''''
+echo """"""""*
+echo "Makefile"*
+echo *"Makefile"
+echo "Makefile"***
+echo ***"Makefile"
+echo Makefile***''''
+echo ''''***''''Makefile
+echo ''*''Make
+echo *'Makefile''*''*'
+echo *Makefil
+echo *Makefilea
+echo akefile*
+echo kefile*

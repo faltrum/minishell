@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:57:02 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/11 01:38:01 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 03:31:21 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char	*get_heredoc_line(t_var *var)
 		if (line_skip)
 			*line_skip = 0;
 	}
-	if (g_sigint == SINT_ON || !line)
+	if (g_sigint == SIGINT || !line)
 		return (line);
 	parameter_expansion(var, &line);
 	return (line);
@@ -53,9 +53,9 @@ int	do_here_doc(t_var *var, t_redirect *redir)
 		return (heredoc_error(fds, NULL));
 	while (1)
 	{
-		write(var->fds_list[1], "> ", 2);
+		write(var->fds_list[1], HEREDOC_PREFIX, 2);
 		line = get_heredoc_line(var);
-		if (!line && g_sigint == SINT_HEREDOC)
+		if (!line && g_sigint != SIGINT)
 			ft_err_here_doc(0, WAR_HERE_EOF, redir->word, WAR_HERE_EOF2);
 		if (!line || !ft_strcmp(redir->word, line))
 			break ;
@@ -65,9 +65,37 @@ int	do_here_doc(t_var *var, t_redirect *redir)
 			return (heredoc_error(fds, line));
 		free(line);
 	}
-	if (g_sigint == SINT_ON)
+	if (g_sigint == SIGINT)
 		return (heredoc_cleanup(fds, line));
 	close(fds[1]);
 	redir->fd = fds[0];
 	return (0);
 }
+
+int	parse_here_docs(t_var *var, t_command *command_tree)
+{
+	t_redirect *redir;
+
+	if (command_tree->type == cm_simple)
+	{
+		redir = command_tree->value.simple->redirects;
+		while (redir && g_sigint != SIGINT)
+		{
+			if (redir->type == here_doc && do_here_doc(var, redir) == -1)
+					return (-1);
+			redir = redir->next;
+		}
+		if (g_sigint != SIGINT)
+			return (0);
+	}
+	else if (command_tree->type == cm_connection && \
+		parse_here_docs(var, command_tree->value.connection->first) == 0 && \
+		parse_here_docs(var, command_tree->value.connection->second) == 0)
+		return (0);
+	else
+		return (-1);
+	return (0);
+}
+
+//			if (g_sigint == SIGINT)
+//				return (-1);

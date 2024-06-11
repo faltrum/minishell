@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:38:34 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/11 01:57:23 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 06:39:29 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ struct s_command
 {
 	enum e_command_type		type;
 	union u_command_value	value;
+	int						flags;
 };
 
 #endif

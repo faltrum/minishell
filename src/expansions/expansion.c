@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:56:55 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/10 08:44:35 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 02:32:44 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,10 @@ static int	expand_argument(t_var *var, t_word_list *node, t_word_list *next)
 static int	expand_redirection(t_var *var, t_redirect *redirect)
 {
 	t_word_list	*node;
-	int			here_exit;
 
 	node = NULL;
-	if (redirect->type == here_doc)
-	{
-		g_sigint = SINT_HEREDOC;
-		here_exit = do_here_doc(var, redirect);
-		if (g_sigint == SINT_HEREDOC)
-			g_sigint = SINT_OFF;
-		if (g_sigint == SINT_ON)
-			return (-1);
-		return (here_exit);
-	}
-	else if (get_expanded_list(var, &(redirect->word), &node) == -1)
+	if (redirect->type != here_doc && \
+		get_expanded_list(var, &(redirect->word), &node) == -1)
 		return (-1);
 	redirect->expanded = node;
 	return (0);

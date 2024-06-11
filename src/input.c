@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:30 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/11 01:59:17 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 02:22:58 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,15 @@ static void	save_env(t_var *var, char **env)
 		env ++;
 	}
 }
-
+void	init_signals(void)
+{
+	g_sigint = 0;
+	set_signal_ignore(SIGQUIT);
+	set_signal_handler(SIGINT, sint_handler);
+}
 void	init_minishell(char **env, t_var *var)
 {
+	init_signals();
 	var->fds_list[0] = dup(STDIN_FILENO);
 	if (var->fds_list[0] == -1)
 		ft_err(0, "dup", strerror(errno), WAR_BROKE_STDIN);

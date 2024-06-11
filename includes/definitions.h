@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:38:26 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/11 01:58:25 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 02:27:24 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define END_OF_LINE "\n"
 # define BLANK_CHARS " \t"
 # define META_CHARS "|&()<>"
+# define HEREDOC_PREFIX "> "
 
 //COLORS
 # define BLUE "\033[0;34m"

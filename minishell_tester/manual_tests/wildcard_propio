@@ -5,8 +5,6 @@ touch Makefile
 touch testa
 touch atest
 
-Matches
-
 echo *
 echo ***
 echo '*'
@@ -28,8 +26,6 @@ echo "Makefile"***
 echo ***"Makefile"
 echo Makefile***''''
 echo ''''***''''Makefile
-
-Fails
 echo ''*''Make
 echo *'Makefile''*''*'
 echo *Makefil
