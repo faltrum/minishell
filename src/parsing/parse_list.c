@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 02:22:32 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/11 06:40:26 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 22:17:57 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	right_par(char	*str)
 {
 	size_t	len;
 
-	len = strlen(str) - 1;
+	len = ft_strlen(str) - 1;
 	while (len > 0)
 	{
 		if (str[len] == ' ')

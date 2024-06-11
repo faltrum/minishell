@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:28:30 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/11 17:05:50 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 22:16:22 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	execute_here(t_var *var, char **params, int flags)
 	int		i;
 	int		exit;
 
-	i = 0;	
+	i = 0;
 	if (var->fds_list[2] > 2)
 		close(var->fds_list[2]);
 	while (var->act && var->act[i].action)

@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:55:19 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/11 01:55:37 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 22:17:57 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	search_andand_or_oror(char *str, char *c)
 
 	if (!str)
 		return (0);
-	len = strlen(str);
+	len = ft_strlen(str);
 	quoted = -1;
 	nesting = 0;
 	while (!*c && len > 0)

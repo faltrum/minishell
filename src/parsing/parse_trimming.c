@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:55:58 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 15:01:49 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 22:17:57 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static char	*get_right_side_pipe(char *str)
 			break ;
 		i++;
 	}
-	return (ft_substr(str, i + 1, strlen(str)));
+	return (ft_substr(str, i + 1, ft_strlen(str)));
 }
 
 int	get_connector_char(enum e_connector connector, char *c)
@@ -77,7 +77,7 @@ char	*get_left_side(char	*str, enum e_connector connector)
 	int		nesting;
 
 	nesting = 0;
-	len = strlen(str);
+	len = ft_strlen(str);
 	if (!get_connector_char(connector, &c))
 		return (get_left_side_pipe(str));
 	while (len > 1)
@@ -103,7 +103,7 @@ char	*get_right_side(char *str, enum e_connector connector)
 	int		nesting;
 
 	nesting = 0;
-	len = strlen(str);
+	len = ft_strlen(str);
 	if (!get_connector_char(connector, &c))
 		return (get_right_side_pipe(str));
 	while (len > 1)
@@ -116,5 +116,5 @@ char	*get_right_side(char *str, enum e_connector connector)
 			break ;
 		len--;
 	}
-	return (ft_substr(str, len + 1, strlen(str)));
+	return (ft_substr(str, len + 1, ft_strlen(str)));
 }

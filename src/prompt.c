@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 00:33:54 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/11 01:12:58 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 22:17:57 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ char	*get_cwd(t_var *var)
 	getcwd(cwd, sizeof(cwd));
 	if (getcwd(cwd, sizeof(cwd)) == NULL)
 		cwd[0] = 0;
-	len = strlen(GREEN) + ft_strlen(name) + strlen(RESET) \
-		+ strlen(BLUE) + strlen(cwd) \
-		+ strlen(RESET) + 4;
+	len = ft_strlen(GREEN) + ft_strlen(name) + ft_strlen(RESET) \
+		+ ft_strlen(BLUE) + ft_strlen(cwd) \
+		+ ft_strlen(RESET) + 4;
 	if (ft_errloc(len, 1, (void **) &prompt) == -1)
 		return (NULL);
 	set_prompt(prompt, name, cwd, len);

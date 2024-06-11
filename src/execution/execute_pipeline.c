@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:58:25 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/11 01:46:28 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 22:18:13 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int fds[2], t_var *var, int islast)
 	if (fds[0] != -1 && dup2(fds[0], STDIN_FILENO) == -1)
 		perror(PROGRAM_NAME);
 	if (fds[0] != -1)
-		close (fds[0]);
+		close(fds[0]);
 	if (islast)
 	{
 		if (dup2(var->fds_list[1], STDOUT_FILENO) == -1)
