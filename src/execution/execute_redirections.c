@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:58:12 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/11 02:03:51 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/12 08:47:35 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	redirect_append(t_redirect *redirects)
 	if (fd == -1 || dup2(fd, STDOUT_FILENO) == -1)
 	{
 		exit = EXIT_FAILURE;
-		perror(ERR_PERROR_APPEND_REDIR);
+		ft_err(-1, redirects->word, strerror(errno), 0);
 	}
 	if (fd > -1)
 		close(fd);
@@ -43,7 +43,7 @@ static int	redirect_input(t_redirect *redirects)
 	if (fd == -1 || dup2(fd, STDIN_FILENO) == -1)
 	{
 		exit = EXIT_FAILURE;
-		perror(ERR_PERROR_INPUT_REDIR);
+	ft_err(-1, redirects->word, strerror(errno), 0);
 	}
 	if (fd > -1)
 		close(fd);
@@ -62,7 +62,7 @@ static int	redirect_output(t_redirect *redirects)
 	if (fd == -1 || dup2(fd, STDOUT_FILENO) == -1)
 	{
 		exit = EXIT_FAILURE;
-		perror(ERR_PERROR_OUTPUT_REDIR);
+		ft_err(-1, redirects->word, strerror(errno), 0);
 	}
 	if (fd > -1)
 		close(fd);

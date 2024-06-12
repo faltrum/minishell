@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 04:01:31 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/12 01:17:52 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/12 09:09:03 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,7 @@ static int	change_dir(t_var *var, char *dir)
 
 static int	next_options(t_var *var, t_env *env, char **params, char *dir)
 {
-	if (params[1][0] == '\0')
-		ft_err(0, "cd", "null directory", 0);
-	else if (!ft_strcmp(params[1], "/"))
+	if (!ft_strcmp(params[1], "/"))
 		dir = "/";
 	else if (!ft_strcmp(params[1], "-"))
 	{
@@ -55,7 +53,7 @@ int	ft_cd(t_var *var, char **params)
 	env = NULL;
 	if (params[1] && params[2])
 		ft_err(0, CD, ERR_TOO_MANY_ARGS, 0);
-	else if (!params[1] || !ft_strcmp(params[1], "~"))
+	else if (!params[1] || !ft_strcmp(params[1], "~") || params[1][0] == '\0')
 	{
 		env = find_in_env(var->env, "HOME");
 		if (!env)

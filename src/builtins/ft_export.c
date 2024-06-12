@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:34:19 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/12 01:33:54 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/12 09:09:50 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,22 @@ static int	get_add_var_env(t_var *var, char *param)
 
 static int	valid_identifier(char *str, int *exit)
 {
+	char	*s0;
+
+	s0 = str;
 	if (!str)
 		return (-1);
 	if (!is_identifier(*str, 1))
 	{
 		*exit = EXIT_FAILURE;
-		return (ft_err(-1, EXPORT, str, ERR_VALID_IDENTIFIER));
+		return (ft_err_here_doc(-1, EXPORT, s0, ERR_VALID_IDENTIFIER));
 	}
 	while (*str && is_identifier(*str, 0))
 		str ++;
 	if (!*str || *str == '=')
 		return (0);
 	*exit = EXIT_FAILURE;
-	return (ft_err(-1, EXPORT, str, ERR_VALID_IDENTIFIER));
+	return (ft_err(-1, EXPORT, s0, ERR_VALID_IDENTIFIER));
 }
 
 static int	print_export(t_env *env)
