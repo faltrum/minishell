@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 20:35:35 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 20:39:50 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/12 09:23:07 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static void	update_pathname_flag(char **wild, int *i, int *flag)
 	else if ((*wild)[*i] == DQUOTE)
 		(*flag) ^= DQUOTED;
 	(*wild)++;
+	(*i) --;
 }
 
 int	wildcard_matches(char *wild, char *match, int flag, int j)
@@ -52,7 +53,7 @@ int	wildcard_matches(char *wild, char *match, int flag, int j)
 	int	i;
 
 	i = 0;
-	while ((wild[i] && match[i]) || flag)
+	while (((wild[i] && match[i]) || flag))
 	{
 		if (wild[i] == QUOTE || wild[i] == DQUOTE)
 			update_pathname_flag(&wild, &i, &flag);
