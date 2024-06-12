@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 00:33:54 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 00:54:57 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/12 09:07:35 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ static	void	set_prompt(char *prompt, char *name, char *cwd, size_t len)
 	ft_strlcat(prompt, BLUE, len);
 	ft_strlcat(prompt, cwd, len);
 	ft_strlcat(prompt, RESET, len);
-	ft_strlcat(prompt, "$", len);
-	ft_strlcat(prompt, " ", len);
+	ft_strlcat(prompt, PROMPT_END, len);
 }
 
 char	*get_cwd(t_var *var)
@@ -41,9 +40,9 @@ char	*get_cwd(t_var *var)
 	getcwd(cwd, sizeof(cwd));
 	if (getcwd(cwd, sizeof(cwd)) == NULL)
 		cwd[0] = 0;
-	len = strlen(GREEN) + ft_strlen(name) + strlen(RESET) \
-		+ strlen(BLUE) + strlen(cwd) \
-		+ strlen(RESET) + 4;
+	len = ft_strlen(GREEN) + ft_strlen(name) + ft_strlen(RESET) \
+		+ ft_strlen(BLUE) + ft_strlen(cwd) \
+		+ ft_strlen(RESET) + 4;
 	if (ft_errloc(len, 1, (void **) &prompt) == -1)
 		return (NULL);
 	set_prompt(prompt, name, cwd, len);

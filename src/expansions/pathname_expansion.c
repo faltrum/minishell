@@ -6,69 +6,13 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:57:16 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 04:52:22 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 01:35:51 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
-int	match_everything(char *str, int flag)
-{
-	int	i;
-	int	found;
-
-	i = 0;
-	found = 0;
-	while (str[i])
-	{
-		if (str[i] == QUOTE || str[i] == DQUOTE)
-			update_quote_flag(str, &i, &flag);
-		else if (!(flag & QUOTED) && !(flag & DQUOTED) && str[i++] == '*')
-			found = 1;
-		else
-			return (0);
-	}
-	return (found);
-}
-
-int	wildcard_matches(char *wild, char *match, int flag)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while ((wild[i] && match[i]) || flag)
-	{
-		if (wild[i] == QUOTE || wild[i] == DQUOTE)
-		{
-			update_quote_flag(wild, &i, &flag); // Create custom
-			wild ++;
-			i --;
-		}
-		else if (!(flag & QUOTED) && !(flag & DQUOTED) && wild[i] == '*')
-		{
-			j = 0;
-			if (match_everything(wild + i, 0))
-				return (1);
-			while (match[i + j])
-			{
-				if (wildcard_matches(wild + i + 1, match + i + j, flag))
-					return (1);
-				j ++;
-			}
-			return (0);
-		}
-		else if (wild[i] == match[i])
-			i ++;
-		else if (wild[i] != match[i])
-			return (0);
-	}
-	if (wild[i] == match[i] || match_everything(wild + i, 0))
-		return (1);
-	return (0);
-}
-
-int	expand_pathname(t_word_list *next, \
+static int	expand_pathname(t_word_list *next, \
 t_word_list *node, t_word_list *directories)
 {
 	t_word_list	*matches;
@@ -78,7 +22,7 @@ t_word_list *node, t_word_list *directories)
 	while (directories)
 	{
 		if (node->word && *(node->word) \
-		&& wildcard_matches(node->word, directories->word, 0))
+		&& wildcard_matches(node->word, directories->word, 0, 0))
 		{
 			matches = allocate_last_node(&head);
 			matches->word = ft_strdup(directories->word);
@@ -88,6 +32,7 @@ t_word_list *node, t_word_list *directories)
 	if (head)
 	{
 		matches->next = next;
+		free(node->word);
 		node->word = head->word;
 		node->next = head->next;
 		free(head);
@@ -95,7 +40,7 @@ t_word_list *node, t_word_list *directories)
 	return (1);
 }
 
-int	should_be_expanded(char *str)
+static int	should_be_expanded(char *str)
 {
 	int	i;
 	int	flags;
@@ -129,5 +74,6 @@ int	pathname_expansion(t_word_list *node)
 			expand_pathname(next, node, directories);
 		node = next;
 	}
+	free_word_list(directories, 1);
 	return (0);
 }

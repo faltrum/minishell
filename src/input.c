@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:30 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/09 03:46:06 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 02:22:58 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ static void	save_actions(t_var *var)
 		NUM_ACTIONS + 1, (void **) &(var->act)) == -1)
 	{
 		var->act = NULL;
-		ft_err(-1, \
-			"warning: memory error allocating builtins", 0, 0);
+		ft_err(-1, WAR_BUILTIN_MEMORY, 0, 0);
 		return ;
 	}
 	var->act[0].action = EXIT;
@@ -40,16 +39,17 @@ static void	save_actions(t_var *var)
 	var->act[7].function = &ft_help;
 	var->act[8].action = NULL;
 }
+
 static int	env_str_to_node(int eq_ind, char *str, char **key, char **value)
 {
 	*key = ft_substr(str, 0, eq_ind);
 	if (!*key)
-		return (ft_err(-1, STR_MEMORY_ERR, strerror(errno), 0));
+		return (ft_err(-1, ERR_MALLOC, strerror(errno), 0));
 	*value = ft_substr(str, eq_ind + 1, ft_strlen(str));
 	if (!*value)
 	{
 		free(*key);
-		return (ft_err(-1, STR_MEMORY_ERR, strerror(errno), 0));
+		return (ft_err(-1, ERR_MALLOC, strerror(errno), 0));
 	}
 	return (0);
 }
@@ -78,15 +78,22 @@ static void	save_env(t_var *var, char **env)
 		env ++;
 	}
 }
-
+void	init_signals(void)
+{
+	g_sigint = 0;
+	set_signal_ignore(SIGQUIT);
+	set_signal_handler(SIGINT, sint_handler);
+}
 void	init_minishell(char **env, t_var *var)
 {
-	var->stdfds[0] = dup(STDIN_FILENO);
-	if (var->stdfds[0] == -1)
-		ft_err(0, "dup", strerror(errno), "warning broke STDIN");
-	var->stdfds[1] = dup(STDOUT_FILENO);
-	if (var->stdfds[1] == -1)
-		ft_err(0, "dup", strerror(errno), "warning broke STDOUT");
+	init_signals();
+	var->fds_list[0] = dup(STDIN_FILENO);
+	if (var->fds_list[0] == -1)
+		ft_err(0, "dup", strerror(errno), WAR_BROKE_STDIN);
+	var->fds_list[1] = dup(STDOUT_FILENO);
+	if (var->fds_list[1] == -1)
+		ft_err(0, "dup", strerror(errno), WAR_BROKE_STDOUT);
+	var->fds_list[2] = -1;
 	save_env(var, env);
 	save_actions(var);
 	var->exit = EXIT_SUCCESS;

@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:58:12 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 04:42:11 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/12 08:47:35 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ static int	redirect_append(t_redirect *redirects)
 	if (fd == -1 || dup2(fd, STDOUT_FILENO) == -1)
 	{
 		exit = EXIT_FAILURE;
-		perror("minishell: append");
+		ft_err(-1, redirects->word, strerror(errno), 0);
 	}
-	close(fd);
+	if (fd > -1)
+		close(fd);
 	return (exit);
 }
 
@@ -42,9 +43,10 @@ static int	redirect_input(t_redirect *redirects)
 	if (fd == -1 || dup2(fd, STDIN_FILENO) == -1)
 	{
 		exit = EXIT_FAILURE;
-		perror("minishell: redirect input");
+	ft_err(-1, redirects->word, strerror(errno), 0);
 	}
-	close(fd);
+	if (fd > -1)
+		close(fd);
 	return (exit);
 }
 
@@ -60,9 +62,10 @@ static int	redirect_output(t_redirect *redirects)
 	if (fd == -1 || dup2(fd, STDOUT_FILENO) == -1)
 	{
 		exit = EXIT_FAILURE;
-		perror("minishell: redirect output");
+		ft_err(-1, redirects->word, strerror(errno), 0);
 	}
-	close(fd);
+	if (fd > -1)
+		close(fd);
 	return (exit);
 }
 
@@ -81,6 +84,9 @@ static int	set_redirect_word(t_redirect *redirect)
 			word = words->word;
 		words = words->next;
 	}
+	if (!word && redirect->type != here_doc)
+		return (-1);
+	free(redirect->word);
 	redirect->word = word;
 	return (0);
 }
@@ -93,11 +99,11 @@ int	execute_redirections(t_redirect *redirects)
 	while (exit == EXIT_SUCCESS && redirects)
 	{
 		if (redirects->type == here_doc && dup2(redirects->fd, 0) == -1)
-			exit = perr(EXIT_FAILURE, 3, "minishell: heredoc error: ", strerror(errno) ,"\n");
+			exit = ft_err(EXIT_FAILURE, ERR_HEREDOC, strerror(errno), 0);
 		else if (redirects->word)
 		{
 			if (set_redirect_word(redirects) == -1)
-				exit = perr(EXIT_FAILURE, 1, "minishell: ambiguous redirect\n");
+				exit = ft_err(EXIT_FAILURE, ERR_AMB_REDIR, 0, 0);
 			else if (redirects->type == append)
 				exit = redirect_append(redirects);
 			else if (redirects->type == input_redir)
@@ -105,6 +111,8 @@ int	execute_redirections(t_redirect *redirects)
 			else if (redirects->type == output_redir)
 				exit = redirect_output(redirects);
 		}
+		if (redirects->type == here_doc && exit == EXIT_SUCCESS)
+			close (redirects->fd);
 		redirects = redirects->next;
 	}
 	return (exit);

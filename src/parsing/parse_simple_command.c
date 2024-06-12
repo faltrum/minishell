@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:12:26 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 05:03:48 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 02:37:57 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	allocate_simple_command(t_command **node)
 {
-	if (ft_errloc(sizeof(**node), 1, (void **) node) == -1)
+	if (ft_errloc(sizeof(t_command), 1, (void **) node) == -1)
 		return (-1);
 	if (ft_errloc(sizeof(t_simple_command), 1, \
 		(void **) &(*node)->value.simple) == -1)
@@ -40,7 +40,7 @@ t_redirect **redir, t_word_list **words)
 		else if (search_word(str, &i))
 			res = parse_word(str, &i, words);
 		else if (str[i])
-			res = ft_err(-1, "syntax error near unexpected token", 0, 0);
+			res = ft_err(-1, ERR_UNEXPECTED_TOKEN, 0, 0);
 	}
 	if (res == -1)
 	{
@@ -51,15 +51,15 @@ t_redirect **redir, t_word_list **words)
 	}
 }
 
-t_command	*parse_simple_command(char* str)
+t_command	*parse_simple_command(char *str)
 {
 	t_command	*node;
 	t_word_list	*words;
 	t_redirect	*redirects;
 
 	words = NULL;
-	redirects = NULL;
 	node = NULL;
+	redirects = NULL;
 	if (allocate_simple_command(&node) == -1)
 		return (NULL);
 	parse_words_and_redirects(str, &redirects, &words);

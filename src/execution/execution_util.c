@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 11:27:12 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/09 03:58:06 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 01:40:57 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,15 @@
 
 void	restore_fds(int fds[2])
 {
-	(void) (fds);
-	if(dup2(fds[0], STDIN_FILENO) == -1)
-		perror("minishell");
+	if (dup2(fds[0], STDIN_FILENO) == -1)
+		perror(ERR_STDIN_PERROR);
 	if (dup2(fds[1], STDOUT_FILENO) == -1)
-		perror("minishell");
+		perror(ERR_STDOUT_PERROR);
 }
 
 int	is_builtin(t_var *var, char *command)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (var->act && var->act[i].action)

@@ -6,39 +6,20 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:38:34 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/09 02:24:07 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 06:39:29 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-# include "definitions.h" // Estan los enums. Cambiar nombre a data_structures o algo por el estilo y traerlos? Los enums funcionan como globales
+# include "definitions.h"
 
-typedef struct s_var	t_var;
+typedef struct s_var		t_var;
 
-// Descripción: Esta estructura representa un nodo en
-// el árbol de análisis sintáctico.
-// Campos:
-// 	operator: Un puntero a una cadena que representa
-// 		el operador asociado al nodo. Por ejemplo, >, <, ;, etc.
-// 	prev_operator: Un puntero a una cadena que
-// 		representa el operador previo al nodo.
-// 	command: Un puntero a una cadena que representa
-// 		el comando asociado al nodo.
-// 	checked: Un entero que indica si el nodo ha sido
-// 		verificado durante el análisis sintáctico.
-// 	left: Un puntero al hijo izquierdo del nodo.
-// 	right: Un puntero al hijo derecho del nodo.
-typedef struct s_info_tree
-{
-	char				*operator;
-	char				*prev_operator;
-	char				*command;
-	int					checked;
-	struct s_info_tree	*left;
-	struct s_info_tree	*right;
-}	t_info_tree;
+struct						s_command;
+
+typedef struct s_command	t_command;
 
 // Descripción: Esta estructura representa una variable
 // de entorno en la shell.
@@ -72,7 +53,6 @@ typedef struct s_actions
 	int		(*function)(t_var *var, char **params);
 }	t_actions;
 
-
 // Descripción: Esta estructura representa el estado
 // general de la shell.
 // Campos:
@@ -89,19 +69,12 @@ typedef struct s_actions
 
 typedef struct s_var
 {
-	struct s_info_tree	*tree;
+	t_command			*command_tree;
 	struct s_env		*env;
 	struct s_actions	*act;
 	int					exit;
-	int					stdfds[2];
+	int					fds_list[3];
 }	t_var;
-
-typedef struct s_pipe
-{
-	int	**pipes;
-	int	save;
-	int	num_pipes;
-}	t_pipe;
 
 typedef struct s_redirect	t_redirect;
 
@@ -121,10 +94,6 @@ struct s_redirect
 	t_word_list			*expanded;
 	int					fd;
 };
-
-struct						s_command;
-
-typedef struct s_command	t_command;
 
 typedef struct s_connection
 {
@@ -150,6 +119,7 @@ struct s_command
 {
 	enum e_command_type		type;
 	union u_command_value	value;
+	int						flags;
 };
 
 #endif

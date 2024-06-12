@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:56:47 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 04:45:54 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 02:00:25 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	sanitize_list(t_word_list *node)
 
 void	hide_quotes(char *str)
 {
-	int quoted;
+	int	quoted;
 
 	quoted = 0;
 	while (*str)
@@ -72,11 +72,11 @@ void	hide_quotes(char *str)
 	}
 }
 
-void	update_quote_flag(char *str , int *i, int *flags)
+void	update_quote_flag(char *str, int *i, int *flags)
 {
 	if (str[*i] == QUOTE)
 		(*flags) ^= QUOTED;
 	else if (str[*i] == DQUOTE)
 		(*flags) ^= DQUOTED;
-	(*i) ++;
+	(*i)++;
 }

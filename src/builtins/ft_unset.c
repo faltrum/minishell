@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 04:00:55 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 04:00:56 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/10 22:59:47 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_unset(t_var *var, char**params)
 	int		ind;
 
 	ind = 0;
-	while (params[ind])
+	while (params && params[ind])
 	{
 		env_name = find_in_env(var->env, params[ind]);
 		if (env_name)

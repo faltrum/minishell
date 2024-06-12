@@ -6,44 +6,43 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:55:36 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 04:18:03 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/12 00:58:35 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_bool	is_blank(char c)
+void	update_quote_flag_parsing(char c, int *flag)
 {
-	if (c && ft_strchr(" \t", c))
+	if (c == '\'' && !(*flag & DQUOTED))
+		*flag ^= QUOTED;
+	else if (c == '"' && !(*flag & QUOTED))
+		*flag ^= DQUOTED;
+}
+
+int	is_blank(char c)
+{
+	if (c && ft_strchr(BLANK_CHARS, c))
 		return (1);
 	return (0);
 }
 
-t_bool	is_meta(char c)
+int	is_meta(char c)
 {
-	if (ft_strchr("|&()<>", c) || is_blank(c))
+	if (ft_strchr(META_CHARS, c) || is_blank(c))
 		return (1);
 	return (0);
 }
 
-t_bool	is_regular(char c)
+int	is_regular(char c)
 {
 	return (!is_meta(c));
 }
 
-t_redirect	*last_redir_node(t_redirect *node)
+int	is_identifier(char c, int first)
 {
-	if (!node)
-		return (NULL);
-	while (node->next)
-		node = node->next;
-	return (node);
-}
-t_word_list	*last_word_node(t_word_list *node)
-{
-	if (!node)
-		return (NULL);
-	while (node->next)
-		node = node->next;
-	return (node);
+	if (first)
+		return (ft_isalpha(c) || c == '_');
+	else
+		return (ft_isalnum(c) || c == '_');
 }

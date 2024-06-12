@@ -6,19 +6,18 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:56:55 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 04:50:42 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 02:32:44 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_expanded_list(t_var *var, char *word, t_word_list **head)
+int	get_expanded_list(t_var *var, char **word, t_word_list **head)
 {
-	*head = NULL;
-	hide_quotes(word);
-	if (parameter_expansion(var, &word) == -1)
+	hide_quotes(*word);
+	if (parameter_expansion(var, word) == -1)
 		return (-1);
-	if (word_splitting(word, head) == -1)
+	if (word_splitting(*word, head) == -1)
 		return (-1);
 	if (pathname_expansion(*head) == -1)
 		return (-1);
@@ -30,10 +29,11 @@ static int	expand_argument(t_var *var, t_word_list *node, t_word_list *next)
 {
 	t_word_list	*new;
 
-	if (get_expanded_list(var, node->word, &new) == -1)
+	new = NULL;
+	if (get_expanded_list(var, &(node->word), &new) == -1)
 		return (-1);
-	// free(node->word);
 	last_word_node(new)->next = next;
+	free(node->word);
 	node->word = new->word;
 	node->next = new->next;
 	free(new);
@@ -42,18 +42,17 @@ static int	expand_argument(t_var *var, t_word_list *node, t_word_list *next)
 
 static int	expand_redirection(t_var *var, t_redirect *redirect)
 {
-	t_word_list *node;
+	t_word_list	*node;
 
 	node = NULL;
-	if (redirect->type == here_doc)
-		do_here_doc(var, redirect);
-	else if (get_expanded_list(var, redirect->word, &node) == -1)
+	if (redirect->type != here_doc && \
+		get_expanded_list(var, &(redirect->word), &node) == -1)
 		return (-1);
 	redirect->expanded = node;
 	return (0);
 }
 
-int	expand_command_lists(t_simple_command *command, t_var *var)
+int	expand_command_list(t_simple_command *command, t_var *var)
 {
 	t_word_list	*node;
 	t_word_list	*next;
@@ -71,8 +70,8 @@ int	expand_command_lists(t_simple_command *command, t_var *var)
 	while (redirects)
 	{
 		if (expand_redirection(var, redirects) == -1)
-			return (EXIT_FAILURE);
+			return (-1);
 		redirects = (redirects)->next;
 	}
-	return (EXIT_SUCCESS);
+	return (0);
 }

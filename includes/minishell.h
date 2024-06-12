@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:39:15 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/09 04:31:36 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/12 09:10:44 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,19 +63,21 @@ int			parse_redir(char *str, int *i, t_redirect **redirs);
 int			parse_word(char *str, int *i, t_word_list **words);
 int			add_word(char *str, int *i, char **word);
 int			search_pipe(char *str);
-int			search_andand_or_oror(char *str, char c);
+int			search_andand_or_oror(char *str, char *c);
 int			search_list(char *str);
 int			search_redir(char *str, int *i);
+int			parse_here_docs(t_var *var, t_command *command_tree);
 int			search_word(char *str, int *i);
+void		update_quote_flag_parsing(char c, int *flag);
 char		*get_left_side(char	*str, enum e_connector connector);
 char		*get_right_side(char *str, enum e_connector connector);
 
 //SIGNALS
 void		init_signals(void);
-void		reset_signal(t_var *var);
 void		set_signal_ignore(int signal);
 void		set_signal_handler(int signal, void (*handler));
 void		sint_handler(int signal);
+void		sint_handler_heredoc(int signal);
 
 //BUILT-IN
 int			is_builtin(t_var *var, char *command);
@@ -89,26 +91,22 @@ int			ft_export(t_var *var, char **params);
 int			ft_env(t_var *var, char **params);
 
 //ERROR
-void		stx_error(char *error_msg);
-int			exec_error(char *command, char *error_msg);
-void		stx_error_op(char *error_msg, char op);
-long long	perr(int return_value, int argc, ...); // Prohibido variadicos
-int			ft_err(int ret, char *s1, char *s2, char *s3);
+long long	ft_err(int ret, char *s1, char *s2, char *s3);
+int			ft_err_here_doc(int ret, char *s1, char *s2, char *s3);
 
 //EXECUTION
-int			execute_command_tree(t_command *head, t_var *var);
-int			execute_pipeline(t_command *node, t_var *var);
+int			exe_command_tree(t_command *head, t_var *var);
+int			exe_pipeline(t_command *node, t_var *var);
 int			do_here_doc(t_var *var, t_redirect *redir);
-int			execute_simple_command(t_simple_command	*command, \
+int			exe_simple_command(t_simple_command	*command, \
 			t_var *var, int flags);
 int			try_execution(t_var *var, char **params, int should_wait);
-int			execute_here(t_var *var, char **params);
 int			execute_redirections(t_redirect *redirects);
-char		*find_path(char *env, char *param);
+char		*find_path(t_env *env, char *param, int *exit);
 char		**env_to_array(t_env *env);
 
 //EXPANSIONS
-int			expand_command_lists(t_simple_command *command, t_var *var);
+int			expand_command_list(t_simple_command *command, t_var *var);
 void		remove_quotes(char *str);
 void		sanitize_list(t_word_list *node);
 void		hide_quotes(char *str);
@@ -116,28 +114,26 @@ int			parameter_expansion(t_var *var, char **str);
 int			word_splitting(char *str, t_word_list **head);
 int			pathname_expansion(t_word_list *node);
 int			get_directories(t_word_list **directories);
+int			wildcard_matches(char *wild, char *match, int flag, int j);
 
 //UTILS
 void		minishell_cleanup(t_var *var);
 void		restore_fds(int fds[2]);
 t_word_list	*last_word_node(t_word_list *node);
 t_redirect	*last_redir_node(t_redirect *node);
-t_bool		is_blank(char c);
-t_bool		is_regular(char c);
-t_bool		is_meta(char c);
-t_bool		empty_line(char *str);
+int			is_blank(char c);
+int			is_regular(char c);
+int			is_meta(char c);
+int			is_identifier(char c, int first);
+int			empty_line(char *str);
 void		update_quote_flag(char *str, int *i, int *flags);
-int			ft_errloc(size_t size, size_t qty, void **ptr);
 
 //MEMORY UTILS
 void		free_command_tree(t_command *command);
 void		free_word_list(t_word_list *words, int free_word);
 void		free_redirects(t_redirect *redirects);
 void		free_arr(char **arr);
+int			ft_errloc(size_t size, size_t qty, void **ptr);
 t_word_list	*allocate_last_node(t_word_list **words);
-
-//OTHER UTILS (TO BE DELETED)
-void		printf_commands(t_command *node);
-void		print_args(t_word_list *words);
 
 #endif

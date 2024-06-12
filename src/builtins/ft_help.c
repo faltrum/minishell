@@ -6,11 +6,13 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 04:01:05 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/09 04:01:06 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/11 02:06:24 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+#define revisare "Revisar"
 
 int	ft_help(t_var *var, char **params)
 {
