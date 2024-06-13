@@ -49,7 +49,7 @@
 # MACOS
 # Print MINISHELL and authors' names
 MINISHELL_MSG = MINISHELL
-AUTHORS_MSG = by oseivane el "calamidades" & ...buscando compi
+AUTHORS_MSG = by oseivane el "calamidades" & ...kevin
 MESSAGE_LEN = $$(($(shell echo $(MINISHELL_MSG) | wc -c) - 1))
 
 PRINT_MINISHELL = @printf "$(VIOLET)%*s$(RESET)\n" $(MESSAGE_LEN) $(MINISHELL_MSG)
@@ -75,13 +75,54 @@ DEFS = -DREADLINE_LIBRARY
 
 NAME = minishell
 
-INCS =	$(wildcard includes/*.h)
+INCS =	includes/definitions.h \
+		includes/get_next_line.h \
+		includes/minishell.h \
+		includes/structs.h \
 
-SRCS =	$(wildcard src/*.c)	\
-		$(wildcard src/builtins/*.c) \
-		$(wildcard src/parsing/*.c) \
-		$(wildcard src/execution/*.c) \
-		$(wildcard src/expansions/*.c)
+SRCS =	src/env_utils1.c \
+		src/env_utils2.c \
+		src/errors.c \
+		src/free_exit.c	\
+		src/get_next_line_utils.c \
+		src/get_next_line.c	\
+		src/input.c	\
+		src/minishell.c	\
+		src/prompt.c	\
+		src/signals.c	\
+		src/utils.c	\
+		src/builtins/ft_cd.c \
+		src/builtins/ft_echo.c \
+		src/builtins/ft_env.c \
+		src/builtins/ft_exit.c \
+		src/builtins/ft_export.c \
+		src/builtins/ft_help.c \
+		src/builtins/ft_pwd.c \
+		src/builtins/ft_unset.c \
+		src/execution/env_to_array.c \
+		src/execution/execute_command_tree.c \
+		src/execution/execute_pipeline.c \
+		src/execution/execute_redirections.c \
+		src/execution/execute_simple_command.c \
+		src/execution/execution_util.c \
+		src/execution/find_path.c \
+		src/expansions/directories.c \
+		src/expansions/expansion_quotes.c \
+		src/expansions/expansion.c \
+		src/expansions/parameter_expansion.c \
+		src/expansions/pathname_expansion.c \
+		src/expansions/wildcard_matching.c \
+		src/expansions/word_splitting.c \
+		src/parsing/here_doc.c \
+		src/parsing/parse_connected_command.c \
+		src/parsing/parse_list.c \
+		src/parsing/parse_redir.c \
+		src/parsing/parse_simple_command.c \
+		src/parsing/parse_trimming.c \
+		src/parsing/parse_word.c \
+		src/parsing/parser.c \
+		src/parsing/parsing_util.c \
+		src/parsing/searching.c \
 
 OBJS = $(SRCS:.c=.o)
 
