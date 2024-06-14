@@ -75,57 +75,56 @@ DEFS = -DREADLINE_LIBRARY
 
 NAME = minishell
 
-INCS =	includes/definitions.h \
-		includes/get_next_line.h \
-		includes/minishell.h \
-		includes/structs.h \
+INCS =	includes/definitions.h					\
+		includes/get_next_line.h				\
+		includes/minishell.h					\
+		includes/structs.h						\
 
-SRCS =	src/env_utils1.c \
-		src/env_utils2.c \
-		src/errors.c \
-		src/free_exit.c	\
-		src/get_next_line_utils.c \
-		src/get_next_line.c	\
-		src/input.c	\
-		src/minishell.c	\
-		src/prompt.c	\
-		src/signals.c	\
-		src/utils.c	\
-		src/builtins/ft_cd.c \
-		src/builtins/ft_echo.c \
-		src/builtins/ft_env.c \
-		src/builtins/ft_exit.c \
-		src/builtins/ft_export.c \
-		src/builtins/ft_help.c \
-		src/builtins/ft_pwd.c \
-		src/builtins/ft_unset.c \
-		src/execution/env_to_array.c \
-		src/execution/execute_command_tree.c \
-		src/execution/execute_pipeline.c \
-		src/execution/execute_redirections.c \
-		src/execution/execute_simple_command.c \
-		src/execution/execution_util.c \
-		src/execution/find_path.c \
-		src/expansions/directories.c \
-		src/expansions/expansion_quotes.c \
-		src/expansions/expansion.c \
-		src/expansions/parameter_expansion.c \
-		src/expansions/pathname_expansion.c \
-		src/expansions/wildcard_matching.c \
-		src/expansions/word_splitting.c \
-		src/parsing/here_doc.c \
-		src/parsing/parse_connected_command.c \
-		src/parsing/parse_list.c \
-		src/parsing/parse_redir.c \
-		src/parsing/parse_simple_command.c \
-		src/parsing/parse_trimming.c \
-		src/parsing/parse_word.c \
-		src/parsing/parser.c \
-		src/parsing/parsing_util.c \
-		src/parsing/searching.c \
+SRCS =	src/env_utils1.c						\
+		src/env_utils2.c						\
+		src/errors.c							\
+		src/free_exit.c							\
+		src/get_next_line_utils.c				\
+		src/get_next_line.c						\
+		src/input.c								\
+		src/minishell.c							\
+		src/prompt.c							\
+		src/signals.c							\
+		src/utils.c								\
+		src/builtins/ft_cd.c					\
+		src/builtins/ft_echo.c					\
+		src/builtins/ft_env.c					\
+		src/builtins/ft_exit.c					\
+		src/builtins/ft_export.c				\
+		src/builtins/ft_help.c					\
+		src/builtins/ft_pwd.c					\
+		src/builtins/ft_unset.c					\
+		src/execution/env_to_array.c			\
+		src/execution/execute_command_tree.c	\
+		src/execution/execute_pipeline.c		\
+		src/execution/execute_redirections.c	\
+		src/execution/execute_simple_command.c	\
+		src/execution/execution_util.c			\
+		src/execution/find_path.c				\
+		src/expansions/directories.c			\
+		src/expansions/expansion_quotes.c		\
+		src/expansions/expansion.c				\
+		src/expansions/parameter_expansion.c	\
+		src/expansions/pathname_expansion.c		\
+		src/expansions/wildcard_matching.c		\
+		src/expansions/word_splitting.c			\
+		src/parsing/here_doc.c					\
+		src/parsing/parse_connected_command.c	\
+		src/parsing/parse_list.c				\
+		src/parsing/parse_redir.c				\
+		src/parsing/parse_simple_command.c		\
+		src/parsing/parse_trimming.c			\
+		src/parsing/parse_word.c				\
+		src/parsing/parser.c					\
+		src/parsing/parsing_util.c				\
+		src/parsing/searching.c					\
 
 OBJS = $(SRCS:.c=.o)
-
 DEPS = $(SRCS:.c=.d)
 
 INCLUDE = -I./includes
@@ -165,14 +164,16 @@ print_message:
 	$(PRINT_MINISHELL)
 	$(PRINT_AUTHORS)
 
-%.o: %.c
-#	@echo "$(YELLOW)Compiling...$(RESET)"
-	@${CC} ${CFLAGS} $(OFLAGS) $(DEFS) $(INCLUDE) -c $< -o $@
-
 $(NAME): $(OBJS) $(LIBFT_D)$(LIBFT) $(READLINE_A) $(INCS)
 	@echo "$(YELLOW)Linking...$(RESET)"
 	@$(CC) $(CFLAGS) $(DEFS) $(OBJS) -o $@ $(LIBFT_D)$(LIBFT) $(READLINE_A) $(READLINE_FLAGS)
 	@echo "$(GREEN)Linked!$(RESET)✅"
+
+%.o: %.c
+	@echo "$(YELLOW)Compiling $<...$(RESET)"
+	@$(CC) $(CFLAGS) $(DEFS) $(INCLUDE) -MMD -c $< -o $@
+
+# Include dependency files
 -include $(DEPS)
 
 debug:
@@ -180,17 +181,17 @@ debug:
 
 clean:
 	@make clean --no-print-directory -C $(LIBFT_D)
-	@$(RM) $(OBJS) $(DEPS)
+	@$(RM) $(OBJS) $(DEPS) $(NAME)
 	@echo "$(RED)Cleaned minishell!$(RESET)✅"
 
 fclean:
 	@make fclean --no-print-directory -C $(LIBFT_D)
-	@$(RM) $(NAME) $(DEPS) $(OBJS) $(READLINE_A)
+	@$(RM) $(NAME) $(OBJS) $(DEPS) $(READLINE_A)
 	@echo "$(RED)Fcleaned minishell!$(RESET)✅"
 
 jesusg:
 	@echo "$(VIOLET)Jesus is watching you...$(RESET)👀"
-	@$(RM) -r $(OBJS_DIR) $(OBJS) $(DEPS)
+	@$(RM) -r $(OBJS) $(DEPS)
 	@echo "$(RED)Jesus has cleaned your soul!$(RESET)✅"
 
 re: fclean all
