@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_utils2.c                                       :+:      :+:    :+:   */
+/*   env_utils2_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 10:41:32 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/12 08:30:32 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:26:07 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 t_env	*find_in_env(t_env *lst, char *name)
 {

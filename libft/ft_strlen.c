@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 20:17:53 by mcatalan@st       #+#    #+#             */
-/*   Updated: 2024/02/09 11:58:40 by vics             ###   ########.fr       */
+/*   Updated: 2024/06/17 11:43:34 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int	ft_strlen(const char *str)
 	return (c);
 }
 
-int ft_arrlen(char **arr)
+int	ft_arrlen(char **arr)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (arr[i])

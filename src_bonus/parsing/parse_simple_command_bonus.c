@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_simple_command.c                             :+:      :+:    :+:   */
+/*   parse_simple_command_bonus.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:12:26 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/11 02:37:57 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:26:07 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 static int	allocate_simple_command(t_command **node)
 {

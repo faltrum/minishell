@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_list.c                                       :+:      :+:    :+:   */
+/*   parse_list_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 02:22:32 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/17 08:16:22 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:26:07 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 static int	left_par(char	*str)
 {

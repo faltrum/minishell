@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_redirections.c                             :+:      :+:    :+:   */
+/*   execute_redirections_bonus.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:58:12 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/17 08:15:25 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:26:08 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 static int	redirect_append(t_redirect *redirects)
 {

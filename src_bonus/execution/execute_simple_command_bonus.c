@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_simple_command.c                           :+:      :+:    :+:   */
+/*   execute_simple_command_bonus.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:28:30 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/11 22:32:08 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:26:08 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 static int	execute_execve(t_var *var, char **params)
 {

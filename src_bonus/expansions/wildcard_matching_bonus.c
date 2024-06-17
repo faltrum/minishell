@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wildcard_matching.c                                :+:      :+:    :+:   */
+/*   wildcard_matching_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 20:35:35 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/17 08:15:41 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:26:08 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 static int	match_everything(char *str, int flag)
 {

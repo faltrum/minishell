@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   definitions.h                                      :+:      :+:    :+:   */
+/*   definitions_bonus.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:38:26 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/17 10:13:33 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:28:02 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEFINITIONS_H
-# define DEFINITIONS_H
+#ifndef DEFINITIONS_BONUS_H
+# define DEFINITIONS_BONUS_H
 
 //UTILS
 # define PROGRAM_NAME "minishell"
