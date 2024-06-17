@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:39:15 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/12 09:10:44 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/17 09:30:56 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void		set_signal_ignore(int signal);
 void		set_signal_handler(int signal, void (*handler));
 void		sint_handler(int signal);
 void		sint_handler_heredoc(int signal);
+void		squit_handler(int signal);
 
 //BUILT-IN
 int			is_builtin(t_var *var, char *command);

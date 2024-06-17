@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mac <mac@student.42.fr>                    +#+  +:+       +#+         #
+#    By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/04 19:10:12 by mcatalan@st       #+#    #+#              #
-#    Updated: 2024/04/27 19:16:36 by mac              ###   ########.fr        #
+#    Updated: 2024/06/17 08:12:24 by kseligma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,7 +95,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 
-	ar -rcs $(NAME) $(OBJS)
+	@ar -rcs $(NAME) $(OBJS)
 
 -include $(DEPS)
 
@@ -103,15 +103,15 @@ bonus: $(BONUS)
 
 $(BONUS) : $(OBJS) $(OBJSBONUS)
 
-	ar -rcs $(NAME) $(OBJS) $(OBJSBONUS)
+	@ar -rcs $(NAME) $(OBJS) $(OBJSBONUS)
 
 -include $(DEPS_BONUS)
 
 clean:
-	$(RM) $(OBJS) $(OBJSBONUS) $(DEPS) $(DEPS_BONUS)
+	@$(RM) $(OBJS) $(OBJSBONUS) $(DEPS) $(DEPS_BONUS)
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re: fclean all
 .PHONY: all bonus clean fclean re

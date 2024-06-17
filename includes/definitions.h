@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   definitions.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:38:26 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/12 01:41:15 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/17 10:13:33 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define RESET "\033[0m"
 
 //ACTIONS
-# define NUM_ACTIONS 9
+# define NUM_ACTIONS 8
 # define EXIT "exit"
 # define ECHO "echo"
 # define PWD "pwd"
@@ -36,7 +36,6 @@
 # define EXPORT "export"
 # define UNSET "unset"
 # define ENV "env"
-# define HELP "help"
 
 //ERROR MSG
 # define ERR_CMD_NOT_FOUND "command not found"

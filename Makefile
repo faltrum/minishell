@@ -3,51 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+         #
+#    By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/04 19:10:12 by mcatalan@st       #+#    #+#              #
-#    Updated: 2024/06/12 08:33:57 by kseligma         ###   ########.fr        #
+#    Updated: 2024/06/17 10:16:30 by kseligma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-#
-# LIBFT_D = libft/
-# LIBFT = libft.a
+VPATH = src:src/parsing:src/expansions:src/execution:src/builtins
 
-# NSERVER = minishell
-
-
-# OBJS = $(SRCS:.c=.o)
-
-# INCLUDE = -I./
-# RM = rm -f
-# CFLAGS = ## -Wall -Wextra -Werror
-
-# all: makelibft $(NSERVER)
-
-# makelibft:
-# 	@make --no-print-directory -C $(LIBFT_D)
-
-# %.o: %.c
-# 	${CC} ${CFLAGS} $(INCLUDE) -c $< -o $@
-
-# $(NSERVER): $(OBJS) $(LIBFT_D)$(LIBFT)
-# 	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LIBFT_D)$(LIBFT) -g -lreadline -L/usr/lib/x86_64-linux-gnu
-
-# clean:
-# 	@make clean --no-print-directory -C $(LIBFT_D)
-# 	$(RM) $(OBJS)
-
-# fclean: clean
-# 	$(RM) $(NSERVER)
-
-# re: fclean all
-
-# .PHONY: all clean fclean re makelibft
-
-
-# MACOS
-# Print MINISHELL and authors' names
 MINISHELL_MSG = MINISHELL
 AUTHORS_MSG = by oseivane el "calamidades" & ...kevin
 MESSAGE_LEN = $$(($(shell echo $(MINISHELL_MSG) | wc -c) - 1))
@@ -75,64 +39,63 @@ DEFS = -DREADLINE_LIBRARY
 
 NAME = minishell
 
-INCS =	includes/definitions.h					\
-		includes/get_next_line.h				\
-		includes/minishell.h					\
-		includes/structs.h						\
+INCS =	definitions.h				\
+		get_next_line.h				\
+		minishell.h					\
+		structs.h					\
 
-SRCS =	src/env_utils1.c						\
-		src/env_utils2.c						\
-		src/errors.c							\
-		src/free_exit.c							\
-		src/get_next_line_utils.c				\
-		src/get_next_line.c						\
-		src/input.c								\
-		src/minishell.c							\
-		src/prompt.c							\
-		src/signals.c							\
-		src/utils.c								\
-		src/builtins/ft_cd.c					\
-		src/builtins/ft_echo.c					\
-		src/builtins/ft_env.c					\
-		src/builtins/ft_exit.c					\
-		src/builtins/ft_export.c				\
-		src/builtins/ft_help.c					\
-		src/builtins/ft_pwd.c					\
-		src/builtins/ft_unset.c					\
-		src/execution/env_to_array.c			\
-		src/execution/execute_command_tree.c	\
-		src/execution/execute_pipeline.c		\
-		src/execution/execute_redirections.c	\
-		src/execution/execute_simple_command.c	\
-		src/execution/execution_util.c			\
-		src/execution/find_path.c				\
-		src/expansions/directories.c			\
-		src/expansions/expansion_quotes.c		\
-		src/expansions/expansion.c				\
-		src/expansions/parameter_expansion.c	\
-		src/expansions/pathname_expansion.c		\
-		src/expansions/wildcard_matching.c		\
-		src/expansions/word_splitting.c			\
-		src/parsing/here_doc.c					\
-		src/parsing/parse_connected_command.c	\
-		src/parsing/parse_list.c				\
-		src/parsing/parse_redir.c				\
-		src/parsing/parse_simple_command.c		\
-		src/parsing/parse_trimming.c			\
-		src/parsing/parse_word.c				\
-		src/parsing/parser.c					\
-		src/parsing/parsing_util.c				\
-		src/parsing/searching.c					\
+OBJ =	env_utils1.o				\
+		env_utils2.o				\
+		errors.o					\
+		free_exit.o					\
+		get_next_line_utils.o		\
+		get_next_line.o				\
+		input.o						\
+		minishell.o					\
+		prompt.o					\
+		signals.o					\
+		utils.o						\
+		ft_cd.o						\
+		ft_echo.o					\
+		ft_env.o					\
+		ft_exit.o					\
+		ft_export.o					\
+		ft_pwd.o					\
+		ft_unset.o					\
+		env_to_array.o				\
+		execute_command_tree.o		\
+		execute_pipeline.o			\
+		execute_redirections.o		\
+		execute_simple_command.o	\
+		execution_util.o			\
+		find_path.o					\
+		directories.o				\
+		expansion_quotes.o			\
+		expansion.o					\
+		parameter_expansion.o		\
+		pathname_expansion.o		\
+		wildcard_matching.o			\
+		word_splitting.o			\
+		here_doc.o					\
+		parse_connected_command.o	\
+		parse_list.o				\
+		parse_redir.o				\
+		parse_simple_command.o		\
+		parse_trimming.o			\
+		parse_word.o				\
+		parser.o					\
+		parsing_util.o				\
+		searching.o					\
 
-OBJS = $(SRCS:.c=.o)
-DEPS = $(SRCS:.c=.d)
+OBJ_DIR = objs
+
+OBJS = $(addprefix $(OBJ_DIR)/, $(OBJ))
+
+DEPS = $(OBJS:.o=.d)
 
 INCLUDE = -I./includes
 RM = rm -rf
 CFLAGS = -Wall -Wextra -Werror
-
-#all: print_message $(READLINE_A) libft $(NAME)
-#	@echo "$(GREEN)Build finished successfully!$(RESET)✅"
 
 all: print_message libft $(NAME)
 	@echo "$(GREEN)Build finished successfully!$(RESET)✅"
@@ -164,16 +127,15 @@ print_message:
 	$(PRINT_MINISHELL)
 	$(PRINT_AUTHORS)
 
-$(NAME): $(OBJS) $(LIBFT_D)$(LIBFT) $(READLINE_A) $(INCS)
+$(NAME): $(OBJS) $(LIBFT_D)$(LIBFT) $(READLINE_A) Makefile
 	@echo "$(YELLOW)Linking...$(RESET)"
-	@$(CC) $(CFLAGS) $(DEFS) $(OBJS) -o $@ $(LIBFT_D)$(LIBFT) $(READLINE_A) $(READLINE_FLAGS)
+	@$(CC) $(CFLAGS) $(INCLUDE) $(DEFS) $(OBJS) -o $@ $(LIBFT_D)$(LIBFT) $(READLINE_A) $(READLINE_FLAGS)
 	@echo "$(GREEN)Linked!$(RESET)✅"
 
-%.o: %.c
+$(OBJ_DIR)/%.o: %.c
 	@echo "$(YELLOW)Compiling $<...$(RESET)"
 	@$(CC) $(CFLAGS) $(DEFS) $(INCLUDE) -MMD -c $< -o $@
 
-# Include dependency files
 -include $(DEPS)
 
 debug:
