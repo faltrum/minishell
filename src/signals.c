@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:51 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/17 09:30:10 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/18 21:06:27 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ int	g_sigint;
 
 void	sint_handler_heredoc(int signal)
 {
-	write(1, "\n", 2);
+	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	rl_replace_line("", 0);
-	rl_on_new_line();
 	g_sigint = signal;
 }
 
@@ -31,18 +30,16 @@ void	sint_handler(int signal)
 	g_sigint = signal;
 }
 
-void	squit_handler(int signal)
-{
-	kill(signal, 0);
-}
-
-void	set_signal_ignore(int signal)
+void	set_signal_mode(int signal, int mode)
 {
 	struct sigaction	sigs;
 
-	sigs.sa_flags = 0;
-	sigs.sa_handler = SIG_IGN;
 	sigemptyset(&sigs.sa_mask);
+	sigs.sa_flags = 0;
+	if (mode == SIG_IGNORE)
+		sigs.sa_handler = SIG_IGN;
+	else if (mode == SIG_DEFAULT)
+		sigs.sa_handler = SIG_DFL;
 	sigaction(signal, &sigs, NULL);
 }
 

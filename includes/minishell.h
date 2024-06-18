@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:39:15 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/17 09:30:56 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/18 21:02:31 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <sys/wait.h>
 # include <stdarg.h>
 # include <dirent.h>
+# include <sys/ioctl.h>
 
 // Readline .h files
 # include "../readline/readline.h"
@@ -50,6 +51,7 @@ t_env		*ft_lstlast_env(t_env *lst);
 t_env		*find_in_env(t_env *lst, char *name);
 void		replace_or_set_env(t_var *var, char *name, char *value);
 void		add_in_env(t_var *var, char *name, char *value);
+void		update_shlvl(t_var *var);
 
 //INPUT
 char		*get_cwd(t_var *var);
@@ -78,7 +80,7 @@ void		set_signal_ignore(int signal);
 void		set_signal_handler(int signal, void (*handler));
 void		sint_handler(int signal);
 void		sint_handler_heredoc(int signal);
-void		squit_handler(int signal);
+void		set_signal_mode(int signal, int mode);
 
 //BUILT-IN
 int			is_builtin(t_var *var, char *command);

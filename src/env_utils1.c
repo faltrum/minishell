@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:03 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/09 02:23:17 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:26:04 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,43 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new)
 			temp->next = new;
 		}
 	}
+}
+
+static int	shlvl_error(int lvl)
+{
+	char	msg[500];
+
+	msg[0] = 0;
+	ft_strlcat(msg, "warning: shell level ", 500);
+	ft_strlcat(msg, "(", 500);
+	ft_strlcat(msg, ft_itoa(lvl), 500);
+	ft_strlcat(msg, ")", 500);
+	ft_strlcat(msg, " too high, resetting to 1", 500);
+	return (ft_err(1, msg, 0, 0));
+}
+void	update_shlvl(t_var *var)
+{
+	char	*new;
+	t_env	*env;
+	int		lvl;
+
+	env = find_in_env(var->env, "SHLVL");
+	if (env && env->value)
+	{
+		lvl = ft_atoi(env->value) + 1;
+		if (lvl > 1000)
+			lvl = shlvl_error(lvl);
+		else if (lvl < 0)
+			lvl = 0;
+		new = ft_itoa(lvl);
+		if (new)
+		{
+			free(env->value);
+			env->value = new;
+		}
+		else
+			ft_err(0, ERR_MALLOC, "SHLVL UPDATE", 0);
+	}
+	else
+		add_in_env(var, ft_strdup("SHLVL"), ft_strdup("1"));
 }

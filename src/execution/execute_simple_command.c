@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:28:30 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/11 22:32:08 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/18 16:45:59 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,22 @@ static int	execute_here(t_var *var, char **params, int flags)
 	return (execute_execve(var, params));
 }
 
+static int	return_helper(t_var *var, int pid, int status)
+{
+	waitpid(pid, &status, 0);
+	close(1);
+	close(0);
+	while (waitpid(-1, NULL, 0) != -1)
+		;
+	restore_fds(var->fds_list);
+	set_signal_handler(SIGINT, sint_handler);
+	if (WIFSIGNALED(status))
+		return (WTERMSIG(status) + 128);
+	else if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (EXIT_FAILURE);
+}
+
 static int	execute_in_subshell(t_var *var, \
 	char **params, int flags, int status)
 {
@@ -75,25 +91,18 @@ static int	execute_in_subshell(t_var *var, \
 	if (pid == -1)
 		return (ft_err(EXIT_FAILURE, *params, ERR_FORK, strerror(errno)));
 	else if (pid == 0)
+	{
+		set_signal_mode(SIGINT, SIG_DEFAULT);
+		set_signal_mode(SIGQUIT, SIG_DEFAULT);
 		exit (execute_here(var, params, flags));
+	}
+	set_signal_mode(SIGINT, SIG_IGNORE);
 	if (!(flags & WAIT))
 	{
 		waitpid(pid, &status, WNOHANG);
 		return (EXIT_SUCCESS);
 	}
-	set_signal_ignore(SIGINT);
-	waitpid(pid, &status, 0);
-	set_signal_handler(SIGINT, sint_handler);
-	close(1);
-	close(0);
-	while (waitpid(-1, NULL, 0) != -1)
-		;
-	restore_fds(var->fds_list);
-	if (WIFSIGNALED(status))
-		return (WTERMSIG(status) + 128);
-	else if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	return (EXIT_FAILURE);
+	return (return_helper(var, pid, status));
 }
 
 int	try_execution(t_var *var, char **params, int flags)

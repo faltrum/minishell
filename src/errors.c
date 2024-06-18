@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:08 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/12 09:10:44 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/18 21:17:31 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	ft_err_here_doc(int ret, char *s1, char *s2, char *s3)
 	char	msg[500];
 
 	msg[0] = 0;
-	ft_strlcat(msg, END_OF_LINE, 2);
 	ft_strlcat(msg, PROGRAM_NAME, ft_strlen(PROGRAM_NAME) + 2);
 	if (s1)
 	{

@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 04:01:31 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/12 09:09:03 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/18 15:34:24 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,30 @@
 
 static int	change_dir(t_var *var, char *dir)
 {
-	char	str[PATH_MAX];
+	char	new[PATH_MAX];
+	t_env	*oldpwd;
+	t_env	*pwd;
 
+	pwd = find_in_env(var->env, "PWD");
+	oldpwd = find_in_env(var->env, "OLDPWD");
 	if (!dir)
 		return (EXIT_FAILURE);
 	if (chdir(dir) == -1)
 		return (ft_err(EXIT_FAILURE, CD, dir, strerror(errno)));
-	if (getcwd(str, PATH_MAX) == NULL)
+	if (getcwd(new, PATH_MAX) == NULL)
 		return (ft_err(EXIT_FAILURE, CD, dir, strerror(errno)));
-	replace_or_set_env(var, "OLDPWD", str);
-	replace_or_set_env(var, "PWD", str);
+	if (oldpwd)
+	{
+		if (pwd)
+			replace_or_set_env(var, "OLDPWD", pwd->value);
+		else
+		{
+			free(oldpwd->value);
+			oldpwd->value = NULL;
+		}
+	}
+	if (pwd)
+		replace_or_set_env(var, "PWD", new);
 	return (EXIT_SUCCESS);
 }
 
@@ -53,7 +67,9 @@ int	ft_cd(t_var *var, char **params)
 	env = NULL;
 	if (params[1] && params[2])
 		ft_err(0, CD, ERR_TOO_MANY_ARGS, 0);
-	else if (!params[1] || !ft_strcmp(params[1], "~") || params[1][0] == '\0')
+	else if (params[1] && params[1][0] == 0)
+		return (EXIT_SUCCESS);
+	else if (!params[1] || !ft_strcmp(params[1], "~"))
 	{
 		env = find_in_env(var->env, "HOME");
 		if (!env)

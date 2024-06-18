@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:30 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/17 10:16:01 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/18 16:37:21 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	init_signals(void)
 {
 	g_sigint = 0;
 	rl_catch_signals = 0;
-	set_signal_handler(SIGQUIT, squit_handler);
+	set_signal_mode(SIGQUIT, SIG_IGNORE);
 	set_signal_handler(SIGINT, sint_handler);
 }
 
@@ -97,5 +97,6 @@ void	init_minishell(char **env, t_var *var)
 	var->fds_list[2] = -1;
 	save_env(var, env);
 	save_actions(var);
+	update_shlvl(var);
 	var->exit = EXIT_SUCCESS;
 }

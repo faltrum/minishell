@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+         #
+#    By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/04 19:10:12 by mcatalan@st       #+#    #+#              #
-#    Updated: 2024/06/17 10:16:30 by kseligma         ###   ########.fr        #
+#    Updated: 2024/06/18 11:39:43 by kseligma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,6 +60,7 @@ OBJ =	env_utils1.o				\
 		ft_env.o					\
 		ft_exit.o					\
 		ft_export.o					\
+		ft_export_util.o			\
 		ft_pwd.o					\
 		ft_unset.o					\
 		env_to_array.o				\

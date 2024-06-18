@@ -6,11 +6,13 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:34:19 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/12 09:09:50 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:40:51 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	export_error(char *identifier);
 
 static int	get_key_and_value_export(char **key, char **value, char *param)
 {
@@ -67,14 +69,14 @@ static int	valid_identifier(char *str, int *exit)
 	if (!is_identifier(*str, 1))
 	{
 		*exit = EXIT_FAILURE;
-		return (ft_err_here_doc(-1, EXPORT, s0, ERR_VALID_IDENTIFIER));
+		return (export_error(str));
 	}
 	while (*str && is_identifier(*str, 0))
 		str ++;
 	if (!*str || *str == '=')
 		return (0);
 	*exit = EXIT_FAILURE;
-	return (ft_err(-1, EXPORT, s0, ERR_VALID_IDENTIFIER));
+	return (export_error(s0));
 }
 
 static int	print_export(t_env *env)

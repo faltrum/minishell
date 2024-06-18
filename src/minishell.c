@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:38 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/17 07:56:25 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/18 16:53:21 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	get_line(char **l, t_var *var)
 	char	*path;
 
 	path = get_cwd(var);
-	line = readline(path);
+	line = readline("minishell$ ");
 	free(path);
 	if (!line)
 		return (-1);
@@ -41,15 +41,17 @@ static void	minishell(t_var *var)
 	line = NULL;
 	while (1)
 	{
-		g_sigint = 0;
 		if (get_line(&line, var) == -1)
 			break ;
 		if (!line)
 			continue ;
+		if (g_sigint)
+			var->exit = 130;
 		command_tree = parser(var, line);
 		if (command_tree)
 			var->exit = exe_command_tree(command_tree, var);
 		free_command_tree(command_tree);
+		g_sigint = 0;
 	}
 }
 
@@ -65,6 +67,7 @@ int	main(int argc, char **argv, char **env)
 	rl_clear_history();
 	exit = var.exit;
 	minishell_cleanup(&var);
-	write(1, STR_EXIT, ft_strlen(STR_EXIT));
+	if (isatty(STDERR_FILENO))
+		write(STDERR_FILENO, STR_EXIT, ft_strlen(STR_EXIT));
 	return (exit);
 }

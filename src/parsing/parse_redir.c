@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:55:12 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/11 01:59:50 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:16:44 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,34 @@ static enum e_redir_type	get_redir_type(char *str, int *i)
 	}
 }
 
+static void	remove_quotes_hdoc(char *str)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	if (!str)
+		return ;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '"')
+		{
+			j = i;
+			while (str[j])
+			{
+				str[j] = str[j + 1];
+				j ++;
+			}
+		}
+		else
+			i ++;
+	}
+}
+
 int	parse_redir(char *str, int *i, t_redirect **redirs)
 {
 	t_redirect	*redir;
+	int			exit;
 
 	redir = allocate_last_redir(redirs);
 	if (!redir)
@@ -66,7 +91,12 @@ int	parse_redir(char *str, int *i, t_redirect **redirs)
 	while (str[*i] == ' ')
 		(*i)++;
 	if (str[*i] == '\'' || str[*i] == '"' || is_regular(str[*i]))
-		return (add_word(str, i, &(redir->word)));
+	{
+		exit = add_word(str, i, &(redir->word));
+		if (exit == 0 && redir->type == here_doc)
+			remove_quotes_hdoc(redir->word);
+		return (exit);
+	}
 	else
 		return (ft_err(-1, ERR_SYNTAX_REDIRECTION, 0, 0));
 }

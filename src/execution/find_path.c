@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 04:32:05 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/11 06:20:41 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/18 15:39:20 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*find_path(t_env *env, char *param, int *exit)
 	int		i;
 
 	i = 0;
-	if (!env || !env->value || ft_strchr(param, '/'))
+	if (!env || !env->value)
 		return (param_access_check(param, exit));
 	paths = ft_split(env->value, ':');
 	if (!paths)

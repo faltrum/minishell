@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 10:41:32 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/12 08:30:32 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/18 15:26:01 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ void	replace_or_set_env(t_var *var, char *name, char *value)
 	node = find_in_env(var->env, name);
 	if (!node)
 	{
-		add_in_env(var, ft_strdup(name), ft_strdup(value));
+		if (value)
+			add_in_env(var, ft_strdup(name), ft_strdup(value));
+		else
+			add_in_env(var, ft_strdup(name), NULL);
 		node = find_in_env(var->env, name);
 		if (node && (!node->name || !node->value))
 			ft_err(0, ERR_MALLOC, 0, 0);
