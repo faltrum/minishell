@@ -6,7 +6,7 @@
 #    By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/04 19:10:12 by mcatalan@st       #+#    #+#              #
-#    Updated: 2024/06/19 16:12:25 by kseligma         ###   ########.fr        #
+#    Updated: 2024/06/19 18:18:24 by kseligma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -143,7 +143,7 @@ $(OBJ_DIR)/%.o: %.c
 
 -include $(DEPS)
 
-debug:
+debug: all
 	valgrind --suppressions=readline.supp --track-fds=yes --leak-check=full --show-leak-kinds=all ./minishell
 
 clean:
