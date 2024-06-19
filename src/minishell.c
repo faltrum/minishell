@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:38 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/19 08:45:26 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/19 10:29:02 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	get_line(char **l, t_var *var)
 	char	*path;
 
 	path = get_cwd(var);
-	line = readline("minishell$ ");
+	line = readline(path);
 	free(path);
 	if (!line)
 		return (-1);
@@ -67,7 +67,7 @@ int	main(int argc, char **argv, char **env)
 	rl_clear_history();
 	exit = var.exit;
 	minishell_cleanup(&var);
-	if (isatty(STDERR_FILENO))
+	if (isatty(STDIN_FILENO))
 		write(STDERR_FILENO, STR_EXIT, ft_strlen(STR_EXIT));
 	return (exit);
 }

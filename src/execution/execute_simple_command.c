@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:28:30 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/18 16:45:59 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/19 09:45:32 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,35 +16,35 @@ static int	execute_execve(t_var *var, char **params)
 {
 	char	*execution_path;
 	char	**arr_env;
-	int		exit;
+	int		ex;
 
-	exit = EXIT_FAILURE;
+	ex = EXIT_FAILURE;
 	execution_path = find_path(find_in_env(var->env, "PATH"), \
-		params[0], &exit);
+		params[0], &ex);
 	if (!execution_path)
 	{
 		free_command_tree(var->command_tree);
 		minishell_cleanup(var);
-		return (exit);
+		return (ex);
 	}
 	arr_env = env_to_array(var->env);
 	execve(execution_path, params, arr_env);
 	if (execution_path && execution_path != params[0])
 		free(execution_path);
 	if (ft_strchr(*params, '/'))
-		exit = ft_err(126, *params, ERR_IS_DIR, 0);
+		ex = ft_err(126, *params, ERR_IS_DIR, 0);
 	else
-		exit = ft_err(127, *params, ERR_CMD_NOT_FOUND, 0);
+		ex = ft_err(127, *params, ERR_CMD_NOT_FOUND, 0);
 	free_arr(arr_env);
 	free_command_tree(var->command_tree);
 	minishell_cleanup(var);
-	return (exit);
+	return (ex);
 }
 
 static int	execute_here(t_var *var, char **params, int flags)
 {
 	int		i;
-	int		exit;
+	int		ex;
 
 	i = 0;
 	if (var->fds_list[2] > 2)
@@ -53,13 +53,13 @@ static int	execute_here(t_var *var, char **params, int flags)
 	{
 		if (ft_strcmp(params[0], var->act[i].action) == 0)
 		{
-			exit = (*(var->act[i].function))(var, params);
+			ex = (*(var->act[i].function))(var, params);
 			if (flags & SUBSHELL)
 			{
 				free_command_tree(var->command_tree);
 				minishell_cleanup(var);
 			}
-			return (exit);
+			return (ex);
 		}
 		i++;
 	}

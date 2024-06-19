@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 04:01:19 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/18 10:59:39 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/19 10:20:05 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,34 +62,22 @@ static void	actual_exit(t_var *var, int ex)
 	exit ((unsigned char) ex);
 }
 
-int	try_numeric_exit(t_var *var, char *str)
-{
-	ft_err(2, EXIT, str, ERR_NUMERIC_ARG);
-	while (is_blank(*str))
-		str ++;
-	if (*str == '+' || *str == '-')
-		str ++;
-	while(ft_isdigit(*str))
-		str ++;
-	while (is_blank(*str))
-		str ++;
-	if (*str)
-		return (2);
-	actual_exit(var, 2);
-	return (EXIT_SUCCESS);
-}
-
 int	ft_exit(t_var *var, char **params)
 {
 	char *err;
 
 	err = NULL;
-	if (isatty(STDERR_FILENO))
+	if (isatty(STDIN_FILENO))
 		write(2, STR_EXIT, ft_strlen(STR_EXIT));
 	if (params[1] && params[2])
 		err = ERR_TOO_MANY_ARGS;
+	else if (!ft_strcmp(params[1], "--"))
+		actual_exit(var, var->exit);
 	else if (params[1] && (!is_num(params[1]) || too_long(params[1])))
-		return (try_numeric_exit(var, params[1]));
+	{
+		ft_err(2, EXIT, params[1], ERR_NUMERIC_ARG);
+		actual_exit(var, 2);
+	}
 	if (!err && params[1])
 		actual_exit(var, ft_atol(params[1]));
 	else if (!err)
@@ -102,6 +90,3 @@ int	ft_exit(t_var *var, char **params)
 	ft_err(2, EXIT, ERR_TOO_MANY_ARGS, 0);
 	return (EXIT_FAILURE);
 }
-
-// Many args first not numeric --> Exit, print many args
-// Many args first numeric  --> not exit, print many args

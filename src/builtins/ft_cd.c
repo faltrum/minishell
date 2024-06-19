@@ -6,13 +6,20 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 04:01:31 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/18 15:34:24 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/19 09:56:46 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	change_dir(t_var *var, char *dir)
+static int	cd_print(t_env *pwd, int print)
+{
+	if (print && pwd && pwd->value)
+		printf("%s\n", pwd->value);
+	return (EXIT_SUCCESS);
+}
+
+static int	change_dir(t_var *var, char *dir, int print)
 {
 	char	new[PATH_MAX];
 	t_env	*oldpwd;
@@ -38,11 +45,14 @@ static int	change_dir(t_var *var, char *dir)
 	}
 	if (pwd)
 		replace_or_set_env(var, "PWD", new);
-	return (EXIT_SUCCESS);
+	return (cd_print(pwd, print));
 }
 
 static int	next_options(t_var *var, t_env *env, char **params, char *dir)
 {
+	int	print;
+
+	print = 0;
 	if (!ft_strcmp(params[1], "/"))
 		dir = "/";
 	else if (!ft_strcmp(params[1], "-"))
@@ -52,10 +62,11 @@ static int	next_options(t_var *var, t_env *env, char **params, char *dir)
 			ft_err(0, "OLDPWD not set", 0, 0);
 		else
 			dir = env->value;
+		print = 1;
 	}
 	else
 		dir = params[1];
-	return (change_dir(var, dir));
+	return (change_dir(var, dir, print));
 }
 
 int	ft_cd(t_var *var, char **params)
@@ -79,5 +90,5 @@ int	ft_cd(t_var *var, char **params)
 	}
 	else
 		return (next_options(var, env, params, dir));
-	return (change_dir(var, dir));
+	return (change_dir(var, dir, 0));
 }

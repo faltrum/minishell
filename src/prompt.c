@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 00:33:54 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/12 09:07:35 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/19 10:32:01 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ char	*get_cwd(t_var *var)
 	size_t	len;
 	char	cwd[PATH_MAX];
 	char	*prompt;
-	t_env	*env_user;
+	t_env	*env;
 
-	env_user = find_in_env(var->env, "USER");
-	if (!env_user)
+	env = find_in_env(var->env, "USER");
+	if (!env)
 		name = "";
 	else
-		name = env_user->value;
+		name = env->value;
 	getcwd(cwd, sizeof(cwd));
 	if (getcwd(cwd, sizeof(cwd)) == NULL)
 		cwd[0] = 0;
