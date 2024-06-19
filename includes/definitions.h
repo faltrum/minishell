@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:38:26 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/18 21:16:26 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:29:12 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@
 # define WAR_BROKE_STDIN "warning broke STDIN"
 # define WAR_BROKE_STDOUT "warning broke STOUDOUT"
 # define WAR_BUILTIN_MEMORY "warning: memory error allocating builtins"
-# define WAR_HERE_EOF "warning: here-document delimited by end-of-file (wanted `"
+# define WAR_HERE_EOF "warning: here-document \
+delimited by end-of-file (wanted `"
 # define WAR_HERE_EOF2 "')"
 
 //Expansion flags

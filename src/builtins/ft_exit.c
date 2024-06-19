@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 04:01:19 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/19 11:41:09 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:26:13 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	actual_exit(t_var *var, int ex)
 
 int	ft_exit(t_var *var, char **params)
 {
-	char *err;
+	char	*err;
 
 	err = NULL;
 	if (isatty(STDIN_FILENO))

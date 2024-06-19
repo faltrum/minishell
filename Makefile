@@ -6,7 +6,7 @@
 #    By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/04 19:10:12 by mcatalan@st       #+#    #+#              #
-#    Updated: 2024/06/19 16:07:30 by kseligma         ###   ########.fr        #
+#    Updated: 2024/06/19 16:12:25 by kseligma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -103,7 +103,7 @@ all: $(OBJ_DIR) print_message libft $(NAME)
 	@echo "$(GREEN)Build finished successfully!$(RESET)✅"
 
 $(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)
 
 $(READLINE_D):
 			@echo "$(YELLOW)Downloading READLINE...$(RESET)"

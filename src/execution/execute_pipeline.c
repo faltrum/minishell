@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:58:25 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/19 12:13:08 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:25:21 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	kill_pipeline(t_var *var, int fds[2])
 	return (EXIT_FAILURE);
 }
 
-int	execute_pipeline_command(t_simple_command *command, \
+int	exe_pipeline_command(t_simple_command *command, \
 int fds[2], t_var *var, int islast)
 {
 	int	exit;
@@ -65,12 +65,12 @@ int	exe_pipeline(t_command *node, t_var *var)
 	var->fds_list[2] = -1;
 	while (node->type == cm_connection)
 	{
-		if (execute_pipeline_command(node->value.connection->first->value.simple, \
+		if (exe_pipeline_command(node->value.connection->first->value.simple, \
 			fds, var, 0) == -1 || var->kill == 1)
 			return (kill_pipeline(var, fds));
 		node = node->value.connection->second;
 	}
-	ret = execute_pipeline_command(node->value.simple, fds, var, 1);
+	ret = exe_pipeline_command(node->value.simple, fds, var, 1);
 	if (ret == -1)
 		return (kill_pipeline(var, fds));
 	return (ret);

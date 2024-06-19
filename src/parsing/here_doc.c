@@ -6,39 +6,13 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:57:02 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/19 11:50:47 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:27:56 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	remove_quotes_hdoc(char *str)
-{
-	int	i;
-	int	j;
-	int	found;
-
-	i = 0;
-	found = 0;
-	if (!str)
-		return 0;
-	while (str[i])
-	{
-		if (str[i] == '\'' || str[i] == '"')
-		{
-			found = 1;
-			j = i;
-			while (str[j])
-			{
-				str[j] = str[j + 1];
-				j ++;
-			}
-		}
-		else
-			i ++;
-	}
-	return (found);
-}
+int	remove_quotes_hdoc(char *str);
 
 static int	heredoc_cleanup(int fds[2], char *line)
 {
@@ -119,4 +93,3 @@ int	parse_here_docs(t_var *var, t_command *command_tree)
 		return (-1);
 	return (0);
 }
-

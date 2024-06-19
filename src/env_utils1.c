@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:03 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/18 22:08:20 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:28:23 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static int	shlvl_error(int lvl)
 	ft_strlcat(msg, " too high, resetting to 1", 500);
 	return (ft_err(1, msg, 0, 0));
 }
+
 void	update_shlvl(t_var *var)
 {
 	char	*new;
