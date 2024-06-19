@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:58:25 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/18 22:03:45 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:58:17 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,13 @@
 
 static int	kill_pipeline(t_var *var, int fds[2])
 {
-	close(fds[0]);
-	close(fds[1]);
-	close(var->fds_list[2]);
+	var->kill = 1;
+	if (fds[0] > -1)
+		close(fds[0]);
+	if (fds[1] > -1)
+		close(fds[1]);
+	if (var->fds_list[2] > -1)
+		close(var->fds_list[2]);
 	var->fds_list[2] = -1;
 	return (EXIT_FAILURE);
 }
@@ -50,8 +54,6 @@ int fds[2], t_var *var, int islast)
 	}
 	return (exit);
 }
-#define Norm
-// Test
 
 int	exe_pipeline(t_command *node, t_var *var)
 {
@@ -59,6 +61,8 @@ int	exe_pipeline(t_command *node, t_var *var)
 	int	ret;
 
 	fds[0] = -1;
+	fds[1] = -1;
+	var->fds_list[2] = -1;
 	while (node->type == cm_connection)
 	{
 		if (execute_pipeline_command(node->value.connection->first->value.simple, \

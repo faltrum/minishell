@@ -6,11 +6,39 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:57:02 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/18 21:19:20 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:50:47 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	remove_quotes_hdoc(char *str)
+{
+	int	i;
+	int	j;
+	int	found;
+
+	i = 0;
+	found = 0;
+	if (!str)
+		return 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '"')
+		{
+			found = 1;
+			j = i;
+			while (str[j])
+			{
+				str[j] = str[j + 1];
+				j ++;
+			}
+		}
+		else
+			i ++;
+	}
+	return (found);
+}
 
 static int	heredoc_cleanup(int fds[2], char *line)
 {
@@ -26,18 +54,19 @@ static int	heredoc_error(int fds[2], char *line)
 	return (heredoc_cleanup(fds, line));
 }
 
-static char	*get_heredoc_line(t_var *var)
+static char	*get_heredoc_line(t_var *var, int expand)
 {
 	char	*line;
 
 	line = readline("> ");
 	if (g_sigint == SIGINT || !line)
 		return (line);
-	parameter_expansion(var, &line);
+	if (!expand)
+		parameter_expansion(var, &line);
 	return (line);
 }
 
-int	do_here_doc(t_var *var, t_redirect *redir)
+static int	do_here_doc(t_var *var, t_redirect *redir, int expand)
 {
 	int		fds[2];
 	char	*line;
@@ -46,7 +75,7 @@ int	do_here_doc(t_var *var, t_redirect *redir)
 		return (heredoc_error(fds, NULL));
 	while (1)
 	{
-		line = get_heredoc_line(var);
+		line = get_heredoc_line(var, expand);
 		if (!line && g_sigint != SIGINT)
 			ft_err_here_doc(0, WAR_HERE_EOF, redir->word, WAR_HERE_EOF2);
 		if (!line || !ft_strcmp(redir->word, line) || g_sigint == SIGINT)
@@ -74,7 +103,8 @@ int	parse_here_docs(t_var *var, t_command *command_tree)
 		redir = command_tree->value.simple->redirects;
 		while (redir && g_sigint != SIGINT)
 		{
-			if (redir->type == here_doc && do_here_doc(var, redir) == -1)
+			if (redir->type == here_doc && \
+				do_here_doc(var, redir, remove_quotes_hdoc(redir->word)) == -1)
 				return (-1);
 			redir = redir->next;
 		}
@@ -89,3 +119,4 @@ int	parse_here_docs(t_var *var, t_command *command_tree)
 		return (-1);
 	return (0);
 }
+

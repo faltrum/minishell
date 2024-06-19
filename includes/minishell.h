@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:39:15 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/18 21:02:31 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:49:46 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ int			ft_err_here_doc(int ret, char *s1, char *s2, char *s3);
 //EXECUTION
 int			exe_command_tree(t_command *head, t_var *var);
 int			exe_pipeline(t_command *node, t_var *var);
-int			do_here_doc(t_var *var, t_redirect *redir);
 int			exe_simple_command(t_simple_command	*command, \
 			t_var *var, int flags);
 int			try_execution(t_var *var, char **params, int should_wait);

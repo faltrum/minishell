@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command_tree.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kseligma <kseligma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:59:45 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/17 08:09:59 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:13:01 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	exe_simple_command(t_simple_command	*command, t_var *var, int flags)
 {
 	int		exit;
 
-	if (expand_command_list(command, var) == -1)
+	if (var->kill == 1 || expand_command_list(command, var) == -1)
 		exit = EXIT_FAILURE;
 	else
 	{

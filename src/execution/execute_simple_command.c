@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:28:30 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/19 09:45:32 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:54:35 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,10 @@ static int	execute_in_subshell(t_var *var, \
 
 	pid = fork();
 	if (pid == -1)
+	{
+		var->kill = 1;
 		return (ft_err(EXIT_FAILURE, *params, ERR_FORK, strerror(errno)));
+	}
 	else if (pid == 0)
 	{
 		set_signal_mode(SIGINT, SIG_DEFAULT);

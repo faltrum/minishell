@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:38:34 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/11 06:39:29 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:03:44 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_var
 	struct s_env		*env;
 	struct s_actions	*act;
 	int					exit;
+	int					kill;
 	int					fds_list[3];
 }	t_var;
 

@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 04:01:19 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/19 10:20:05 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:41:09 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_exit(t_var *var, char **params)
 		write(2, STR_EXIT, ft_strlen(STR_EXIT));
 	if (params[1] && params[2])
 		err = ERR_TOO_MANY_ARGS;
-	else if (!ft_strcmp(params[1], "--"))
+	else if (params[1] && !ft_strcmp(params[1], "--"))
 		actual_exit(var, var->exit);
 	else if (params[1] && (!is_num(params[1]) || too_long(params[1])))
 	{
