@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 03:58:25 by kseligma          #+#    #+#             */
-/*   Updated: 2024/06/19 11:58:17 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/19 12:13:08 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	exe_pipeline(t_command *node, t_var *var)
 	while (node->type == cm_connection)
 	{
 		if (execute_pipeline_command(node->value.connection->first->value.simple, \
-			fds, var, 0) == -1)
+			fds, var, 0) == -1 || var->kill == 1)
 			return (kill_pipeline(var, fds));
 		node = node->value.connection->second;
 	}
