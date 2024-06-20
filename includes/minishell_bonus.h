@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_bonus.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:39:15 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/17 11:28:33 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/06/20 10:47:35 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <sys/wait.h>
 # include <stdarg.h>
 # include <dirent.h>
+# include <sys/ioctl.h>
 
 // Readline .h files
 # include "../readline/readline.h"
@@ -35,9 +36,8 @@
 
 // Our .h files
 # include "../libft/libft.h"
-# include "structs.h"
-# include "definitions.h"
-# include "get_next_line.h"
+# include "structs_bonus.h"
+# include "definitions_bonus.h"
 
 //INITIALIZE
 void		init_minishell(char **env, t_var *var);
@@ -50,6 +50,7 @@ t_env		*ft_lstlast_env(t_env *lst);
 t_env		*find_in_env(t_env *lst, char *name);
 void		replace_or_set_env(t_var *var, char *name, char *value);
 void		add_in_env(t_var *var, char *name, char *value);
+void		update_shlvl(t_var *var);
 
 //INPUT
 char		*get_cwd(t_var *var);
@@ -78,7 +79,7 @@ void		set_signal_ignore(int signal);
 void		set_signal_handler(int signal, void (*handler));
 void		sint_handler(int signal);
 void		sint_handler_heredoc(int signal);
-void		squit_handler(int signal);
+void		set_signal_mode(int signal, int mode);
 
 //BUILT-IN
 int			is_builtin(t_var *var, char *command);
@@ -98,7 +99,6 @@ int			ft_err_here_doc(int ret, char *s1, char *s2, char *s3);
 //EXECUTION
 int			exe_command_tree(t_command *head, t_var *var);
 int			exe_pipeline(t_command *node, t_var *var);
-int			do_here_doc(t_var *var, t_redirect *redir);
 int			exe_simple_command(t_simple_command	*command, \
 			t_var *var, int flags);
 int			try_execution(t_var *var, char **params, int should_wait);

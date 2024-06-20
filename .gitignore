@@ -108,6 +108,4 @@ minishell
 readline
 
 # Otros
-minishell_tester
-mpanic
 objs

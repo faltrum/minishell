@@ -6,7 +6,7 @@
 /*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:39:15 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/19 11:49:46 by kseligma         ###   ########.fr       */
+/*   Updated: 2024/06/19 20:36:58 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@
 # include "../libft/libft.h"
 # include "structs.h"
 # include "definitions.h"
-# include "get_next_line.h"
 
 //INITIALIZE
 void		init_minishell(char **env, t_var *var);

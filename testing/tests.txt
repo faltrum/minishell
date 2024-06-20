@@ -12,9 +12,9 @@ cat | ls
 #- Ctrl+C
 
 grep oi | ls
-#- Enter + Ctrl+D
-#- Ctrl+D
-#- "oi" + Enter + Ctrl+D
+#- Enter + Ctrl+D -- 0
+#- Ctrl+D -- 0
+#- "oi" + Enter + Ctrl+D -- 0
 #- Ctrl+\
 #- Ctrl+C
 #- "oi" + Enter + Ctrl+\
@@ -421,7 +421,7 @@ echo """"""""*
 echo "Makefile"*
 echo *"Makefile"
 echo "Makefile"***
-echo ***"Makefile"	
+echo ***"Makefile"
 echo Makefile***''''
 echo ''''***''''Makefile
 echo ''*''Make

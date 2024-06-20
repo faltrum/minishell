@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   definitions_bonus.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kseligma <kseligma@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:38:26 by oseivane          #+#    #+#             */
-/*   Updated: 2024/06/17 11:28:02 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/06/19 20:48:39 by kseligma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@
 # define WAR_BROKE_STDIN "warning broke STDIN"
 # define WAR_BROKE_STDOUT "warning broke STOUDOUT"
 # define WAR_BUILTIN_MEMORY "warning: memory error allocating builtins"
-# define WAR_HERE_EOF "warning: here-document\
-	delimited by end-of-file (wanted `"
+# define WAR_HERE_EOF "warning: here-document \
+delimited by end-of-file (wanted `"
 # define WAR_HERE_EOF2 "')"
 
 //Expansion flags
@@ -88,6 +88,8 @@
 # define SINT_OFF 0
 # define SINT_ON 1
 # define SINT_HEREDOC 2
+# define SIG_IGNORE 0
+# define SIG_DEFAULT 1
 
 extern int	g_sigint;
 
